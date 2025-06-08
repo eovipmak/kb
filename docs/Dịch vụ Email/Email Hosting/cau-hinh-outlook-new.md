@@ -1,11 +1,7 @@
----
-title: "Hướng dẫn cấu hình Outlook (new) cho dịch vụ Email Hosting"
----
-
 # Hướng dẫn cấu hình Outlook (new) cho dịch vụ Email Hosting
 
-!!! info
-    Bài viết này sẽ hướng dẫn bạn cách **cấu hình Outlook (new)** khi sử dụng dịch vụ Email Hosting. Nếu bạn cần hỗ trợ, xin vui lòng liên hệ hotline **1900 6046 nhánh 3**, gửi email đến [**support@vinahost.vn**](mailto:support@vinahost.vn), hoặc chat trực tiếp với chúng tôi tại [**đây**](https://livechat.vinahost.vn/chat.php).
+
+Bài viết này sẽ hướng dẫn bạn cách **cấu hình Outlook (new)** khi sử dụng dịch vụ Email Hosting. Nếu bạn cần hỗ trợ, xin vui lòng liên hệ hotline **1900 6046 nhánh 3**, gửi email đến [**support@vinahost.vn**](mailto:support@vinahost.vn), hoặc chat trực tiếp với chúng tôi tại [**đây**](https://livechat.vinahost.vn/chat.php).
 
 
 **Trước khi vào nội dung chính, mong bạn lưu ý rằng:**
@@ -21,8 +17,7 @@ title: "Hướng dẫn cấu hình Outlook (new) cho dịch vụ Email Hosting"
 
 Thông tin cấu hình bạn cần lấy nằm trong **cPanel** - giao diện quản trị Email Hosting mà VinaHost đã cung cấp khi bạn đăng ký dịch vụ.
 
-!!! info "Thông tin thêm"
-    Thông tin đăng nhập cPanel đã được gửi đến địa chỉ email được dùng để đăng ký dịch vụ. Vui lòng liên hệ chủ sở hữu địa chỉ email này nếu bạn không sở hữu nó.
+Thông tin đăng nhập cPanel đã được gửi đến địa chỉ email được dùng để đăng ký dịch vụ. Vui lòng liên hệ chủ sở hữu địa chỉ email này nếu bạn không sở hữu nó.
 
 Trong cPanel, truy cập **Email Accounts**.
 ![Email Accounts](images/emailhosting-cau_hinh_outlook_new-01.jpg "Email Accounts")
@@ -48,8 +43,7 @@ Tiếp theo, chọn **IMAP**.
 Điền các thông tin đã lấy tại **bước 1.1**.
 ![Điền thông tin](images/emailhosting-cau_hinh_outlook_new-07.jpg "Điền thông tin") 
 
-!!! tip "Mẹo"
-    Bạn có thể để trống **Mật khẩu SMTP** do nó trùng với mật khẩu IMAP đã nhập trên cùng.
+Bạn có thể để trống **Mật khẩu SMTP** do nó trùng với mật khẩu IMAP đã nhập trên cùng.
 
 Chọn **Tiếp tục** tại bước tiếp theo để đồng bộ hoá dữ liệu.
 ![Tiếp tục](images/emailhosting-cau_hinh_outlook_new-08.jpg "Tiếp tục")
@@ -57,8 +51,8 @@ Chọn **Tiếp tục** tại bước tiếp theo để đồng bộ hoá dữ l
 Nếu các thông tin đều đã đúng, thông báo thêm tài khoản thành công sẽ xuất hiện.
 ![Thông báo thêm tài khoản thành công](images/emailhosting-cau_hinh_outlook_new-09.jpg "Thông báo thêm tài khoản thành công")
 
-!!! tip "Mẹo"
-    Nếu bạn chắc chắn rằng mọi thông tin đã đúng nhưng vẫn không thể thêm được tài khoản, vui lòng lấy IP [tại đây](https://ip.vinahost.vn/) và gửi đến [support@vinahost.vn](mailto:support@vinahost.vn) để được hỗ trợ kiểm tra.
+
+Nếu bạn chắc chắn rằng mọi thông tin đã đúng nhưng vẫn không thể thêm được tài khoản, vui lòng lấy IP [tại đây](https://ip.vinahost.vn/) và gửi đến [support@vinahost.vn](mailto:support@vinahost.vn) để được hỗ trợ kiểm tra.
 
 
 ## 2. Kết luận
