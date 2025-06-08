@@ -31,7 +31,7 @@ Cuộn xuống dưới để xem thông tin cấu hình tại mục **Mail Clien
 
 ### 1.2. Cấu hình Outlook (new)
 
-Tại góc phải trên trong Outlook (new), chọn **Thiết đặt** :octicons-gear-16:{ title="Settings" } > **Thêm tài khoản** :material-account-plus:{ title="Add account" }.
+Tại góc phải trên trong Outlook (new), chọn **Thiết đặt** > **Thêm tài khoản**.
 ![Thêm tài khoản](images/emailhosting-cau_hinh_outlook_new-04.jpg "Thêm tài khoản")
 
 Nhập tài khoản bạn cần thêm vào hộp thoại hiện lên.
