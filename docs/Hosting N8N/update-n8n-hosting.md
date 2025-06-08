@@ -1,5 +1,6 @@
+# Hướng dẫn update N8N trên hosting tại Vinahost 
+
 Bài viết này sẽ hướng dẫn cách cập nhật phiên bản n8n khi đăng kí dịch vụ Hosting N8N tại Vinahost. Nếu bạn cần hỗ trợ, xin vui lòng liên hệ VinaHost qua Hotline 1900 6046 ext.3, email về support@vinahost.vn hoặc chat với VinaHost qua livechat https://livechat.vinahost.vn/chat.php  
-# Hướng Dẫn cập nhật phiên bản Dịch Vụ Hosting N8N tại VinaHost
 
 ## Bước 1: Xem thông tin phiên bảng N8N hiện tại
 - Ta đăng nhập sau đó vào **Help** -> **About n8n** để xem
