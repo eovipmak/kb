@@ -13,7 +13,7 @@ categories:
 
 - Nếu không thể đăng nhập WebMail thành công, bạn cũng không thể cấu hình Outlook được.
 - VinaHost chỉ đảm bảo hoạt động của WebMail. Việc gửi và nhận thành công trên WebMail có nghĩa là hệ thống đang hoạt động đúng.
-- Outlook hay bất kỳ phần mềm email nào khác đều là phần mềm bên thứ ba.<br>_VinaHost không có trách nhiệm đối với các phần mềm này. Vui lòng chủ động kiểm tra lại cấu hình Outlook theo hướng dẫn tại [đây](https://kb.vinahost.vn/Email/huong-dan-cau-hinh-email-tren-outlook/)._
+- Outlook hay bất kỳ phần mềm email nào khác đều là phần mềm bên thứ ba._VinaHost không có trách nhiệm đối với các phần mềm này. Vui lòng chủ động kiểm tra lại cấu hình Outlook theo hướng dẫn tại [đây](https://kb.vinahost.vn/Email/huong-dan-cau-hinh-email-tren-outlook/)._
 
 
 ## 1. Thực hiện

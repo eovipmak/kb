@@ -1,11 +1,5 @@
----
-title: "Hướng dẫn tạo chữ ký trên Webmail cPanel"
-date: "2025-06-02"
-categories:
-  - "email-hosting"
-  - "shared-hosting"
-  - "linux-hosting"
----
+
+# Hướng dẫn tạo chữ ký trên Webmail cPanel
 
 > Bài viết này hướng dẫn các bạn tạo chữ ký trên Webmail cPanel của dịch vụ Email Hosting tại VinaHost. Nếu bạn cần hỗ trợ, xin vui lòng:
 >
@@ -67,8 +61,6 @@ Sau các bước trên, bạn đã có thể soạn email mới được tự đ
 
 ![](../../images/emailhosting-tao_chu_ky_webmail-10.jpg)
 
-
-<hr>
 
 Chúc bạn **bạn tạo chữ ký trên Webmail cPanel** thành công! 🍻
 
