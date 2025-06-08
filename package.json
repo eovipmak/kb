@@ -17,7 +17,7 @@
     "@docusaurus/core": "3.8.1",
     "@docusaurus/preset-classic": "3.8.1",
     "@mdx-js/react": "^3.0.0",
-    "@aldridged/docusaurus-plugin-lunr": "^3.6.0",
+    "docusaurus-plugin-lunr": "1.0.0-alpha.10",
     "clsx": "^2.0.0",
     "docusaurus-lunr-search": "^3.6.0",
     "prism-react-renderer": "^2.3.0",
