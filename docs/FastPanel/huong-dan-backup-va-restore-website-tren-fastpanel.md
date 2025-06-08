@@ -187,7 +187,7 @@ Kiểm tra có thể thấy dung lượng của các bản backup là khác nhau
 
  ![](attachments/5a15bf70-eff5-4ca6-8640-b037a88859c9.png)
 
-Tham khảo thêm về các phương pháp backup tại: <https://vinahost.vn/backup-la-gi/>
+Tham khảo thêm về các phương pháp backup tại: https://vinahost.vn/backup-la-gi/
 
 **Chúc bạn thực hiện thành công!**
 
