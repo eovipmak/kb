@@ -57,7 +57,7 @@ Nếu bạn chắc chắn rằng mọi thông tin đã đúng nhưng vẫn khôn
 
 ## 2. Kết luận
 
-Như vậy là VinaHost đã hướng dẫn bạn cách **cấu hình Outlook (new)** khi sử dụng dịch vụ Email Hosting. Chúc bạn thực hiện thành công! 🍻
+Như vậy là VinaHost đã hướng dẫn bạn cách **cấu hình Outlook (new)** khi sử dụng dịch vụ Email Hosting. Chúc bạn thực hiện thành công!
 
 
 > **THAM KHẢO CÁC DỊCH VỤ TẠI [VINAHOST](https://vinahost.vn/)**
