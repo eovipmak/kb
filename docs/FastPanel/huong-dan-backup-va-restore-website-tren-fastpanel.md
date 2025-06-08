@@ -1,6 +1,6 @@
 # Hướng dẫn backup và restore website trên FastPanel
 
-Bài viết này sẽ giới thiệu về **Hướng dẫn backup và restore website trên FastPanel** và lợi ích của nó. Nếu bạn cần hỗ trợ, xin vui lòng liên hệ VinaHost qua **Hotline 1900 6046 ext. 3**, email về [support@vinahost.vn](mailto:support@vinahost.vn) hoặc chat với VinaHost qua livechat <https://livechat.vinahost.vn/chat.php>
+Bài viết này sẽ giới thiệu về **Hướng dẫn backup và restore website trên FastPanel** và lợi ích của nó. Nếu bạn cần hỗ trợ, xin vui lòng liên hệ VinaHost qua **Hotline 1900 6046 ext. 3**, email về [support@vinahost.vn](mailto:support@vinahost.vn) hoặc chat với VinaHost qua livechat https://livechat.vinahost.vn/chat.php
 
 # 1. Khởi tạo tài khoản (vị trí) backup local và phương pháp backup full
 
@@ -76,7 +76,7 @@ LƯU Ý:
 
 Giao thức sao chép an toàn (SCP) là phương tiện truyền tệp máy tính an toàn giữa máy chủ cục bộ và máy chủ từ xa hoặc giữa hai máy chủ từ xa. Có thể hiểu cách thức này sẽ lưu trữ backup vào một VPS/server khác phòng VPS/server hiện tại down mà không thể phục hồi
 
-Cần chuẩn bị một VPS mở port 22 (hoặc port dùng cho việc SSH) gồm user/password, tham khảo ngay VPS giá rẻ, toàn quyền quản trị tại VPS: <https://vinahost.vn/thue-vps-gia-re/>
+Cần chuẩn bị một VPS mở port 22 (hoặc port dùng cho việc SSH) gồm user/password, tham khảo ngay VPS giá rẻ, toàn quyền quản trị tại VPS: https://vinahost.vn/thue-vps-gia-re/
 
 Chọn New account ![](attachments/efcf521a-1a66-402e-a9b1-94f5abfdc48f.png)Nhập các thông tin của VPS đã được cấp gồm username, password và địa chỉ IP
 
