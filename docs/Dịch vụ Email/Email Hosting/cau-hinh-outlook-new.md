@@ -1,5 +1,8 @@
-# Hướng dẫn cấu hình Outlook (new) cho dịch vụ Email Hosting
+---
+title: "Hướng dẫn cấu hình Outlook (new) cho dịch vụ Email Hosting"
+---
 
+# Hướng dẫn cấu hình Outlook (new) cho dịch vụ Email Hosting
 
 !!! info
     Bài viết này sẽ hướng dẫn bạn cách **cấu hình Outlook (new)** khi sử dụng dịch vụ Email Hosting. Nếu bạn cần hỗ trợ, xin vui lòng liên hệ hotline **1900 6046 nhánh 3**, gửi email đến [**support@vinahost.vn**](mailto:support@vinahost.vn), hoặc chat trực tiếp với chúng tôi tại [**đây**](https://livechat.vinahost.vn/chat.php).

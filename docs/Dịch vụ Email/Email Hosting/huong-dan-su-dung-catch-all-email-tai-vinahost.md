@@ -1,4 +1,4 @@
-**Hướng dẫn sử dụng Catch-All Email tại Vinahost**
+# **Hướng dẫn sử dụng Catch-All Email tại Vinahost**
 
 Catch-All Email là một tính năng của dịch vụ email hosting, cho phép Quý khách nhận toàn bộ email được gửi đến tên miền email của mình, bất kể địa chỉ email người nhận có tồn tại hay không.
 

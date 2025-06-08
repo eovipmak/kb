@@ -1,5 +1,8 @@
-# Hướng dẫn mở rộng dung lượng lưu trữ trên Windows sau khi nâng cấp
+---
+title: "Hướng dẫn mở rộng dung lượng lưu trữ trên Windows sau khi nâng cấp"
+---
 
+# Hướng dẫn mở rộng dung lượng lưu trữ trên Windows sau khi nâng cấp
 
 !!! info "Liên hệ"
     Nếu bạn cần hỗ trợ, xin vui lòng liên hệ hotline **1900 6046 nhánh 3**, hoặc gửi email đến [**support@vinahost.vn**](mailto:support@vinahost.vn), hoặc chat trực tiếp với chúng tôi tại [**đây**](https://livechat.vinahost.vn/chat.php).
