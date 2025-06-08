@@ -30,11 +30,11 @@ _(lệnh_ **_mods_** _đối với Forge, Fabric,..)_![](data:image/png;base64,i
 
 Một số trang web tải **plugin/mod** phổ biến :
 
-\[1\] <https://modrinth.com/>
+\[1\] https://modrinth.com/
 
-\[2\] <https://www.curseforge.com/minecraft>
+\[2\] https://www.curseforge.com/minecraft
 
-\[3\] <https://www.9minecraft.net/>
+\[3\] https://www.9minecraft.net/
 
 
 **Chúc bạn thực hiện thành công!**

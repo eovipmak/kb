@@ -102,7 +102,7 @@ Kết quả test từ WAFER (Cloudbrics):
 | Tích hợp CDN | Không | Có | Không |
 | Tùy chỉnh | Cao (Giới hạn ít) | Trung bình (giới hạn nhiều) | Rất cao (người dùng làm chủ) |
 | DDoS | HTTP Flood | DDoS Traffic | Không có khả năng |
-| Hiệu suất | Độ trễ thấp (<1ms), tối ưu tự quản lý | Cao (mạng toàn cầu, 100M req/s tại đỉnh) | Phụ thuộc máy chủ, có thể chậm nếu không tối ưu |
+| Hiệu suất | Độ trễ thấp, tối ưu tự quản lý | Cao (mạng toàn cầu, 100M req/s tại đỉnh) | Phụ thuộc máy chủ, có thể chậm nếu không tối ưu |
 | **Hỗ trợ SSL** | Có (Let's Encrypt) | Có (tự động, wildcard tùy gói) | Có (phụ thuộc cấu hình máy chủ) |
 | **Cộng đồng/Hỗ trợ** | Hỗ trợ kỹ thuật 24/7 | Ít hỗ trợ nhưng cộng đồng lớn | Cộng đồng mạnh, sắp EOL (2024) |
 

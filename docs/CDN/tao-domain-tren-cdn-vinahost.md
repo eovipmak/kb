@@ -109,9 +109,9 @@ Nếu người dùng truy cập bằng HTTP thì các Edge sẽ gửi yêu cầu
 
 > **THAM KHẢO CÁC DỊCH VỤ TẠI [VINAHOST](https://vinahost.vn/)**
 >
-> **\>> [SERVER](https://vinahost.vn/thue-may-chu-rieng/) – [COLOCATION](https://vinahost.vn/colocation.html) – [CDN](https://vinahost.vn/dich-vu-cdn-chuyen-nghiep)**<br>
-> **\>> [CLOUD](https://vinahost.vn/cloud-server-gia-re/) – [VPS](https://vinahost.vn/vps-ssd-chuyen-nghiep/)**<br>
-> **\>> [HOSTING](https://vinahost.vn/wordpress-hosting)**<br>
-> **\>> [EMAIL](https://vinahost.vn/email-hosting)**<br>
-> **\>> [WEBSITE](http://vinawebsite.vn/)**<br>
+> **\>> [SERVER](https://vinahost.vn/thue-may-chu-rieng/) – [COLOCATION](https://vinahost.vn/colocation.html) – [CDN](https://vinahost.vn/dich-vu-cdn-chuyen-nghiep)**
+> **\>> [CLOUD](https://vinahost.vn/cloud-server-gia-re/) – [VPS](https://vinahost.vn/vps-ssd-chuyen-nghiep/)**
+> **\>> [HOSTING](https://vinahost.vn/wordpress-hosting)**
+> **\>> [EMAIL](https://vinahost.vn/email-hosting)**
+> **\>> [WEBSITE](http://vinawebsite.vn/)**
 > **\>> [TÊN MIỀN](https://vinahost.vn/ten-mien-gia-re/)**
