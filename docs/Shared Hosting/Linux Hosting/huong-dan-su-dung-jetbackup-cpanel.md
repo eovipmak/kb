@@ -15,11 +15,11 @@ categories:
 
 **JetBackup** là giải pháp sao lưu mạnh mẽ và linh hoạt. Để truy cập JetBackup trên cPanel, nhập "jetbackup" vào thanh tìm kiếm hoặc chọn biểu tượng như hình dưới.
 
-![](../../images/linuxhosting-huong_dan_su_dung_jetbackup_cpanel-01.jpg)
+![](images/linuxhosting-huong_dan_su_dung_jetbackup_cpanel-01.jpg)
 
 Giao diện chính của JetBackup:
 
-![](../../images/linuxhosting-huong_dan_su_dung_jetbackup_cpanel-02.jpg)
+![](images/linuxhosting-huong_dan_su_dung_jetbackup_cpanel-02.jpg)
 
 ## 1. Khôi phục tài khoản cPanel
 
@@ -27,25 +27,25 @@ Tính năng này hữu ích khi bạn muốn khôi phục toàn bộ dữ liệu
 
 Để khôi phục tài khoản cPanel, trong giao diện chính JetBackup, chọn **Full Backups**.
 
-![](../../images/linuxhosting-huong_dan_su_dung_jetbackup_cpanel-03.jpg)
+![](images/linuxhosting-huong_dan_su_dung_jetbackup_cpanel-03.jpg)
 
 Đảm bảo bạn đang ở thẻ **Full Account** như hình dưới. Chọn thời điểm sao lưu mà bạn mong muốn.
 
-![](../../images/linuxhosting-huong_dan_su_dung_jetbackup_cpanel-04.jpg)
+![](images/linuxhosting-huong_dan_su_dung_jetbackup_cpanel-04.jpg)
 
 Kéo xuống dưới cùng, chọn **Restore**.
 
-![](../../images/linuxhosting-huong_dan_su_dung_jetbackup_cpanel-05.jpg)
+![](images/linuxhosting-huong_dan_su_dung_jetbackup_cpanel-05.jpg)
 
 _**Thông tin thêm:** Bạn cũng có thể chọn **Download** (bên phải nút **Restore**) để tải xuống bản sao lưu tài khoản cPanel._
 
 Trong giao diện tiếp theo, chọn **Restore Selected Items** để tiến hành khôi phục.
 
-![](../../images/linuxhosting-huong_dan_su_dung_jetbackup_cpanel-06.jpg)
+![](images/linuxhosting-huong_dan_su_dung_jetbackup_cpanel-06.jpg)
 
 Bạn sẽ được chuyển hướng đến giao diện **Queue** để xem tiến trình khôi phục. Trạng thái "Completed" có nghĩa là khôi phục thành công.
 
-![](../../images/linuxhosting-huong_dan_su_dung_jetbackup_cpanel-07.jpg)
+![](images/linuxhosting-huong_dan_su_dung_jetbackup_cpanel-07.jpg)
 
 ## 2. Khôi phục tệp, thư mục
 
@@ -56,27 +56,27 @@ _A: Giả sử bạn vô tình xoá tệp `wp-config.php`, việc khôi phục t
 
 Để khôi phục tài khoản cPanel, trong giao diện chính JetBackup, chọn **Home Directory**.
 
-![](../../images/linuxhosting-huong_dan_su_dung_jetbackup_cpanel-08.jpg)
+![](images/linuxhosting-huong_dan_su_dung_jetbackup_cpanel-08.jpg)
 
 Đảm bảo bạn đang ở thẻ **Home Directory** như hình dưới. Chọn thời điểm sao lưu mà bạn mong muốn để khôi phục toàn bộ **_thư mục gốc_** của tài khoản.
 
 _**Thông tin thêm:** Thư mục gốc của tài khoản `myusername` là `/home/myusername`._
 
-![](../../images/linuxhosting-huong_dan_su_dung_jetbackup_cpanel-09.jpg)
+![](images/linuxhosting-huong_dan_su_dung_jetbackup_cpanel-09.jpg)
 
 Nếu bạn chỉ muốn khôi phục tệp `public_html/wp-config.php` như đã đề cập, chọn **Change Files Selection** > **public_html** > tích chọn **wp-config.php**.
 
-![](../../images/linuxhosting-huong_dan_su_dung_jetbackup_cpanel-10.jpg)
+![](images/linuxhosting-huong_dan_su_dung_jetbackup_cpanel-10.jpg)
 
-![](../../images/linuxhosting-huong_dan_su_dung_jetbackup_cpanel-11.jpg)
+![](images/linuxhosting-huong_dan_su_dung_jetbackup_cpanel-11.jpg)
 
 Cuộn xuống dưới, chọn lần lượt **Select Files** > **Restore** > **Restore Selected Items** để tiến hành khôi phục.
 
-![](../../images/linuxhosting-huong_dan_su_dung_jetbackup_cpanel-12.jpg)
+![](images/linuxhosting-huong_dan_su_dung_jetbackup_cpanel-12.jpg)
 
-![](../../images/linuxhosting-huong_dan_su_dung_jetbackup_cpanel-05.jpg)
+![](images/linuxhosting-huong_dan_su_dung_jetbackup_cpanel-05.jpg)
 
-![](../../images/linuxhosting-huong_dan_su_dung_jetbackup_cpanel-13.jpg)
+![](images/linuxhosting-huong_dan_su_dung_jetbackup_cpanel-13.jpg)
 
 ## 3. Khôi phục cơ sở dữ liệu (CSDL) và người dùng CSDL
 
@@ -86,19 +86,19 @@ Tính năng này hữu ích khi bạn chỉ muốn khôi phục CSDL và ngườ
 
 Để khôi phục CSDL, trong giao diện chính JetBackup, chọn **Databases**.
 
-![](../../images/linuxhosting-huong_dan_su_dung_jetbackup_cpanel-14.jpg)
+![](images/linuxhosting-huong_dan_su_dung_jetbackup_cpanel-14.jpg)
 
 Đảm bảo bạn đang ở thẻ **Databases** như hình dưới. Chọn CSDL và thời điểm sao lưu mà bạn mong muốn bằng cách nhấn vào nút **Choose Other Backup**. Sau cùng, nhấn **Restore** > **Restore Selected Items**.
 
-![](../../images/linuxhosting-huong_dan_su_dung_jetbackup_cpanel-16.jpg)
+![](images/linuxhosting-huong_dan_su_dung_jetbackup_cpanel-16.jpg)
 
-![](../../images/linuxhosting-huong_dan_su_dung_jetbackup_cpanel-17.jpg)
+![](images/linuxhosting-huong_dan_su_dung_jetbackup_cpanel-17.jpg)
 
 ### 3.2. Khôi phục người dùng CSDL
 
 Để khôi phục người dùng CSDL, trong giao diện chính JetBackup, chọn **Database Users** rồi thực hiện tương tự **mục 3.1. Khôi phục CSDL**.
 
-![](../../images/linuxhosting-huong_dan_su_dung_jetbackup_cpanel-15.jpg)
+![](images/linuxhosting-huong_dan_su_dung_jetbackup_cpanel-15.jpg)
 
 ## 4. Khôi phục các loại dữ liệu khác
 

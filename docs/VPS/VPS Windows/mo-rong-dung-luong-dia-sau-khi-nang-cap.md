@@ -44,15 +44,15 @@ Sau khi nâng cấp dung lượng lưu trữ cho VPS, thực hiện các b
 
         Tìm kiếm và chạy **Computer Management** với quyền quản trị viên.
 
-        ![Computer Management](../../images/windows-mo_rong_dung_luong_luu_tru_sau_khi_nang_cap-01.jpg)
+        ![Computer Management](images/windows-mo_rong_dung_luong_luu_tru_sau_khi_nang_cap-01.jpg)
 
         Chọn **Storage > Disk Management** trong thanh điều hướng bên trái.
 
-        ![Disk Management](../../images/windows-mo_rong_dung_luong_luu_tru_sau_khi_nang_cap-02.jpg)
+        ![Disk Management](images/windows-mo_rong_dung_luong_luu_tru_sau_khi_nang_cap-02.jpg)
 
     2. **Xác định volume có thể mở rộng**
     
-        ![Unallocated space](../../images/windows-mo_rong_dung_luong_luu_tru_sau_khi_nang_cap-03.jpg)
+        ![Unallocated space](images/windows-mo_rong_dung_luong_luu_tru_sau_khi_nang_cap-03.jpg)
 
         Trong ảnh trên, chỉ có một phần dung lượng trống nằm liền kề bên phải của volume **D:**. Do đó, đây cũng là volume duy nhất có thể được mở rộng trong trường hợp này.
 
@@ -60,23 +60,23 @@ Sau khi nâng cấp dung lượng lưu trữ cho VPS, thực hiện các b
 
         Chọn volume cần mở rộng (D:), sau đó chọn **Action > All Tasks > Extend Volume...**.
 
-        ![Extend Volume](../../images/windows-mo_rong_dung_luong_luu_tru_sau_khi_nang_cap-04.jpg)
+        ![Extend Volume](images/windows-mo_rong_dung_luong_luu_tru_sau_khi_nang_cap-04.jpg)
 
         Chọn **Next** ở cửa sổ tiếp theo.
 
         Đảm bảo toàn bộ dung lượng trống nằm trong hộp **Selected**.
 
-        ![Chọn dung lượng trống để mở rộng](../../images/windows-mo_rong_dung_luong_luu_tru_sau_khi_nang_cap-05.jpg)
+        ![Chọn dung lượng trống để mở rộng](images/windows-mo_rong_dung_luong_luu_tru_sau_khi_nang_cap-05.jpg)
 
         Chọn **Finish** ở hộp thoại cuối cùng để hoàn tất việc mở rộng.
 
-        ![Finish](../../images/windows-mo_rong_dung_luong_luu_tru_sau_khi_nang_cap-06.jpg)
+        ![Finish](images/windows-mo_rong_dung_luong_luu_tru_sau_khi_nang_cap-06.jpg)
 
 === "Sử dụng Powershell"
 
     1.  **Mở Powershell với quyền quản trị viên**
 
-        ![Mở Powershell](../../images/windows-mo_rong_dung_luong_luu_tru_sau_khi_nang_cap-07.jpg)
+        ![Mở Powershell](images/windows-mo_rong_dung_luong_luu_tru_sau_khi_nang_cap-07.jpg)
 
     2. **Kiểm tra cổng RDP đang dùng**
 

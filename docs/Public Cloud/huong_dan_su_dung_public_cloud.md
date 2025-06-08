@@ -86,7 +86,7 @@ Giao diện web hỗ trợ Quý khách khởi tạo nhiều Virtual Machine (VM)
 
 ## 4. Truy cập VM
 
-![Alt text](cloud-30-vnc.png)
+![Alt text](images/cloud-30-vnc.png)
 *<center>Hình 15: Xem VM qua VNC</center>*
 
 Sau khi tạo VM, và VM ở trạng thái **running**, có thể truy cập VM trên giao diện web thông qua VNC. Giao diện VNC hỗ trợ quan sát VM kể cả giao diện boot. Giao diện web VNC không hỗ trợ tính năng "copy-paste", cần nhập lệnh thủ công. Mặc định, các template Linux thường không có mật khẩu user root. Nên cần thực hiện 1 trong 2 cách sau để truy cập vào VM:

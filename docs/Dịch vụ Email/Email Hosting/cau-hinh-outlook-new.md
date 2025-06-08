@@ -26,37 +26,37 @@ Thông tin cấu hình bạn cần lấy nằm trong **cPanel** - giao diện qu
     Thông tin đăng nhập cPanel đã được gửi đến địa chỉ email được dùng để đăng ký dịch vụ. Vui lòng liên hệ chủ sở hữu địa chỉ email này nếu bạn không sở hữu nó.
 
 Trong cPanel, truy cập **Email Accounts**.
-![Email Accounts](../../images/emailhosting-cau_hinh_outlook_new-01.jpg "Email Accounts")
+![Email Accounts](images/emailhosting-cau_hinh_outlook_new-01.jpg "Email Accounts")
 
 Chọn **Connect Devices** tại dòng tài khoản mà bạn muốn cấu hình.
-![Connect Devices](../../images/emailhosting-cau_hinh_outlook_new-02.jpg "Connect Devices")
+![Connect Devices](images/emailhosting-cau_hinh_outlook_new-02.jpg "Connect Devices")
 
 Cuộn xuống dưới để xem thông tin cấu hình tại mục **Mail Client Manual Settings**.
-![Thông tin cấu hình](../../images/emailhosting-cau_hinh_outlook_new-03.jpg "Thông tin cấu hình")
+![Thông tin cấu hình](images/emailhosting-cau_hinh_outlook_new-03.jpg "Thông tin cấu hình")
 
 
 ### 1.2. Cấu hình Outlook (new)
 
 Tại góc phải trên trong Outlook (new), chọn **Thiết đặt** :octicons-gear-16:{ title="Settings" } > **Thêm tài khoản** :material-account-plus:{ title="Add account" }.
-![Thêm tài khoản](../../images/emailhosting-cau_hinh_outlook_new-04.jpg "Thêm tài khoản")
+![Thêm tài khoản](images/emailhosting-cau_hinh_outlook_new-04.jpg "Thêm tài khoản")
 
 Nhập tài khoản bạn cần thêm vào hộp thoại hiện lên.
-![Nhập tài khoản](../../images/emailhosting-cau_hinh_outlook_new-05.jpg "Nhập tài khoản")
+![Nhập tài khoản](images/emailhosting-cau_hinh_outlook_new-05.jpg "Nhập tài khoản")
 
 Tiếp theo, chọn **IMAP**.
-![Chọn IMAP](../../images/emailhosting-cau_hinh_outlook_new-06.jpg "Chọn IMAP")
+![Chọn IMAP](images/emailhosting-cau_hinh_outlook_new-06.jpg "Chọn IMAP")
 
 Điền các thông tin đã lấy tại **bước 1.1**.
-![Điền thông tin](../../images/emailhosting-cau_hinh_outlook_new-07.jpg "Điền thông tin") 
+![Điền thông tin](images/emailhosting-cau_hinh_outlook_new-07.jpg "Điền thông tin") 
 
 !!! tip "Mẹo"
     Bạn có thể để trống **Mật khẩu SMTP** do nó trùng với mật khẩu IMAP đã nhập trên cùng.
 
 Chọn **Tiếp tục** tại bước tiếp theo để đồng bộ hoá dữ liệu.
-![Tiếp tục](../../images/emailhosting-cau_hinh_outlook_new-08.jpg "Tiếp tục")
+![Tiếp tục](images/emailhosting-cau_hinh_outlook_new-08.jpg "Tiếp tục")
 
 Nếu các thông tin đều đã đúng, thông báo thêm tài khoản thành công sẽ xuất hiện.
-![Thông báo thêm tài khoản thành công](../../images/emailhosting-cau_hinh_outlook_new-09.jpg "Thông báo thêm tài khoản thành công")
+![Thông báo thêm tài khoản thành công](images/emailhosting-cau_hinh_outlook_new-09.jpg "Thông báo thêm tài khoản thành công")
 
 !!! tip "Mẹo"
     Nếu bạn chắc chắn rằng mọi thông tin đã đúng nhưng vẫn không thể thêm được tài khoản, vui lòng lấy IP [tại đây](https://ip.vinahost.vn/) và gửi đến [support@vinahost.vn](mailto:support@vinahost.vn) để được hỗ trợ kiểm tra.
