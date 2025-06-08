@@ -2,7 +2,7 @@
 
 Bài viết này sẽ giới thiệu về **Hướng dẫn tạo database trên FastPanel** và lợi ích của nó. Nếu bạn cần hỗ trợ, xin vui lòng liên hệ VinaHost qua **Hotline 1900 6046 ext. 3**, email về [support@vinahost.vn](mailto:support@vinahost.vn) hoặc chat với VinaHost qua livechat https://livechat.vinahost.vn/chat.php
 
-# 1. Khởi tạo
+## 1. Khởi tạo
 
 Đầu tiên, ta truy cập FastPanel và chọn Management => Databases
 
@@ -36,9 +36,9 @@ Note lại các thông tin đặc biệt quan trọng gồm **Name, Login** và 
 
  ![](attachments/4c469a43-987f-4e34-b4d8-7d94ecaa7c38.png)
 
-# 2. Quản lý và các thao tác cơ bản
+## 2. Quản lý và các thao tác cơ bản
 
-## a. Import/Export bằng giao diện phpMyAdmin
+### a. Import/Export bằng giao diện phpMyAdmin
 
 Chọn Open phpMyAdmin hoặc nút mũi tên chéo để mở thẳng trang quản lý cho database chỉ định
 
@@ -80,7 +80,7 @@ Trình duyệt sẽ tiến hành tải file về máy tính đang sử dụng
 
  ![](attachments/d0a24fe7-db57-4bf4-9b5e-a3d157499763.png)
 
-## b. Import/Export bằng giao diện FastPanel
+### b. Import/Export bằng giao diện FastPanel
 
 Chọn vào nút 3 chấm của database cần thao tác => Upload SQL-dump
 
@@ -104,7 +104,7 @@ Hoàn tất
 
  ![](attachments/d0a24fe7-db57-4bf4-9b5e-a3d157499763.png)
 
-# 3. Chỉnh sửa thông tin cơ bản database
+## 3. Chỉnh sửa thông tin cơ bản database
 
 **LƯU Ý**: 1 số bước không thể hoàn tác, cần hết sức cẩn thận khi thực hiện
 
@@ -137,7 +137,7 @@ Có 3 thao tác cơ bản gồm:
 
  ![](attachments/7088420d-2866-421f-b058-685958742f94.png)
 
-# 4. Kết nối từ xa vào database
+## 4. Kết nối từ xa vào database
 
 Đầu tiên, cần đảm bảo user của database có quyền kết nối từ xa (xem lại mục 3)
 

@@ -1,6 +1,6 @@
 # Hướng dẫn thiết lập https (SSL) cho website trên FastPanel
 
-# 1. Cài đặt **https (SSL) miễn phí bằng Let's Encrypt (90 ngày)**
+## 1. Cài đặt **https (SSL) miễn phí bằng Let's Encrypt (90 ngày)**
 
 Truy cập Management => SSL certificates
 
@@ -24,7 +24,7 @@ Hoàn tất, truy cập trang web để kiểm tra
 
  ![](attachments/58e7b308-f817-47da-9b2f-51184148f46a.png)
 
-# 2. Cài đặt **https (SSL) có phí (1 năm)**
+## 2. Cài đặt **https (SSL) có phí (1 năm)**
 
 Nếu cần các chứng chỉ SSL dài hơn, có thể tham khảo ngay dịch vụ SSL tại Vinahost:
 

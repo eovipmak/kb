@@ -2,7 +2,7 @@
 
 Bài viết này sẽ giới thiệu về **Hướng dẫn cài đặt website wordpress trên FastPanel** và lợi ích của nó. Nếu bạn cần hỗ trợ, xin vui lòng liên hệ VinaHost qua **Hotline 1900 6046 ext. 3**, email về [support@vinahost.vn](mailto:support@vinahost.vn) hoặc chat với VinaHost qua livechat https://livechat.vinahost.vn/chat.php
 
-# 1. Tạo website Wordpress tự động (bản mới nhất)
+## 1. Tạo website Wordpress tự động (bản mới nhất)
 
 Chọn Create Site để bắt đầu
 
@@ -42,9 +42,9 @@ Kiểm tra đăng nhập trang quản trị Wordpress
 
  ![](attachments/cfbfcbd8-88d8-4fed-9ee2-1eb0fe2dfe0d.png)
 
-# 2 Thao tác cơ bản
+## 2 Thao tác cơ bản
 
-## a. Quản lý
+### a. Quản lý
 
 Rê chuột vào trang Wordpress vừa tạo và chọn Options
 
@@ -56,7 +56,7 @@ Tại đây, ta có thể thay đổi các thông số cơ bản như Aliases**,
 
 Các mục khác nếu không chắc chắn có thể bỏ qua để tránh các lỗi không cần thiết.
 
-## b. Tổng quan
+### b. Tổng quan
 
 Chuyên sâu hơn, truy cập Site card của website
 
