@@ -1,7 +1,7 @@
+# Hướng dẫn di chuyển dữ liệu email từ Email Hosting hoặc Email Server lên Tài khoản Google Workspace
 
-!!! info 
-	Bài viết này sẽ hướng dẫn bạn cách **di chuyển dữ liệu email từ Email Hosting hoặc Email Server lên Tài khoản Google Workspace**  
-	Nếu bạn cần hỗ trợ, xin vui lòng liên hệ VinaHost qua **Hotline 1900 6046 ext. 3**, email về [support@vinahost.vn](mailto:support@vinahost.vn) hoặc chat với VinaHost qua livechat [https://livechat.vinahost.vn](https://livechat.vinahost.vn)
+Bài viết này sẽ hướng dẫn bạn cách **di chuyển dữ liệu email từ Email Hosting hoặc Email Server lên Tài khoản Google Workspace**  
+Nếu bạn cần hỗ trợ, xin vui lòng liên hệ VinaHost qua **Hotline 1900 6046 ext. 3**, email về [support@vinahost.vn](mailto:support@vinahost.vn) hoặc chat với VinaHost qua livechat [https://livechat.vinahost.vn](https://livechat.vinahost.vn)
 
 
 ## Tổng quan

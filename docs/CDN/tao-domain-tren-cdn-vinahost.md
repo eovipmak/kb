@@ -1,5 +1,7 @@
+# Hướng Dẫn Tạo Domain CDN Tại VINAHOST
+
 Bài viết này sẽ hướng dẫn cách tạo domain trên CDN tại Vinahost. Nếu bạn cần hỗ trợ, xin vui lòng liên hệ VinaHost qua Hotline 1900 6046 ext.3, email về support@vinahost.vn hoặc chat với VinaHost qua livechat https://livechat.vinahost.vn/chat.php.
-## Hướng Dẫn Tạo Domain CDN Tại VINAHOST
+
 CDN (Content Delivery Network): thông thường sẽ có 2 loại Content Acceleration và Media Acceleration — hai cách tối ưu khác nhau cho từng loại nội dung.  
 - Content Acceleration (Tăng tốc nội dung thông thường)  
 -  Media Acceleration (Tăng tốc nội dung media, đặc biệt là VOD)

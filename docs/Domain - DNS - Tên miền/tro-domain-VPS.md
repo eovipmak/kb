@@ -1,5 +1,7 @@
+# Hướng dẫn cách trỏ bảng tên miền về VPS khi đăng kí dịch vụ tại VINAHOST
+
 Bài viết này sẽ hướng dẫn cách trỏ bảng tên miền về VPS khi đăng kí dịch vụ tại VINAHOST. Nếu bạn cần hỗ trợ, xin vui lòng liên hệ VinaHost qua Hotline 1900 6046 ext.3, email về support@vinahost.vn hoặc chat với VinaHost qua livechat https://livechat.vinahost.vn/chat.php.
-## Hướng dẫn cách trỏ bảng tên miền về VPS khi đăng kí dịch vụ tại VINAHOST
+
 ### Bước 1: truy cập vào trang quản lí dịch vụ của bạn tại vinahost
 Địa chỉ: https://secure.vinahost.vn/ac/index.php?rp=/login  
 

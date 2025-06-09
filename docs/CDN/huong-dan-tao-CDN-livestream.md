@@ -1,10 +1,6 @@
-
-**Bài viết này sẽ hướng dẫn cách tạo tài khoản CDN Livestream Broadcast. Nếu bạn cần hỗ trợ, xin vui lòng liên hệ VinaHost qua Hotline 1900 6046 ext.3, email về support@vinahost.vn hoặc chat với VinaHost qua livechat https://livechat.vinahost.vn/chat.php.**
-
-
 # Hướng dẫn cách tạo tài khoản CDN Livestream Broadcast
 
-Trong hướng dẫn này mình sẽ hướng dẫn tạo CDN Livestream Broadcast khi đăng ký dịch vụ tại VinaHost.
+Bài viết này sẽ hướng dẫn cách tạo tài khoản CDN Livestream Broadcast. Nếu bạn cần hỗ trợ, xin vui lòng liên hệ VinaHost qua Hotline 1900 6046 ext.3, email về support@vinahost.vn hoặc chat với VinaHost qua livechat https://livechat.vinahost.vn/chat.php.
 
 **CDN Livestream Broadcast** (Content Delivery Network cho phát sóng trực tiếp) là một hệ thống giúp truyền tải nội dung video livestream đến nhiều người xem trên toàn thế giới một cách nhanh chóng, ổn định và hiệu quả.
 
