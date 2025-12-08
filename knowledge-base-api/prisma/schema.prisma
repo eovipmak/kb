@@ -1,0 +1,63 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  passwordHash  String
+  role          Role      @default(WRITER)
+  createdAt     DateTime  @default(now())
+  qaPages       QAPage[]
+}
+
+enum Role {
+  ADMIN
+  WRITER
+}
+
+model QAPage {
+  id              String    @id @default(cuid())
+  slug            String    @unique
+  title           String
+  contentMarkdown String
+  contentText     String    // Plain text for search
+  type            PageType  @default(FAQ)
+  status          Status    @default(DRAFT)
+  viewCount       Int       @default(0)
+  authorId        String
+  author          User      @relation(fields: [authorId], references: [id])
+  tags            Tag[]
+  categoryId      String?
+  category        Category? @relation(fields: [categoryId], references: [id])
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+}
+
+enum PageType {
+  FAQ
+  TROUBLESHOOTING
+}
+
+enum Status {
+  DRAFT
+  REVIEW
+  PUBLISHED
+}
+
+model Tag {
+  id      String   @id @default(cuid())
+  name    String   @unique
+  qaPages QAPage[]
+}
+
+model Category {
+  id      String   @id @default(cuid())
+  name    String   @unique
+  slug    String   @unique
+  qaPages QAPage[]
+}
