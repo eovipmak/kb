@@ -4,6 +4,7 @@ import { Status, PageType, Role } from '../types';
 import removeMarkdown from 'remove-markdown';
 import { MetadataService } from './metadata.service';
 import { SearchService } from './search.service';
+import { WorkflowService } from './workflow.service';
 
 export class QAService {
     static async generateSlug(title: string): Promise<string> {
@@ -96,6 +97,13 @@ export class QAService {
         // Check permissions
         if (userRole !== Role.ADMIN && page.authorId !== userId) {
             throw new Error('Forbidden');
+        }
+
+        // Validate status transition
+        if (data.status && data.status !== page.status) {
+            if (!WorkflowService.canTransition(page.status as Status, data.status, userRole)) {
+                throw new Error('Forbidden: Invalid status transition');
+            }
         }
 
         // Prepare update data

@@ -1,5 +1,6 @@
 import { FastifyInstance } from 'fastify';
 import { QAService } from '../services/qa.service';
+import { WorkflowService } from '../services/workflow.service';
 import { verifyToken, requireRole } from '../middleware/auth.middleware';
 import { AuthService } from '../services/auth.service';
 import { Role, PageType, Status } from '../types';
@@ -106,7 +107,7 @@ export async function qaRoutes(fastify: FastifyInstance) {
             const updated = await QAService.updateQAPage(id, body, request.user!.id, request.user!.role);
             return updated;
         } catch (err: any) {
-            if (err.message === 'Forbidden') return reply.code(403).send({ message: 'Forbidden' });
+            if (err.message.includes('Forbidden')) return reply.code(403).send({ message: err.message });
             if (err.message === 'Not found') return reply.code(404).send({ message: 'Not Found' });
             return reply.code(500).send({ message: 'Internal Server Error' });
         }
@@ -122,6 +123,45 @@ export async function qaRoutes(fastify: FastifyInstance) {
             return reply.code(204).send();
         } catch (err: any) {
             if (err.message === 'Forbidden') return reply.code(403).send({ message: 'Forbidden' });
+            if (err.message === 'Not found') return reply.code(404).send({ message: 'Not Found' });
+            return reply.code(500).send({ message: 'Internal Server Error' });
+        }
+    });
+
+    // Publish (Admin only)
+    fastify.post('/:id/publish', {
+        preHandler: [verifyToken, requireRole([Role.ADMIN])]
+    }, async (request, reply) => {
+        const { id } = request.params as any;
+        try {
+            const page = await WorkflowService.transitionStatus(id, Status.PUBLISHED, request.user!.id, request.user!.role);
+            return page;
+        } catch (err: any) {
+            if (err.message.includes('Forbidden')) return reply.code(403).send({ message: err.message });
+            if (err.message === 'Not found') return reply.code(404).send({ message: 'Not Found' });
+            return reply.code(500).send({ message: 'Internal Server Error' });
+        }
+    });
+
+    // Reject (Admin only)
+    fastify.post('/:id/reject', {
+        schema: {
+            body: {
+                type: 'object',
+                properties: {
+                    reason: { type: 'string' }
+                }
+            }
+        },
+        preHandler: [verifyToken, requireRole([Role.ADMIN])]
+    }, async (request, reply) => {
+        const { id } = request.params as any;
+        // Body with reason is optional for logic but part of spec
+        try {
+            const page = await WorkflowService.transitionStatus(id, Status.DRAFT, request.user!.id, request.user!.role);
+            return page;
+        } catch (err: any) {
+            if (err.message.includes('Forbidden')) return reply.code(403).send({ message: err.message });
             if (err.message === 'Not found') return reply.code(404).send({ message: 'Not Found' });
             return reply.code(500).send({ message: 'Internal Server Error' });
         }

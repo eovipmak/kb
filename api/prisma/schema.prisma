@@ -46,3 +46,14 @@ model Category {
   slug    String   @unique
   qaPages QAPage[]
 }
+
+model DiagnosisFlow {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  startNodeId String
+  nodes       String   // Stored as JSON string
+  edges       String   // Stored as JSON string
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}

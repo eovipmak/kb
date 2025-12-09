@@ -8,6 +8,8 @@ import { authRoutes } from './routes/auth.routes';
 import { qaRoutes } from './routes/qa.routes';
 import { metadataRoutes } from './routes/metadata.routes';
 import { searchRoutes } from './routes/search.routes';
+import { analyticsRoutes } from './routes/analytics.routes';
+import { diagnosisRoutes } from './routes/diagnosis.routes';
 
 const server: FastifyInstance = Fastify({
     logger: true
@@ -26,6 +28,8 @@ server.register(authRoutes, { prefix: '/api/auth' });
 server.register(qaRoutes, { prefix: '/api/qa' });
 server.register(metadataRoutes, { prefix: '/api' });
 server.register(searchRoutes, { prefix: '/api' });
+server.register(analyticsRoutes, { prefix: '/api/analytics' });
+server.register(diagnosisRoutes, { prefix: '/api/diagnosis-flows' });
 
 // Health check route
 server.get('/health', async (request, reply) => {
