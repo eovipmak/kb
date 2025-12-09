@@ -2,7 +2,7 @@ import { FastifyInstance } from 'fastify';
 import { prisma } from '../utils/db';
 import { AuthService } from '../services/auth.service';
 import { verifyToken, requireRole } from '../middleware/auth.middleware';
-import { Role } from '@prisma/client';
+import { Role } from '../types';
 
 export async function authRoutes(fastify: FastifyInstance) {
     fastify.post('/register', async (request, reply) => {
@@ -53,9 +53,9 @@ export async function authRoutes(fastify: FastifyInstance) {
             return reply.code(401).send({ message: 'Invalid credentials' });
         }
 
-        const token = AuthService.generateToken(user.id, user.role);
+        const token = AuthService.generateToken(user.id, user.role as Role);
 
-        return { token, user: { id: user.id, email: user.email, role: user.role } };
+        return { token, user: { id: user.id, email: user.email, role: user.role as Role } };
     });
 
     // Protected route for testing

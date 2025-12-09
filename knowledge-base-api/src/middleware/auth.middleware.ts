@@ -1,6 +1,6 @@
 import { FastifyRequest, FastifyReply } from 'fastify';
 import { AuthService } from '../services/auth.service';
-import { Role } from '@prisma/client';
+import { Role } from '../types';
 
 // Extend FastifyRequest to include user
 declare module 'fastify' {

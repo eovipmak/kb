@@ -1,6 +1,6 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-import { Role } from '@prisma/client';
+import { Role } from '../types';
 
 const SALT_ROUNDS = 10;
 

@@ -4,20 +4,16 @@ generator client {
 
 datasource db {
   provider = "sqlite"
+  url      = "file:./dev.db"
 }
 
 model User {
   id            String    @id @default(cuid())
   email         String    @unique
   passwordHash  String
-  role          Role      @default(WRITER)
+  role          String    @default("WRITER") // Enum Role
   createdAt     DateTime  @default(now())
   qaPages       QAPage[]
-}
-
-enum Role {
-  ADMIN
-  WRITER
 }
 
 model QAPage {
@@ -25,9 +21,9 @@ model QAPage {
   slug            String    @unique
   title           String
   contentMarkdown String
-  contentText     String    // Plain text for search
-  type            PageType  @default(FAQ)
-  status          Status    @default(DRAFT)
+  contentText     String
+  type            String    @default("FAQ") // Enum PageType
+  status          String    @default("DRAFT") // Enum Status
   viewCount       Int       @default(0)
   authorId        String
   author          User      @relation(fields: [authorId], references: [id])
@@ -36,17 +32,6 @@ model QAPage {
   category        Category? @relation(fields: [categoryId], references: [id])
   createdAt       DateTime  @default(now())
   updatedAt       DateTime  @updatedAt
-}
-
-enum PageType {
-  FAQ
-  TROUBLESHOOTING
-}
-
-enum Status {
-  DRAFT
-  REVIEW
-  PUBLISHED
 }
 
 model Tag {
