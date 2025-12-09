@@ -5,3 +5,11 @@ uploads
 coverage
 .DS_Store
 *.log
+
+# Meilisearch
+meilisearch
+data.ms/
+
+# Database
+*.db
+*.db-journal

@@ -3,6 +3,7 @@ import { QAPage, Prisma } from '@prisma/client';
 import { Status, PageType, Role } from '../types';
 import removeMarkdown from 'remove-markdown';
 import { MetadataService } from './metadata.service';
+import { SearchService } from './search.service';
 
 export class QAService {
     static async generateSlug(title: string): Promise<string> {
@@ -27,7 +28,7 @@ export class QAService {
         const slug = await this.generateSlug(data.title);
         const contentText = removeMarkdown(data.contentMarkdown);
 
-        return prisma.qAPage.create({
+        const result = await prisma.qAPage.create({
             data: {
                 title: data.title,
                 contentMarkdown: data.contentMarkdown,
@@ -54,6 +55,11 @@ export class QAService {
                 }
             }
         });
+
+        // Sync to Meilisearch
+        await SearchService.indexDocument(result);
+
+        return result;
     }
 
     static async getQAPageById(id: string, userId?: string, userRole?: Role) {
@@ -116,7 +122,7 @@ export class QAService {
             };
         }
 
-        return prisma.qAPage.update({
+        const result = await prisma.qAPage.update({
             where: { id },
             data: updateData,
             include: {
@@ -124,6 +130,11 @@ export class QAService {
                 category: true
             }
         });
+
+        // Sync to Meilisearch
+        await SearchService.indexDocument(result);
+
+        return result;
     }
 
     static async deleteQAPage(id: string, userId: string, userRole: Role) {
@@ -134,6 +145,7 @@ export class QAService {
             throw new Error('Forbidden');
         }
 
+        await SearchService.removeDocument(id);
         return prisma.qAPage.delete({ where: { id } });
     }
 
