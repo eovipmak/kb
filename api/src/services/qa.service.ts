@@ -90,6 +90,33 @@ export class QAService {
         throw new Error('Forbidden');
     }
 
+    static async getQAPageBySlug(slug: string, userId?: string, userRole?: Role) {
+        const page = await prisma.qAPage.findUnique({
+            where: { slug },
+            include: {
+                tags: true,
+                category: true,
+                author: {
+                    select: { id: true, email: true, role: true }
+                }
+            }
+        });
+
+        if (!page) return null;
+
+        // If published, anyone can view
+        if (page.status === Status.PUBLISHED) return page;
+
+        // If not published, check permissions
+        if (!userId) throw new Error('Unauthorized'); // Public tries to access draft
+
+        if (userRole === Role.ADMIN || page.authorId === userId) {
+            return page;
+        }
+
+        throw new Error('Forbidden');
+    }
+
     static async updateQAPage(id: string, data: { title?: string; contentMarkdown?: string; status?: Status; type?: PageType; tags?: string[]; categoryId?: string }, userId: string, userRole: Role) {
         const page = await prisma.qAPage.findUnique({ where: { id } });
         if (!page) throw new Error('Not found');

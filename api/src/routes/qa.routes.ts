@@ -95,6 +95,38 @@ export async function qaRoutes(fastify: FastifyInstance) {
         }
     });
 
+    // Get by Slug
+    fastify.get('/slug/:slug', async (request, reply) => {
+        const { slug } = request.params as any;
+        let userId: string | undefined;
+        let userRole: Role | undefined;
+
+        const authHeader = request.headers.authorization;
+        if (authHeader) {
+            try {
+                const token = authHeader.replace('Bearer ', '');
+                const decoded = AuthService.verifyToken(token);
+                userId = decoded.id;
+                userRole = decoded.role;
+            } catch (err) {
+                // If token is invalid but provided, we might fail or treat as anonymous.
+                // For get, we can probably treat as anonymous if token is bad, but usually token invalid means 401.
+                // However, detailed logic: if no token -> anonymous. if invalid token -> 401.
+                return reply.code(401).send({ message: 'Invalid token' });
+            }
+        }
+
+        try {
+            const page = await QAService.getQAPageBySlug(slug, userId, userRole);
+            if (!page) return reply.code(404).send({ message: 'Not Found' });
+            return page;
+        } catch (err: any) {
+            if (err.message === 'Forbidden') return reply.code(403).send({ message: 'Forbidden' });
+            if (err.message === 'Unauthorized') return reply.code(401).send({ message: 'Unauthorized' });
+            return reply.code(500).send({ message: 'Internal Server Error' });
+        }
+    });
+
     // Update
     fastify.put('/:id', {
         schema: updateSchema,

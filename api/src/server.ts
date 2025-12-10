@@ -10,12 +10,35 @@ import { metadataRoutes } from './routes/metadata.routes';
 import { searchRoutes } from './routes/search.routes';
 import { analyticsRoutes } from './routes/analytics.routes';
 import { diagnosisRoutes } from './routes/diagnosis.routes';
+import { uploadRoutes } from './routes/upload.routes';
+import multipart from '@fastify/multipart';
+import fastifyStatic from '@fastify/static';
+import path from 'path';
+import fs from 'fs';
 
 const server: FastifyInstance = Fastify({
     logger: true
 });
 
 // Register plugins
+// Ensure uploads directory exists
+const uploadDir = path.join(process.cwd(), 'uploads');
+if (!fs.existsSync(uploadDir)) {
+    fs.mkdirSync(uploadDir, { recursive: true });
+}
+
+// Register plugins
+server.register(multipart, {
+    limits: {
+        fileSize: 5 * 1024 * 1024 // 5MB
+    }
+});
+
+server.register(fastifyStatic, {
+    root: uploadDir,
+    prefix: '/uploads/'
+});
+
 server.register(cors, {
     origin: true
 });
@@ -30,6 +53,7 @@ server.register(metadataRoutes, { prefix: '/api' });
 server.register(searchRoutes, { prefix: '/api' });
 server.register(analyticsRoutes, { prefix: '/api/analytics' });
 server.register(diagnosisRoutes, { prefix: '/api/diagnosis-flows' });
+server.register(uploadRoutes, { prefix: '/api' });
 
 // Health check route
 server.get('/health', async (request, reply) => {

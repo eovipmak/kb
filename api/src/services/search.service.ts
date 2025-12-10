@@ -21,36 +21,37 @@ export class SearchService {
     static async initIndex() {
         const client = this.getClient();
 
-        // Create index if it doesn't exist
-        // getOrCreateIndex is deprecated in newer versions usually? 
-        // createIndex throws if exists. getIndex throws if not exists.
-        // client.index() just creates a reference.
-
         try {
             await client.createIndex(this.indexName, { primaryKey: 'id' });
         } catch (e: any) {
             // Ignore if exists, but ensure PK is set
             if (e.code === 'index_already_exists') {
-                await client.index(this.indexName).update({ primaryKey: 'id' });
+                try {
+                    await client.index(this.indexName).update({ primaryKey: 'id' });
+                } catch (e) { console.error("SearchService non-fatal:", e); }
+            } else {
+                console.error("SearchService Init Error (non-fatal):", e.message);
+                return;
             }
         }
 
-        const index = client.index(this.indexName);
+        try {
+            const index = client.index(this.indexName);
 
-        const settings: Settings = {
-            searchableAttributes: ["title", "contentText", "tags"],
-            filterableAttributes: ["type", "status", "categoryId", "tags"],
-            sortableAttributes: ["createdAt", "viewCount"],
-            displayedAttributes: ["id", "slug", "title", "contentText", "type", "tags", "category", "createdAt"],
-            rankingRules: [
-                "words", "typo", "proximity", "attribute", "sort", "exactness"
-            ]
-        };
+            const settings: Settings = {
+                searchableAttributes: ["title", "contentText", "tags"],
+                filterableAttributes: ["type", "status", "categoryId", "tags"],
+                sortableAttributes: ["createdAt", "viewCount"],
+                displayedAttributes: ["id", "slug", "title", "contentText", "type", "tags", "category", "createdAt"],
+                rankingRules: [
+                    "words", "typo", "proximity", "attribute", "sort", "exactness"
+                ]
+            };
 
-        // We update settings. This will create the index if it doesn't exist (in most client versions) 
-        // or we simply ensure it exists.
-        // Let's try explicit creation or just updateSettings on the index object.
-        await index.updateSettings(settings);
+            await index.updateSettings(settings);
+        } catch (e) {
+            console.error("SearchService Settings Error (non-fatal):", e);
+        }
     }
 
     static async indexDocument(qaPage: any) {
@@ -78,16 +79,22 @@ export class SearchService {
             viewCount: qaPage.viewCount || 0
         };
 
-        console.log(`Indexing document ${qaPage.id}, status: ${qaPage.status}`);
-        const task = await index.addDocuments([document]);
-        console.log(`Index task enqueued: ${task.taskUid}`);
+        try {
+            console.log(`Indexing document ${qaPage.id}, status: ${qaPage.status}`);
+            const task = await index.addDocuments([document]);
+            console.log(`Index task enqueued: ${task.taskUid}`);
+        } catch (e) {
+            console.error("SearchService Index Error (non-fatal):", e);
+        }
     }
 
     static async removeDocument(qaId: string) {
-        console.log(`Removing document ${qaId}`);
-        const client = this.getClient();
-        const index = client.index(this.indexName);
-        await index.deleteDocument(qaId);
+        try {
+            console.log(`Removing document ${qaId}`);
+            const client = this.getClient();
+            const index = client.index(this.indexName);
+            await index.deleteDocument(qaId);
+        } catch (e) { console.error("SearchService Remove Error (non-fatal):", e); }
     }
 
     static async searchDocuments(query: string, filters?: { type?: string[], status?: string[], tags?: string[], categoryId?: string }, page = 1, limit = 20) {
