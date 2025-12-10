@@ -104,6 +104,17 @@ export class DiagnosisService {
         });
     }
 
+    static async listFlows() {
+        return prisma.diagnosisFlow.findMany({
+            select: {
+                id: true,
+                title: true,
+                description: true,
+                createdAt: true
+            }
+        });
+    }
+
     static async getFlow(id: string) {
         const flow = await prisma.diagnosisFlow.findUnique({
             where: { id }

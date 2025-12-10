@@ -1,0 +1,50 @@
+version: '3.8'
+
+services:
+  api:
+    build: 
+      context: ./api
+      target: builder
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=file:/app/prisma/dev.db
+      - JWT_SECRET=supersecret
+      - MEILI_HOST=http://meilisearch:7700
+      - MEILI_MASTER_KEY=masterKey
+    volumes:
+      - ./api:/app
+      - /app/node_modules
+    command: sh -c "npm install && npx prisma generate && npm run dev"
+    depends_on:
+      - meilisearch
+
+  client:
+    build:
+      context: ./client
+      target: builder
+      args:
+        VITE_API_BASE_URL: http://localhost:3000/api
+    ports:
+      - "5173:5173"
+    environment:
+      - NODE_ENV=development
+      - VITE_API_BASE_URL=http://localhost:3000/api 
+    volumes:
+      - ./client:/app
+      - /app/node_modules
+    command: sh -c "npm install && npm run dev -- --host"
+    depends_on:
+      - api
+
+  meilisearch:
+    image: getmeili/meilisearch:v1.10
+    ports:
+      - "7700:7700"
+    environment:
+      - MEILI_MASTER_KEY=masterKey
+    volumes:
+      - meili_data:/meili_data
+
+volumes:
+  meili_data:

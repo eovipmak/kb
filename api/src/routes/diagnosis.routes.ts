@@ -56,6 +56,17 @@ export async function diagnosisRoutes(fastify: FastifyInstance) {
         }
     });
 
+    // List Flows (Public)
+    fastify.get('/', async (request, reply) => {
+        try {
+            const flows = await DiagnosisService.listFlows();
+            return flows;
+        } catch (err) {
+            request.log.error(err);
+            return reply.code(500).send({ message: 'Internal Server Error' });
+        }
+    });
+
     // Get Flow (Public)
     fastify.get('/:id', async (request, reply) => {
         const { id } = request.params as any;

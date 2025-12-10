@@ -63,6 +63,13 @@ server.get('/health', async (request, reply) => {
     };
 });
 
+server.get('/api/health', async (request, reply) => {
+    return {
+        status: 'ok',
+        timestamp: new Date().toISOString()
+    };
+});
+
 import { SearchService } from './services/search.service';
 
 const start = async () => {

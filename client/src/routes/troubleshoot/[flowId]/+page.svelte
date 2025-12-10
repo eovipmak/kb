@@ -63,7 +63,7 @@
 
     async function loadFlow() {
         // Fetch flow metadata
-        const res = await client.get(`/api/diagnosis-flows/${flowId}`);
+        const res = await client.get(`/diagnosis-flows/${flowId}`);
         const flow = res.data;
         flowTitle = flow.title;
         startNodeId = flow.startNodeId;
@@ -76,7 +76,7 @@
     async function loadNode(nodeId: string) {
         loadingNode = true;
         try {
-            const res = await client.get(`/api/diagnosis-flows/${flowId}/node/${nodeId}`);
+            const res = await client.get(`/diagnosis-flows/${flowId}/node/${nodeId}`);
             const data: TraversalResponse = res.data;
             
             currentNode = data.currentNode;

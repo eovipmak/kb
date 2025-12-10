@@ -15,6 +15,10 @@ export const api = {
     getPopular: async () => {
         const res = await client.get('/analytics/popular');
         return res.data;
+    },
+    listQA: async (params?: { status?: string; type?: string; authorId?: string }) => {
+        const res = await client.get('/qa', { params });
+        return res.data;
     }
 };
 
