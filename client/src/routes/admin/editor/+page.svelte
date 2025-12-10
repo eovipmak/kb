@@ -7,6 +7,7 @@
     import CodeBlock from '@tiptap/extension-code-block';
     import Image from '@tiptap/extension-image';
     import Link from '@tiptap/extension-link';
+    import Placeholder from '@tiptap/extension-placeholder';
 
     let element: HTMLElement;
     let editor: Editor;
@@ -19,6 +20,35 @@
     let tagInput = '';
     let loading = true;
     let saving = false;
+
+    const uploadImage = async (file: File) => {
+        const formData = new FormData();
+        formData.append('file', file);
+        
+        try {
+            const res = await client.post('/upload', formData, {
+                headers: { 'Content-Type': 'multipart/form-data' }
+            });
+            if (res.data.url) {
+                editor.chain().focus().setImage({ src: res.data.url }).run();
+            }
+        } catch (e) {
+            alert('Upload failed');
+            console.error(e);
+        }
+    };
+
+    const handleImageUpload = () => {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = 'image/png, image/jpeg';
+        input.onchange = async () => {
+            if (input.files?.length) {
+                await uploadImage(input.files[0]);
+            }
+        };
+        input.click();
+    };
 
     onMount(async () => {
         const token = localStorage.getItem('token');
@@ -43,12 +73,40 @@
                 StarterKit,
                 CodeBlock,
                 Image,
-                Link.configure({ openOnClick: false })
+                Link.configure({ openOnClick: false }),
+                Placeholder.configure({
+                    placeholder: 'Write something or type "/"...',
+                })
             ],
             content: '<p></p>',
             editorProps: {
                 attributes: {
                     class: 'prose prose-sm sm:prose lg:prose-lg xl:prose-2xl mx-auto focus:outline-none min-h-[500px] text-gray-300'
+                },
+                handlePaste: (view, event, slice) => {
+                    const items = Array.from(event.clipboardData?.items || []);
+                    const item = items.find(item => item.type.indexOf('image') === 0);
+
+                    if (item) {
+                        event.preventDefault();
+                        const file = item.getAsFile();
+                        if (file) {
+                            uploadImage(file);
+                        }
+                        return true;
+                    }
+                    return false;
+                },
+                handleDrop: (view, event, slice, moved) => {
+                    if (!moved && event.dataTransfer && event.dataTransfer.files && event.dataTransfer.files.length > 0) {
+                        const file = event.dataTransfer.files[0];
+                        if (file.type.startsWith('image/')) {
+                            event.preventDefault();
+                            uploadImage(file);
+                            return true;
+                        }
+                    }
+                    return false;
                 }
             }
         });
@@ -57,32 +115,6 @@
     onDestroy(() => {
         if (editor) editor.destroy();
     });
-
-    const handleImageUpload = () => {
-        const input = document.createElement('input');
-        input.type = 'file';
-        input.accept = 'image/png, image/jpeg';
-        input.onchange = async () => {
-            if (input.files?.length) {
-                const file = input.files[0];
-                const formData = new FormData();
-                formData.append('file', file);
-                
-                try {
-                    const res = await client.post('/upload', formData, {
-                        headers: { 'Content-Type': 'multipart/form-data' }
-                    });
-                    if (res.data.url) {
-                        editor.chain().focus().setImage({ src: res.data.url }).run();
-                    }
-                } catch (e) {
-                    alert('Upload failed');
-                    console.error(e);
-                }
-            }
-        };
-        input.click();
-    };
 
     const save = async (status: string) => {
         if (!title) return alert('Title is required');
@@ -230,4 +262,13 @@
     :global(.ProseMirror a) { color: #60a5fa; text-decoration: underline; text-underline-offset: 4px; }
     :global(.ProseMirror img) { max-width: 100%; border-radius: 0.5rem; border: 1px solid #1e293b; margin: 1.5em 0; }
     :global(.ProseMirror blockquote) { border-left: 4px solid #3b82f6; padding-left: 1em; color: #94a3b8; font-style: italic; margin-bottom: 1.25em; }
+
+    /* Placeholder */
+    :global(.ProseMirror p.is-editor-empty:first-child::before) {
+        color: #64748b;
+        content: attr(data-placeholder);
+        float: left;
+        height: 0;
+        pointer-events: none;
+    }
 </style>
