@@ -1,85 +1,85 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('Admin Flow', () => {
-    test('login, write and publish article', async ({ page }) => {
-        // Debug
-        page.on('console', msg => console.log(`[Browser Console] ${msg.text()}`));
-        page.on('pageerror', err => console.log(`[Browser Error] ${err.message}`));
+	test('login, write and publish article', async ({ page }) => {
+		// Debug
+		page.on('console', (msg) => console.log(`[Browser Console] ${msg.text()}`));
+		page.on('pageerror', (err) => console.log(`[Browser Error] ${err.message}`));
 
-        // Mock API calls
-        await page.route('**/api/auth/login', async route => {
-            await route.fulfill({
-                status: 200,
-                contentType: 'application/json',
-                body: JSON.stringify({ token: 'fake-jwt-token' })
-            });
-        });
-        await page.route('**/api/admin/categories', async route => {
-            await route.fulfill({
-                json: [{ id: 'cat1', name: 'General' }]
-            });
-        });
-        await page.route('**/api/categories', async route => {
-            await route.fulfill({
-                json: [{ id: 'cat1', name: 'General' }]
-            });
-        });
+		// Mock API calls
+		await page.route('**/api/auth/login', async (route) => {
+			await route.fulfill({
+				status: 200,
+				contentType: 'application/json',
+				body: JSON.stringify({ token: 'fake-jwt-token' })
+			});
+		});
+		await page.route('**/api/admin/categories', async (route) => {
+			await route.fulfill({
+				json: [{ id: 'cat1', name: 'General' }]
+			});
+		});
+		await page.route('**/api/categories', async (route) => {
+			await route.fulfill({
+				json: [{ id: 'cat1', name: 'General' }]
+			});
+		});
 
-        await page.route('**/api/qa', async route => {
-            await route.fulfill({ json: { success: true } });
-        });
+		await page.route('**/api/qa', async (route) => {
+			await route.fulfill({ json: { success: true } });
+		});
 
-        await page.route('**/api/upload', async route => {
-            await route.fulfill({ json: { url: 'http://placeholder.com/image.png' } });
-        });
+		await page.route('**/api/upload', async (route) => {
+			await route.fulfill({ json: { url: 'http://placeholder.com/image.png' } });
+		});
 
-        // 1. Login
-        await page.goto('/login');
+		// 1. Login
+		await page.goto('/login');
 
-        // Wait for the page to be fully loaded
-        await page.waitForLoadState('networkidle');
+		// Wait for the page to be fully loaded
+		await page.waitForLoadState('networkidle');
 
-        // Use getByLabel for more robust form filling
-        const emailInput = page.getByLabel('Email address');
-        const passwordInput = page.getByLabel('Password');
+		// Use getByLabel for more robust form filling
+		const emailInput = page.getByLabel('Email address');
+		const passwordInput = page.getByLabel('Password');
 
-        await emailInput.fill('admin@example.com');
-        await passwordInput.fill('admin123');
+		await emailInput.fill('admin@example.com');
+		await passwordInput.fill('admin123');
 
-        // Click the Sign in button and wait for navigation
-        const signInButton = page.getByRole('button', { name: 'Sign in' });
-        await signInButton.click();
+		// Click the Sign in button and wait for navigation
+		const signInButton = page.getByRole('button', { name: 'Sign in' });
+		await signInButton.click();
 
-        // Wait for navigation to admin dashboard with longer timeout
-        await expect(page).toHaveURL(/\/admin/, { timeout: 10000 });
+		// Wait for navigation to admin dashboard with longer timeout
+		await expect(page).toHaveURL(/\/admin/, { timeout: 10000 });
 
-        // 2. Navigate to Write/Editor page
-        // Assuming there is a link or we verify by navigation
-        await page.goto('/admin/editor');
+		// 2. Navigate to Write/Editor page
+		// Assuming there is a link or we verify by navigation
+		await page.goto('/admin/editor');
 
-        // 3. Write Article
-        await page.fill('input[placeholder="Article Title"]', 'E2E Test Article');
+		// 3. Write Article
+		await page.fill('input[placeholder="Article Title"]', 'E2E Test Article');
 
-        // Wait for categories to load if they are fetched async
-        // We select the first option just to be safe
-        const categorySelect = page.locator('select').nth(1); // Assuming 2nd select is category
-        await expect(categorySelect).toBeVisible();
-        await categorySelect.selectOption({ index: 0 });
+		// Wait for categories to load if they are fetched async
+		// We select the first option just to be safe
+		const categorySelect = page.locator('select').nth(1); // Assuming 2nd select is category
+		await expect(categorySelect).toBeVisible();
+		await categorySelect.selectOption({ index: 0 });
 
-        // Content is in Tiptap/ProseMirror, which is a contenteditable div
-        const editor = page.locator('.ProseMirror');
-        await editor.click();
-        await editor.fill('This is a test article content generated by Playwright.');
+		// Content is in Tiptap/ProseMirror, which is a contenteditable div
+		const editor = page.locator('.ProseMirror');
+		await editor.click();
+		await editor.fill('This is a test article content generated by Playwright.');
 
-        // 4. Publish
-        // Handle alert dialog
-        page.once('dialog', async dialog => {
-            await dialog.accept();
-        });
+		// 4. Publish
+		// Handle alert dialog
+		page.once('dialog', async (dialog) => {
+			await dialog.accept();
+		});
 
-        await page.click('button:has-text("Publish")');
+		await page.click('button:has-text("Publish")');
 
-        // Expect to be redirected back to admin dashboard or stay (based on code checking earlier, it goes to /admin)
-        await expect(page).toHaveURL(/\/admin/);
-    });
+		// Expect to be redirected back to admin dashboard or stay (based on code checking earlier, it goes to /admin)
+		await expect(page).toHaveURL(/\/admin/);
+	});
 });
