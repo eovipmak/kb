@@ -8,8 +8,22 @@
     import Image from '@tiptap/extension-image';
     import Link from '@tiptap/extension-link';
     import Placeholder from '@tiptap/extension-placeholder';
+    import TaskList from '@tiptap/extension-task-list';
+    import TaskItem from '@tiptap/extension-task-item';
+    import Underline from '@tiptap/extension-underline';
+    import Strike from '@tiptap/extension-strike';
+    import TextAlign from '@tiptap/extension-text-align';
+    import Color from '@tiptap/extension-color';
+    import { TextStyle } from '@tiptap/extension-text-style';
+    import Highlight from '@tiptap/extension-highlight';
+    import { Table } from '@tiptap/extension-table';
+    import { TableRow } from '@tiptap/extension-table-row';
+    import { TableCell } from '@tiptap/extension-table-cell';
+    import { TableHeader } from '@tiptap/extension-table-header';
+    import BubbleMenu from '@tiptap/extension-bubble-menu';
 
     let element: HTMLElement;
+    let bubbleMenuElement: HTMLElement;
     let editor: Editor;
     
     let title = '';
@@ -20,6 +34,8 @@
     let tagInput = '';
     let loading = true;
     let saving = false;
+    let showColorPicker = false;
+    let showHighlightPicker = false;
 
     const uploadImage = async (file: File) => {
         const formData = new FormData();
@@ -70,12 +86,41 @@
         editor = new Editor({
             element: element,
             extensions: [
-                StarterKit,
+                StarterKit.configure({
+                    heading: {
+                        levels: [1, 2, 3, 4, 5, 6]
+                    },
+                    codeBlock: false,  // We'll use separate CodeBlock extension
+                    strike: false,     // We'll use separate Strike extension
+                }),
                 CodeBlock,
                 Image,
                 Link.configure({ openOnClick: false }),
                 Placeholder.configure({
                     placeholder: 'Write something or type "/"...',
+                }),
+                TaskList,
+                TaskItem.configure({
+                    nested: true,
+                }),
+                Underline,
+                Strike,
+                TextAlign.configure({
+                    types: ['heading', 'paragraph'],
+                }),
+                TextStyle,
+                Color,
+                Highlight.configure({
+                    multicolor: true
+                }),
+                Table.configure({
+                    resizable: true,
+                }),
+                TableRow,
+                TableHeader,
+                TableCell,
+                BubbleMenu.configure({
+                    element: bubbleMenuElement,
                 })
             ],
             content: '<p></p>',
@@ -150,6 +195,20 @@
         }
         editor.chain().focus().extendMarkRange('link').setLink({ href: url }).run();
     };
+
+    const setTextColor = (color: string) => {
+        editor.chain().focus().setColor(color).run();
+        showColorPicker = false;
+    };
+
+    const setHighlight = (color: string) => {
+        editor.chain().focus().setHighlight({ color }).run();
+        showHighlightPicker = false;
+    };
+
+    const addTable = () => {
+        editor.chain().focus().insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run();
+    };
 </script>
 
 <div class="min-h-screen bg-gray-950 text-white font-sans selection:bg-blue-500 selection:text-white">
@@ -221,18 +280,87 @@
              <!-- Toolbar -->
              {#if editor}
              <div class="bg-gray-900 border border-gray-800 rounded-xl p-2 flex flex-wrap gap-1 items-center shadow-lg sticky top-24 z-40">
-                 <button on:click={() => editor.chain().focus().toggleBold().run()} class="p-2 rounded hover:bg-gray-800 {editor.isActive('bold') ? 'text-blue-400 bg-gray-800' : 'text-gray-400'}"><strong>B</strong></button>
-                 <button on:click={() => editor.chain().focus().toggleItalic().run()} class="p-2 rounded hover:bg-gray-800 {editor.isActive('italic') ? 'text-blue-400 bg-gray-800' : 'text-gray-400'}"><em>I</em></button>
-                 <button on:click={() => editor.chain().focus().toggleCode().run()} class="p-2 rounded hover:bg-gray-800 {editor.isActive('code') ? 'text-blue-400 bg-gray-800' : 'text-gray-400'}">Code</button>
-                 <div class="w-px h-6 bg-gray-800 mx-2"></div>
-                 <button on:click={() => editor.chain().focus().toggleHeading({ level: 1 }).run()} class="p-2 rounded hover:bg-gray-800 {editor.isActive('heading', { level: 1 }) ? 'text-blue-400 bg-gray-800' : 'text-gray-400'}">H1</button>
-                 <button on:click={() => editor.chain().focus().toggleHeading({ level: 2 }).run()} class="p-2 rounded hover:bg-gray-800 {editor.isActive('heading', { level: 2 }) ? 'text-blue-400 bg-gray-800' : 'text-gray-400'}">H2</button>
-                 <div class="w-px h-6 bg-gray-800 mx-2"></div>
-                 <button on:click={() => editor.chain().focus().toggleBulletList().run()} class="p-2 rounded hover:bg-gray-800 {editor.isActive('bulletList') ? 'text-blue-400 bg-gray-800' : 'text-gray-400'}">List</button>
-                 <button on:click={() => editor.chain().focus().toggleCodeBlock().run()} class="p-2 rounded hover:bg-gray-800 {editor.isActive('codeBlock') ? 'text-blue-400 bg-gray-800' : 'text-gray-400'}">CodeBlock</button>
-                 <div class="w-px h-6 bg-gray-800 mx-2"></div>
-                 <button on:click={setLink} class="p-2 rounded hover:bg-gray-800 {editor.isActive('link') ? 'text-blue-400 bg-gray-800' : 'text-gray-400'}">Link</button>
-                 <button on:click={handleImageUpload} class="p-2 rounded hover:bg-gray-800 text-gray-400 hover:text-blue-400">Img</button>
+                 <!-- Text formatting -->
+                 <button on:click={() => editor.chain().focus().toggleBold().run()} class="p-2 rounded hover:bg-gray-800 {editor.isActive('bold') ? 'text-blue-400 bg-gray-800' : 'text-gray-400'}" title="Bold"><strong>B</strong></button>
+                 <button on:click={() => editor.chain().focus().toggleItalic().run()} class="p-2 rounded hover:bg-gray-800 {editor.isActive('italic') ? 'text-blue-400 bg-gray-800' : 'text-gray-400'}" title="Italic"><em>I</em></button>
+                 <button on:click={() => editor.chain().focus().toggleUnderline().run()} class="p-2 rounded hover:bg-gray-800 {editor.isActive('underline') ? 'text-blue-400 bg-gray-800' : 'text-gray-400'}" title="Underline"><u>U</u></button>
+                 <button on:click={() => editor.chain().focus().toggleStrike().run()} class="p-2 rounded hover:bg-gray-800 {editor.isActive('strike') ? 'text-blue-400 bg-gray-800' : 'text-gray-400'}" title="Strikethrough"><s>S</s></button>
+                 <button on:click={() => editor.chain().focus().toggleCode().run()} class="p-2 rounded hover:bg-gray-800 {editor.isActive('code') ? 'text-blue-400 bg-gray-800' : 'text-gray-400'}" title="Code">Code</button>
+                 
+                 <div class="w-px h-6 bg-gray-800 mx-1"></div>
+                 
+                 <!-- Headings -->
+                 <button on:click={() => editor.chain().focus().toggleHeading({ level: 1 }).run()} class="p-2 rounded hover:bg-gray-800 {editor.isActive('heading', { level: 1 }) ? 'text-blue-400 bg-gray-800' : 'text-gray-400'}" title="Heading 1">H1</button>
+                 <button on:click={() => editor.chain().focus().toggleHeading({ level: 2 }).run()} class="p-2 rounded hover:bg-gray-800 {editor.isActive('heading', { level: 2 }) ? 'text-blue-400 bg-gray-800' : 'text-gray-400'}" title="Heading 2">H2</button>
+                 <button on:click={() => editor.chain().focus().toggleHeading({ level: 3 }).run()} class="p-2 rounded hover:bg-gray-800 {editor.isActive('heading', { level: 3 }) ? 'text-blue-400 bg-gray-800' : 'text-gray-400'}" title="Heading 3">H3</button>
+                 
+                 <div class="w-px h-6 bg-gray-800 mx-1"></div>
+                 
+                 <!-- Lists -->
+                 <button on:click={() => editor.chain().focus().toggleBulletList().run()} class="p-2 rounded hover:bg-gray-800 {editor.isActive('bulletList') ? 'text-blue-400 bg-gray-800' : 'text-gray-400'}" title="Bullet List">• List</button>
+                 <button on:click={() => editor.chain().focus().toggleOrderedList().run()} class="p-2 rounded hover:bg-gray-800 {editor.isActive('orderedList') ? 'text-blue-400 bg-gray-800' : 'text-gray-400'}" title="Ordered List">1. List</button>
+                 <button on:click={() => editor.chain().focus().toggleTaskList().run()} class="p-2 rounded hover:bg-gray-800 {editor.isActive('taskList') ? 'text-blue-400 bg-gray-800' : 'text-gray-400'}" title="Task List">☑ Task</button>
+                 
+                 <div class="w-px h-6 bg-gray-800 mx-1"></div>
+                 
+                 <!-- Blocks -->
+                 <button on:click={() => editor.chain().focus().toggleBlockquote().run()} class="p-2 rounded hover:bg-gray-800 {editor.isActive('blockquote') ? 'text-blue-400 bg-gray-800' : 'text-gray-400'}" title="Blockquote">" Quote</button>
+                 <button on:click={() => editor.chain().focus().toggleCodeBlock().run()} class="p-2 rounded hover:bg-gray-800 {editor.isActive('codeBlock') ? 'text-blue-400 bg-gray-800' : 'text-gray-400'}" title="Code Block">&lt;/&gt;</button>
+                 <button on:click={() => editor.chain().focus().setHorizontalRule().run()} class="p-2 rounded hover:bg-gray-800 text-gray-400 hover:text-blue-400" title="Horizontal Rule">—</button>
+                 
+                 <div class="w-px h-6 bg-gray-800 mx-1"></div>
+                 
+                 <!-- Text alignment -->
+                 <button on:click={() => editor.chain().focus().setTextAlign('left').run()} class="p-2 rounded hover:bg-gray-800 {editor.isActive({ textAlign: 'left' }) ? 'text-blue-400 bg-gray-800' : 'text-gray-400'}" title="Align Left">⬅</button>
+                 <button on:click={() => editor.chain().focus().setTextAlign('center').run()} class="p-2 rounded hover:bg-gray-800 {editor.isActive({ textAlign: 'center' }) ? 'text-blue-400 bg-gray-800' : 'text-gray-400'}" title="Align Center">↔</button>
+                 <button on:click={() => editor.chain().focus().setTextAlign('right').run()} class="p-2 rounded hover:bg-gray-800 {editor.isActive({ textAlign: 'right' }) ? 'text-blue-400 bg-gray-800' : 'text-gray-400'}" title="Align Right">➡</button>
+                 
+                 <div class="w-px h-6 bg-gray-800 mx-1"></div>
+                 
+                 <!-- Color/Highlight -->
+                 <div class="relative">
+                     <button on:click={() => showColorPicker = !showColorPicker} class="p-2 rounded hover:bg-gray-800 text-gray-400 hover:text-blue-400" title="Text Color">A</button>
+                     {#if showColorPicker}
+                     <div class="absolute top-full mt-1 bg-gray-900 border border-gray-800 rounded-lg p-2 flex gap-1 z-50">
+                         <button on:click={() => setTextColor('#ffffff')} class="w-6 h-6 rounded" style="background-color: #ffffff"></button>
+                         <button on:click={() => setTextColor('#ef4444')} class="w-6 h-6 rounded" style="background-color: #ef4444"></button>
+                         <button on:click={() => setTextColor('#f59e0b')} class="w-6 h-6 rounded" style="background-color: #f59e0b"></button>
+                         <button on:click={() => setTextColor('#10b981')} class="w-6 h-6 rounded" style="background-color: #10b981"></button>
+                         <button on:click={() => setTextColor('#3b82f6')} class="w-6 h-6 rounded" style="background-color: #3b82f6"></button>
+                         <button on:click={() => setTextColor('#8b5cf6')} class="w-6 h-6 rounded" style="background-color: #8b5cf6"></button>
+                     </div>
+                     {/if}
+                 </div>
+                 
+                 <div class="relative">
+                     <button on:click={() => showHighlightPicker = !showHighlightPicker} class="p-2 rounded hover:bg-gray-800 text-gray-400 hover:text-blue-400" title="Highlight">🖍</button>
+                     {#if showHighlightPicker}
+                     <div class="absolute top-full mt-1 bg-gray-900 border border-gray-800 rounded-lg p-2 flex gap-1 z-50">
+                         <button on:click={() => setHighlight('#fef3c7')} class="w-6 h-6 rounded border border-gray-700" style="background-color: #fef3c7"></button>
+                         <button on:click={() => setHighlight('#fed7aa')} class="w-6 h-6 rounded border border-gray-700" style="background-color: #fed7aa"></button>
+                         <button on:click={() => setHighlight('#fecaca')} class="w-6 h-6 rounded border border-gray-700" style="background-color: #fecaca"></button>
+                         <button on:click={() => setHighlight('#bfdbfe')} class="w-6 h-6 rounded border border-gray-700" style="background-color: #bfdbfe"></button>
+                         <button on:click={() => setHighlight('#c7d2fe')} class="w-6 h-6 rounded border border-gray-700" style="background-color: #c7d2fe"></button>
+                         <button on:click={() => editor.chain().focus().unsetHighlight().run()} class="w-6 h-6 rounded border border-gray-700 bg-gray-800 text-white text-xs flex items-center justify-center">✕</button>
+                     </div>
+                     {/if}
+                 </div>
+                 
+                 <div class="w-px h-6 bg-gray-800 mx-1"></div>
+                 
+                 <!-- Insert -->
+                 <button on:click={setLink} class="p-2 rounded hover:bg-gray-800 {editor.isActive('link') ? 'text-blue-400 bg-gray-800' : 'text-gray-400'}" title="Link">🔗</button>
+                 <button on:click={handleImageUpload} class="p-2 rounded hover:bg-gray-800 text-gray-400 hover:text-blue-400" title="Image">🖼</button>
+                 <button on:click={addTable} class="p-2 rounded hover:bg-gray-800 text-gray-400 hover:text-blue-400" title="Table">⊞</button>
+             </div>
+             
+             <!-- Bubble Menu -->
+             <div bind:this={bubbleMenuElement} class="bubble-menu bg-gray-900 border border-gray-800 rounded-lg p-1 flex gap-1 items-center shadow-xl">
+                 <button on:click={() => editor.chain().focus().toggleBold().run()} class="p-1.5 rounded hover:bg-gray-800 {editor.isActive('bold') ? 'text-blue-400 bg-gray-800' : 'text-gray-400'}"><strong>B</strong></button>
+                 <button on:click={() => editor.chain().focus().toggleItalic().run()} class="p-1.5 rounded hover:bg-gray-800 {editor.isActive('italic') ? 'text-blue-400 bg-gray-800' : 'text-gray-400'}"><em>I</em></button>
+                 <button on:click={() => editor.chain().focus().toggleUnderline().run()} class="p-1.5 rounded hover:bg-gray-800 {editor.isActive('underline') ? 'text-blue-400 bg-gray-800' : 'text-gray-400'}"><u>U</u></button>
+                 <button on:click={() => editor.chain().focus().toggleStrike().run()} class="p-1.5 rounded hover:bg-gray-800 {editor.isActive('strike') ? 'text-blue-400 bg-gray-800' : 'text-gray-400'}"><s>S</s></button>
+                 <button on:click={setLink} class="p-1.5 rounded hover:bg-gray-800 {editor.isActive('link') ? 'text-blue-400 bg-gray-800' : 'text-gray-400'}">🔗</button>
              </div>
              {/if}
 
@@ -254,6 +382,10 @@
     :global(.ProseMirror p) { margin-bottom: 1.25em; }
     :global(.ProseMirror h1) { font-size: 2.25em; font-weight: 800; margin-top: 0; margin-bottom: 0.8em; line-height: 1.1; letter-spacing: -0.025em; color: #fff; }
     :global(.ProseMirror h2) { font-size: 1.5em; font-weight: 700; margin-top: 1.5em; margin-bottom: 0.8em; line-height: 1.3; color: #f8fafc; }
+    :global(.ProseMirror h3) { font-size: 1.25em; font-weight: 600; margin-top: 1.25em; margin-bottom: 0.6em; line-height: 1.4; color: #f1f5f9; }
+    :global(.ProseMirror h4) { font-size: 1.125em; font-weight: 600; margin-top: 1em; margin-bottom: 0.5em; color: #e2e8f0; }
+    :global(.ProseMirror h5) { font-size: 1em; font-weight: 600; margin-top: 1em; margin-bottom: 0.5em; color: #cbd5e1; }
+    :global(.ProseMirror h6) { font-size: 0.875em; font-weight: 600; margin-top: 1em; margin-bottom: 0.5em; color: #94a3b8; text-transform: uppercase; }
     :global(.ProseMirror ul) { list-style-type: disc; padding-left: 1.625em; margin-bottom: 1.25em; }
     :global(.ProseMirror ol) { list-style-type: decimal; padding-left: 1.625em; margin-bottom: 1.25em; }
     :global(.ProseMirror code) { background-color: #1e293b; color: #e2e8f0; padding: 0.2em 0.4em; border-radius: 0.25em; font-size: 0.875em; font-family: monospace; }
@@ -262,6 +394,38 @@
     :global(.ProseMirror a) { color: #60a5fa; text-decoration: underline; text-underline-offset: 4px; }
     :global(.ProseMirror img) { max-width: 100%; border-radius: 0.5rem; border: 1px solid #1e293b; margin: 1.5em 0; }
     :global(.ProseMirror blockquote) { border-left: 4px solid #3b82f6; padding-left: 1em; color: #94a3b8; font-style: italic; margin-bottom: 1.25em; }
+    :global(.ProseMirror hr) { border: none; border-top: 2px solid #334155; margin: 2em 0; }
+    
+    /* Task lists */
+    :global(.ProseMirror ul[data-type="taskList"]) { list-style: none; padding-left: 0; }
+    :global(.ProseMirror ul[data-type="taskList"] li) { display: flex; align-items: flex-start; margin-bottom: 0.5em; }
+    :global(.ProseMirror ul[data-type="taskList"] li > label) { flex: 0 0 auto; margin-right: 0.5em; user-select: none; }
+    :global(.ProseMirror ul[data-type="taskList"] li > div) { flex: 1 1 auto; }
+    :global(.ProseMirror ul[data-type="taskList"] input[type="checkbox"]) { cursor: pointer; width: 1.2em; height: 1.2em; }
+    
+    /* Strike-through and underline */
+    :global(.ProseMirror s) { text-decoration: line-through; }
+    :global(.ProseMirror u) { text-decoration: underline; }
+    
+    /* Text alignment */
+    :global(.ProseMirror [style*="text-align: left"]) { text-align: left; }
+    :global(.ProseMirror [style*="text-align: center"]) { text-align: center; }
+    :global(.ProseMirror [style*="text-align: right"]) { text-align: right; }
+    :global(.ProseMirror [style*="text-align: justify"]) { text-align: justify; }
+    
+    /* Highlight */
+    :global(.ProseMirror mark) { padding: 0.125em 0.25em; border-radius: 0.125em; }
+    
+    /* Tables */
+    :global(.ProseMirror table) { border-collapse: collapse; table-layout: fixed; width: 100%; margin: 1em 0; overflow: hidden; border: 1px solid #334155; }
+    :global(.ProseMirror table td, .ProseMirror table th) { min-width: 1em; border: 1px solid #334155; padding: 0.5em 0.75em; vertical-align: top; box-sizing: border-box; position: relative; background-color: #0f172a; }
+    :global(.ProseMirror table th) { font-weight: 600; text-align: left; background-color: #1e293b; color: #f8fafc; }
+    :global(.ProseMirror table .selectedCell) { background-color: #1e3a5f; }
+    :global(.ProseMirror table .column-resize-handle) { position: absolute; right: -2px; top: 0; bottom: 0; width: 4px; background-color: #3b82f6; pointer-events: none; }
+    
+    /* Bubble menu */
+    :global(.bubble-menu) { display: none; }
+    :global(.bubble-menu.is-active) { display: flex; }
 
     /* Placeholder */
     :global(.ProseMirror p.is-editor-empty:first-child::before) {
