@@ -15,13 +15,10 @@ test.describe('Admin Flow', () => {
             });
         });
         await page.route('**/api/admin/categories', async route => {
-            // Check if component calls /categories or /admin/categories
-            // Editor.svelte calls /categories
             await route.fulfill({
                 json: [{ id: 'cat1', name: 'General' }]
             });
         });
-        // Also mock /categories just in case
         await page.route('**/api/categories', async route => {
             await route.fulfill({
                 json: [{ id: 'cat1', name: 'General' }]
@@ -32,25 +29,29 @@ test.describe('Admin Flow', () => {
             await route.fulfill({ json: { success: true } });
         });
 
-        // Handle image upload if needed
         await page.route('**/api/upload', async route => {
             await route.fulfill({ json: { url: 'http://placeholder.com/image.png' } });
         });
 
         // 1. Login
         await page.goto('/login');
-        await page.fill('input[name="email"]', 'admin@example.com');
-        await page.fill('input[name="password"]', 'admin123');
-        await page.click('button[type="submit"]');
 
-        // Check for error message if login failed
-        const errorMsg = page.locator('.text-red-500');
-        if (await errorMsg.isVisible()) {
-            console.log('Login Error Visible:', await errorMsg.textContent());
-        }
+        // Wait for the page to be fully loaded
+        await page.waitForLoadState('networkidle');
 
-        // Wait for navigation to admin dashboard
-        await expect(page).toHaveURL(/\/admin/);
+        // Use getByLabel for more robust form filling
+        const emailInput = page.getByLabel('Email address');
+        const passwordInput = page.getByLabel('Password');
+
+        await emailInput.fill('admin@example.com');
+        await passwordInput.fill('admin123');
+
+        // Click the Sign in button and wait for navigation
+        const signInButton = page.getByRole('button', { name: 'Sign in' });
+        await signInButton.click();
+
+        // Wait for navigation to admin dashboard with longer timeout
+        await expect(page).toHaveURL(/\/admin/, { timeout: 10000 });
 
         // 2. Navigate to Write/Editor page
         // Assuming there is a link or we verify by navigation
