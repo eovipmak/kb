@@ -89,7 +89,9 @@
                 StarterKit.configure({
                     heading: {
                         levels: [1, 2, 3, 4, 5, 6]
-                    }
+                    },
+                    codeBlock: false,  // We'll use separate CodeBlock extension
+                    strike: false,     // We'll use separate Strike extension
                 }),
                 CodeBlock,
                 Image,
