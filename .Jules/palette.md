@@ -1,17 +1,4 @@
-# Palette's Journal 🎨
+## 2024-12-11 - Accessibility Fixes for Editor
 
-A log of critical UX/accessibility learnings from the kb project.
-
----
-
-## 2025-12-10 - Dynamic ARIA Labels for Better Screen Reader Feedback
-
-**Learning:** When adding ARIA labels to dynamically changing buttons (like "Copy" → "Copied!"), it's crucial to update the aria-label along with the visible text. Static ARIA labels on dynamic content provide outdated information to screen reader users.
-
-**Action:** For any button that changes state (loading, success, error), always update aria-label to match:
-- Initial state: Describe the action (e.g., "Copy code to clipboard")
-- Success state: Confirm the result (e.g., "Code copied to clipboard")
-- Reset state: Return to original description
-
-**Future Enhancement Opportunity:** Consider aria-live regions for more robust screen reader announcements of state changes, especially for critical user feedback. However, for simple button state changes, dynamic aria-label updates are sufficient and simpler to implement.
-
+**Learning:** SvelteKit's `svelte-check` is excellent at catching accessibility issues like missing form labels and ARIA attributes on interactive elements. It warned about unassociated labels and buttons without text content in the editor component.
+**Action:** Always run `npm run check` (or equivalent) early in the process to identify low-hanging accessibility fruit. For icon-only buttons, `aria-label` is a must. For form inputs, ensure `id` and `for` attributes match.
