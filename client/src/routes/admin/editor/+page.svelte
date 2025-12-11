@@ -241,10 +241,13 @@
 		<div class="lg:col-span-1 space-y-6">
 			<div class="bg-gray-900 border border-gray-800 rounded-xl p-5 space-y-4 shadow-lg">
 				<div>
-					<label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2"
+					<label
+						for="title"
+						class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2"
 						>Title</label
 					>
 					<input
+						id="title"
 						bind:value={title}
 						placeholder="Article Title"
 						class="w-full bg-gray-950 border border-gray-800 rounded-lg px-3 py-2 text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 outline-none transition"
@@ -252,10 +255,13 @@
 				</div>
 
 				<div>
-					<label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2"
+					<label
+						for="type"
+						class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2"
 						>Type</label
 					>
 					<select
+						id="type"
 						bind:value={type}
 						class="w-full bg-gray-950 border border-gray-800 rounded-lg px-3 py-2 text-sm outline-none"
 					>
@@ -265,10 +271,13 @@
 				</div>
 
 				<div>
-					<label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2"
+					<label
+						for="category"
+						class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2"
 						>Category</label
 					>
 					<select
+						id="category"
 						bind:value={category}
 						class="w-full bg-gray-950 border border-gray-800 rounded-lg px-3 py-2 text-sm outline-none"
 					>
@@ -279,7 +288,9 @@
 				</div>
 
 				<div>
-					<label class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2"
+					<label
+						for="tags"
+						class="block text-xs font-semibold text-gray-500 uppercase tracking-wider mb-2"
 						>Tags</label
 					>
 					<div class="flex flex-wrap gap-2 mb-2">
@@ -289,6 +300,7 @@
 							>
 								{tag}
 								<button
+									aria-label="Remove tag {tag}"
 									class="hover:text-white"
 									on:click={() => (tags = tags.filter((t) => t !== tag))}>&times;</button
 								>
@@ -296,6 +308,7 @@
 						{/each}
 					</div>
 					<input
+						id="tags"
 						bind:value={tagInput}
 						on:keydown={(e) => {
 							if (e.key === 'Enter') {
@@ -490,31 +503,37 @@
 								class="absolute top-full mt-1 bg-gray-900 border border-gray-800 rounded-lg p-2 flex gap-1 z-50"
 							>
 								<button
+									aria-label="Set text color to white"
 									on:click={() => setTextColor('#ffffff')}
 									class="w-6 h-6 rounded"
 									style="background-color: #ffffff"
 								></button>
 								<button
+									aria-label="Set text color to red"
 									on:click={() => setTextColor('#ef4444')}
 									class="w-6 h-6 rounded"
 									style="background-color: #ef4444"
 								></button>
 								<button
+									aria-label="Set text color to orange"
 									on:click={() => setTextColor('#f59e0b')}
 									class="w-6 h-6 rounded"
 									style="background-color: #f59e0b"
 								></button>
 								<button
+									aria-label="Set text color to green"
 									on:click={() => setTextColor('#10b981')}
 									class="w-6 h-6 rounded"
 									style="background-color: #10b981"
 								></button>
 								<button
+									aria-label="Set text color to blue"
 									on:click={() => setTextColor('#3b82f6')}
 									class="w-6 h-6 rounded"
 									style="background-color: #3b82f6"
 								></button>
 								<button
+									aria-label="Set text color to purple"
 									on:click={() => setTextColor('#8b5cf6')}
 									class="w-6 h-6 rounded"
 									style="background-color: #8b5cf6"
@@ -534,31 +553,37 @@
 								class="absolute top-full mt-1 bg-gray-900 border border-gray-800 rounded-lg p-2 flex gap-1 z-50"
 							>
 								<button
+									aria-label="Set highlight color to light yellow"
 									on:click={() => setHighlight('#fef3c7')}
 									class="w-6 h-6 rounded border border-gray-700"
 									style="background-color: #fef3c7"
 								></button>
 								<button
+									aria-label="Set highlight color to light orange"
 									on:click={() => setHighlight('#fed7aa')}
 									class="w-6 h-6 rounded border border-gray-700"
 									style="background-color: #fed7aa"
 								></button>
 								<button
+									aria-label="Set highlight color to light red"
 									on:click={() => setHighlight('#fecaca')}
 									class="w-6 h-6 rounded border border-gray-700"
 									style="background-color: #fecaca"
 								></button>
 								<button
+									aria-label="Set highlight color to light blue"
 									on:click={() => setHighlight('#bfdbfe')}
 									class="w-6 h-6 rounded border border-gray-700"
 									style="background-color: #bfdbfe"
 								></button>
 								<button
+									aria-label="Set highlight color to light purple"
 									on:click={() => setHighlight('#c7d2fe')}
 									class="w-6 h-6 rounded border border-gray-700"
 									style="background-color: #c7d2fe"
 								></button>
 								<button
+									aria-label="Remove highlight"
 									on:click={() => editor.chain().focus().unsetHighlight().run()}
 									class="w-6 h-6 rounded border border-gray-700 bg-gray-800 text-white text-xs flex items-center justify-center"
 									>✕</button
