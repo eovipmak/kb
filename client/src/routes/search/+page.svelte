@@ -38,6 +38,7 @@
 
 	// Debounced search input
 	let searchInput = '';
+	let inputEl: HTMLInputElement;
 	let debounceTimer: ReturnType<typeof setTimeout>;
 
 	// Initialize searchInput from query on load/nav
@@ -49,6 +50,13 @@
 		debounceTimer = setTimeout(() => {
 			updateUrl({ q: searchInput, page: 1 });
 		}, 300);
+	}
+
+	function handleClear() {
+		searchInput = '';
+		clearTimeout(debounceTimer);
+		updateUrl({ q: '', page: 1 });
+		inputEl?.focus();
 	}
 
 	// Search Execution
@@ -198,14 +206,34 @@
 				</svg>
 			</div>
 			<input
+				bind:this={inputEl}
 				type="text"
-				class="block w-full pl-10 pr-3 py-4 border border-slate-300 rounded-lg leading-5 bg-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-lg shadow-sm"
+				class="block w-full pl-10 pr-12 py-4 border border-slate-300 rounded-lg leading-5 bg-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-lg shadow-sm"
 				placeholder="Search articles (e.g. nginx, error 500)..."
 				value={searchInput}
 				on:input={handleInput}
 			/>
-			{#if loading}
-				<div class="absolute inset-y-0 right-0 pr-3 flex items-center">
+			<div class="absolute inset-y-0 right-0 pr-3 flex items-center gap-2">
+				{#if searchInput}
+					<button
+						type="button"
+						aria-label="Clear search"
+						class="text-slate-400 hover:text-slate-600 focus:outline-none focus:text-slate-600"
+						on:click={handleClear}
+					>
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							fill="none"
+							viewBox="0 0 24 24"
+							stroke-width="2"
+							stroke="currentColor"
+							class="w-5 h-5"
+						>
+							<path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+						</svg>
+					</button>
+				{/if}
+				{#if loading}
 					<svg
 						class="animate-spin h-5 w-5 text-blue-500"
 						xmlns="http://www.w3.org/2000/svg"
@@ -220,8 +248,8 @@
 							d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
 						></path>
 					</svg>
-				</div>
-			{/if}
+				{/if}
+			</div>
 		</div>
 	</div>
 
