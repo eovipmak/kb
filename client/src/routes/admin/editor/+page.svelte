@@ -360,35 +360,40 @@
 						class="p-2 rounded hover:bg-gray-800 {editor.isActive('bold')
 							? 'text-blue-400 bg-gray-800'
 							: 'text-gray-400'}"
-						title="Bold"><strong>B</strong></button
+						title="Bold (Cmd/Ctrl+B)"
+						aria-keyshortcuts="Meta+b Control+b"><strong>B</strong></button
 					>
 					<button
 						on:click={() => editor.chain().focus().toggleItalic().run()}
 						class="p-2 rounded hover:bg-gray-800 {editor.isActive('italic')
 							? 'text-blue-400 bg-gray-800'
 							: 'text-gray-400'}"
-						title="Italic"><em>I</em></button
+						title="Italic (Cmd/Ctrl+I)"
+						aria-keyshortcuts="Meta+i Control+i"><em>I</em></button
 					>
 					<button
 						on:click={() => editor.chain().focus().toggleUnderline().run()}
 						class="p-2 rounded hover:bg-gray-800 {editor.isActive('underline')
 							? 'text-blue-400 bg-gray-800'
 							: 'text-gray-400'}"
-						title="Underline"><u>U</u></button
+						title="Underline (Cmd/Ctrl+U)"
+						aria-keyshortcuts="Meta+u Control+u"><u>U</u></button
 					>
 					<button
 						on:click={() => editor.chain().focus().toggleStrike().run()}
 						class="p-2 rounded hover:bg-gray-800 {editor.isActive('strike')
 							? 'text-blue-400 bg-gray-800'
 							: 'text-gray-400'}"
-						title="Strikethrough"><s>S</s></button
+						title="Strikethrough (Cmd/Ctrl+Shift+X)"
+						aria-keyshortcuts="Meta+Shift+x Control+Shift+x"><s>S</s></button
 					>
 					<button
 						on:click={() => editor.chain().focus().toggleCode().run()}
 						class="p-2 rounded hover:bg-gray-800 {editor.isActive('code')
 							? 'text-blue-400 bg-gray-800'
 							: 'text-gray-400'}"
-						title="Code">Code</button
+						title="Code (Cmd/Ctrl+E)"
+						aria-keyshortcuts="Meta+e Control+e">Code</button
 					>
 
 					<div class="w-px h-6 bg-gray-800 mx-1"></div>
@@ -399,21 +404,24 @@
 						class="p-2 rounded hover:bg-gray-800 {editor.isActive('heading', { level: 1 })
 							? 'text-blue-400 bg-gray-800'
 							: 'text-gray-400'}"
-						title="Heading 1">H1</button
+						title="Heading 1 (Cmd/Ctrl+Alt+1)"
+						aria-keyshortcuts="Meta+Alt+1 Control+Alt+1">H1</button
 					>
 					<button
 						on:click={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
 						class="p-2 rounded hover:bg-gray-800 {editor.isActive('heading', { level: 2 })
 							? 'text-blue-400 bg-gray-800'
 							: 'text-gray-400'}"
-						title="Heading 2">H2</button
+						title="Heading 2 (Cmd/Ctrl+Alt+2)"
+						aria-keyshortcuts="Meta+Alt+2 Control+Alt+2">H2</button
 					>
 					<button
 						on:click={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
 						class="p-2 rounded hover:bg-gray-800 {editor.isActive('heading', { level: 3 })
 							? 'text-blue-400 bg-gray-800'
 							: 'text-gray-400'}"
-						title="Heading 3">H3</button
+						title="Heading 3 (Cmd/Ctrl+Alt+3)"
+						aria-keyshortcuts="Meta+Alt+3 Control+Alt+3">H3</button
 					>
 
 					<div class="w-px h-6 bg-gray-800 mx-1"></div>
@@ -424,21 +432,24 @@
 						class="p-2 rounded hover:bg-gray-800 {editor.isActive('bulletList')
 							? 'text-blue-400 bg-gray-800'
 							: 'text-gray-400'}"
-						title="Bullet List">• List</button
+						title="Bullet List (Cmd/Ctrl+Shift+8)"
+						aria-keyshortcuts="Meta+Shift+8 Control+Shift+8">• List</button
 					>
 					<button
 						on:click={() => editor.chain().focus().toggleOrderedList().run()}
 						class="p-2 rounded hover:bg-gray-800 {editor.isActive('orderedList')
 							? 'text-blue-400 bg-gray-800'
 							: 'text-gray-400'}"
-						title="Ordered List">1. List</button
+						title="Ordered List (Cmd/Ctrl+Shift+7)"
+						aria-keyshortcuts="Meta+Shift+7 Control+Shift+7">1. List</button
 					>
 					<button
 						on:click={() => editor.chain().focus().toggleTaskList().run()}
 						class="p-2 rounded hover:bg-gray-800 {editor.isActive('taskList')
 							? 'text-blue-400 bg-gray-800'
 							: 'text-gray-400'}"
-						title="Task List">☑ Task</button
+						title="Task List (Cmd/Ctrl+Shift+9)"
+						aria-keyshortcuts="Meta+Shift+9 Control+Shift+9">☑ Task</button
 					>
 
 					<div class="w-px h-6 bg-gray-800 mx-1"></div>
@@ -449,14 +460,16 @@
 						class="p-2 rounded hover:bg-gray-800 {editor.isActive('blockquote')
 							? 'text-blue-400 bg-gray-800'
 							: 'text-gray-400'}"
-						title="Blockquote">" Quote</button
+						title="Blockquote (Cmd/Ctrl+Shift+B)"
+						aria-keyshortcuts="Meta+Shift+b Control+Shift+b">" Quote</button
 					>
 					<button
 						on:click={() => editor.chain().focus().toggleCodeBlock().run()}
 						class="p-2 rounded hover:bg-gray-800 {editor.isActive('codeBlock')
 							? 'text-blue-400 bg-gray-800'
 							: 'text-gray-400'}"
-						title="Code Block">&lt;/&gt;</button
+						title="Code Block (Cmd/Ctrl+Alt+C)"
+						aria-keyshortcuts="Meta+Alt+c Control+Alt+c">&lt;/&gt;</button
 					>
 					<button
 						on:click={() => editor.chain().focus().setHorizontalRule().run()}
@@ -600,7 +613,8 @@
 						class="p-2 rounded hover:bg-gray-800 {editor.isActive('link')
 							? 'text-blue-400 bg-gray-800'
 							: 'text-gray-400'}"
-						title="Link">🔗</button
+						title="Link (Cmd/Ctrl+K)"
+						aria-keyshortcuts="Meta+k Control+k">🔗</button
 					>
 					<button
 						on:click={handleImageUpload}
