@@ -21,6 +21,7 @@
 	import { TableCell } from '@tiptap/extension-table-cell';
 	import { TableHeader } from '@tiptap/extension-table-header';
 	import BubbleMenu from '@tiptap/extension-bubble-menu';
+	import Spinner from '$lib/components/Spinner.svelte';
 
 	let element: HTMLElement;
 	let bubbleMenuElement: HTMLElement;
@@ -329,21 +330,36 @@
 				<button
 					on:click={() => save('DRAFT')}
 					disabled={saving}
-					class="w-full py-2 bg-gray-800 hover:bg-gray-700 text-gray-300 rounded-lg text-sm font-medium transition"
-					>Save Draft</button
+					aria-busy={saving}
+					class="w-full py-2 bg-gray-800 hover:bg-gray-700 text-gray-300 rounded-lg text-sm font-medium transition flex justify-center items-center gap-2"
 				>
+					{#if saving}
+						<Spinner class="h-4 w-4" />
+					{/if}
+					Save Draft
+				</button>
 				<button
 					on:click={() => save('REVIEW')}
 					disabled={saving}
-					class="w-full py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-sm font-medium transition shadow-blue-900/20 shadow-lg"
-					>Submit for Review</button
+					aria-busy={saving}
+					class="w-full py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-sm font-medium transition shadow-blue-900/20 shadow-lg flex justify-center items-center gap-2"
 				>
+					{#if saving}
+						<Spinner class="h-4 w-4" />
+					{/if}
+					Submit for Review
+				</button>
 				<button
 					on:click={() => save('PUBLISHED')}
 					disabled={saving}
-					class="w-full py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-sm font-medium transition shadow-emerald-900/20 shadow-lg"
-					>Publish</button
+					aria-busy={saving}
+					class="w-full py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-sm font-medium transition shadow-emerald-900/20 shadow-lg flex justify-center items-center gap-2"
 				>
+					{#if saving}
+						<Spinner class="h-4 w-4" />
+					{/if}
+					Publish
+				</button>
 			</div>
 		</div>
 
