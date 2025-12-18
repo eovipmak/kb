@@ -501,21 +501,24 @@
 						class="p-2 rounded hover:bg-gray-800 {editor.isActive({ textAlign: 'left' })
 							? 'text-blue-400 bg-gray-800'
 							: 'text-gray-400'}"
-						title="Align Left">⬅</button
+						title="Align Left (Cmd/Ctrl+Shift+L)"
+						aria-keyshortcuts="Meta+Shift+l Control+Shift+l">⬅</button
 					>
 					<button
 						on:click={() => editor.chain().focus().setTextAlign('center').run()}
 						class="p-2 rounded hover:bg-gray-800 {editor.isActive({ textAlign: 'center' })
 							? 'text-blue-400 bg-gray-800'
 							: 'text-gray-400'}"
-						title="Align Center">↔</button
+						title="Align Center (Cmd/Ctrl+Shift+E)"
+						aria-keyshortcuts="Meta+Shift+e Control+Shift+e">↔</button
 					>
 					<button
 						on:click={() => editor.chain().focus().setTextAlign('right').run()}
 						class="p-2 rounded hover:bg-gray-800 {editor.isActive({ textAlign: 'right' })
 							? 'text-blue-400 bg-gray-800'
 							: 'text-gray-400'}"
-						title="Align Right">➡</button
+						title="Align Right (Cmd/Ctrl+Shift+R)"
+						aria-keyshortcuts="Meta+Shift+r Control+Shift+r">➡</button
 					>
 
 					<div class="w-px h-6 bg-gray-800 mx-1"></div>
