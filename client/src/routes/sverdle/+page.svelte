@@ -148,19 +148,7 @@
 			</button>
 		{:else}
 			<div class="keyboard">
-				<button data-key="enter" class:selected={submittable} disabled={!submittable}>enter</button>
-
-				<button
-					onclick={update}
-					data-key="backspace"
-					formaction="?/update"
-					name="key"
-					value="backspace"
-				>
-					back
-				</button>
-
-				{#each ['qwertyuiop', 'asdfghjkl', 'zxcvbnm'] as row (row)}
+				{#each ['qwertyuiop', 'asdfghjkl'] as row (row)}
 					<div class="row">
 						{#each row as letter, index (index)}
 							<button
@@ -178,6 +166,37 @@
 						{/each}
 					</div>
 				{/each}
+
+				<div class="row">
+					<button data-key="enter" class:selected={submittable} disabled={!submittable}
+						>enter</button
+					>
+
+					{#each 'zxcvbnm' as letter, index (index)}
+						<button
+							onclick={update}
+							data-key={letter}
+							class={classnames[letter]}
+							disabled={submittable}
+							formaction="?/update"
+							name="key"
+							value={letter}
+							aria-label="{letter} {description[letter] || ''}"
+						>
+							{letter}
+						</button>
+					{/each}
+
+					<button
+						onclick={update}
+						data-key="backspace"
+						formaction="?/update"
+						name="key"
+						value="backspace"
+					>
+						back
+					</button>
+				</div>
 			</div>
 		{/if}
 	</div>
@@ -348,21 +367,10 @@
 
 	.keyboard button[data-key='enter'],
 	.keyboard button[data-key='backspace'] {
-		position: absolute;
-		bottom: 0;
 		width: calc(1.5 * var(--size));
-		height: calc(1 / 3 * (100% - 2 * var(--gap)));
 		text-transform: uppercase;
 		font-size: calc(0.3 * var(--size));
 		padding-top: calc(0.15 * var(--size));
-	}
-
-	.keyboard button[data-key='enter'] {
-		right: calc(50% + 3.5 * var(--size) + 0.8rem);
-	}
-
-	.keyboard button[data-key='backspace'] {
-		left: calc(50% + 3.5 * var(--size) + 0.8rem);
 	}
 
 	.keyboard button[data-key='enter']:disabled {
