@@ -653,30 +653,35 @@
 					class="bubble-menu bg-gray-900 border border-gray-800 rounded-lg p-1 flex gap-1 items-center shadow-xl"
 				>
 					<button
+						aria-label="Bold"
 						on:click={() => editor.chain().focus().toggleBold().run()}
 						class="p-1.5 rounded hover:bg-gray-800 {editor.isActive('bold')
 							? 'text-blue-400 bg-gray-800'
 							: 'text-gray-400'}"><strong>B</strong></button
 					>
 					<button
+						aria-label="Italic"
 						on:click={() => editor.chain().focus().toggleItalic().run()}
 						class="p-1.5 rounded hover:bg-gray-800 {editor.isActive('italic')
 							? 'text-blue-400 bg-gray-800'
 							: 'text-gray-400'}"><em>I</em></button
 					>
 					<button
+						aria-label="Underline"
 						on:click={() => editor.chain().focus().toggleUnderline().run()}
 						class="p-1.5 rounded hover:bg-gray-800 {editor.isActive('underline')
 							? 'text-blue-400 bg-gray-800'
 							: 'text-gray-400'}"><u>U</u></button
 					>
 					<button
+						aria-label="Strikethrough"
 						on:click={() => editor.chain().focus().toggleStrike().run()}
 						class="p-1.5 rounded hover:bg-gray-800 {editor.isActive('strike')
 							? 'text-blue-400 bg-gray-800'
 							: 'text-gray-400'}"><s>S</s></button
 					>
 					<button
+						aria-label="Link"
 						on:click={setLink}
 						class="p-1.5 rounded hover:bg-gray-800 {editor.isActive('link')
 							? 'text-blue-400 bg-gray-800'
