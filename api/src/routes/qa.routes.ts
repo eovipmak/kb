@@ -197,4 +197,20 @@ export async function qaRoutes(fastify: FastifyInstance) {
             return reply.code(500).send({ message: 'Internal Server Error' });
         }
     });
+
+    // Get History
+    fastify.get('/:id/history', {
+        preHandler: [verifyToken]
+    }, async (request, reply) => {
+        const { id } = request.params as any;
+        try {
+            const { ArticleHistoryService } = await import('../services/article-history.service');
+            const history = await ArticleHistoryService.getArticleHistory(id, request.user!.id, request.user!.role);
+            return history;
+        } catch (err: any) {
+            if (err.message === 'Forbidden') return reply.code(403).send({ message: 'Forbidden' });
+            if (err.message === 'Article not found') return reply.code(404).send({ message: 'Not Found' });
+            return reply.code(500).send({ message: 'Internal Server Error' });
+        }
+    });
 }

@@ -5,6 +5,7 @@ import removeMarkdown from 'remove-markdown';
 import { MetadataService } from './metadata.service';
 import { SearchService } from './search.service';
 import { WorkflowService } from './workflow.service';
+import { ArticleHistoryService } from './article-history.service';
 
 export class QAService {
     static async generateSlug(title: string): Promise<string> {
@@ -118,7 +119,10 @@ export class QAService {
     }
 
     static async updateQAPage(id: string, data: { title?: string; contentHtml?: string; status?: Status; type?: PageType; tags?: string[]; categoryId?: string }, userId: string, userRole: Role) {
-        const page = await prisma.qAPage.findUnique({ where: { id } });
+        const page = await prisma.qAPage.findUnique({
+            where: { id },
+            include: { tags: true }
+        });
         if (!page) throw new Error('Not found');
 
         // Check permissions
@@ -132,6 +136,17 @@ export class QAService {
                 throw new Error('Forbidden: Invalid status transition');
             }
         }
+
+        // Capture history before updating
+        await ArticleHistoryService.createHistoryRecord(id, userId, {
+            title: page.title,
+            contentHtml: page.contentHtml,
+            contentText: page.contentText,
+            status: page.status,
+            type: page.type,
+            categoryId: page.categoryId,
+            tags: page.tags
+        });
 
         // Prepare update data
         const updateData: any = { ...data };

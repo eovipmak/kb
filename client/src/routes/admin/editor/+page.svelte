@@ -25,6 +25,7 @@
     import { ImageUploadExtension } from '$lib/tiptap/ImageUploadExtension';
 	import Spinner from '$lib/components/Spinner.svelte';
 	import { marked } from 'marked';
+	import HistoryTab from './HistoryTab.svelte';
 
 	import { page } from '$app/stores';
 
@@ -41,6 +42,7 @@
 	let tagInput = '';
 	let loading = true;
 	let saving = false;
+	let activeTab: 'editor' | 'history' = 'editor';
 
 	const uploadImage = async (file: File) => {
 		const formData = new FormData();
@@ -225,6 +227,32 @@
 	</nav>
 
 	<main class="max-w-7xl mx-auto px-6 py-8 grid grid-cols-1 lg:grid-cols-4 gap-8">
+		<!-- Tab Navigation (only show for existing articles) -->
+		{#if articleId}
+			<div class="lg:col-span-4 mb-4">
+				<div class="border-b border-gray-800">
+					<nav class="flex gap-6">
+						<button
+							on:click={() => (activeTab = 'editor')}
+							class="pb-3 px-1 border-b-2 transition {activeTab === 'editor'
+								? 'border-blue-500 text-blue-400'
+								: 'border-transparent text-gray-400 hover:text-gray-300'}"
+						>
+							Editor
+						</button>
+						<button
+							on:click={() => (activeTab = 'history')}
+							class="pb-3 px-1 border-b-2 transition {activeTab === 'history'
+								? 'border-blue-500 text-blue-400'
+								: 'border-transparent text-gray-400 hover:text-gray-300'}"
+						>
+							History
+						</button>
+					</nav>
+				</div>
+			</div>
+		{/if}
+
 		<!-- Sidebar -->
 		<div class="lg:col-span-1 space-y-6">
 			<div class="bg-gray-900 border border-gray-800 rounded-xl p-5 space-y-4 shadow-lg">
@@ -350,66 +378,73 @@
 			</div>
 		</div>
 
-		<!-- Editor -->
+		<!-- Editor / History Content -->
 		<div class="lg:col-span-3 flex flex-col gap-4">
-			
-			{#if editor}
-				<!-- Bubble Menu -->
+			{#if activeTab === 'editor'}
+				{#if editor}
+					<!-- Bubble Menu -->
+					<div
+						bind:this={bubbleMenuElement}
+						class="bubble-menu bg-gray-900 border border-gray-700 rounded-lg p-1 flex gap-1 items-center shadow-xl transform transition-all duration-200"
+					>
+						<button
+							aria-label="Bold"
+							on:click={() => editor.chain().focus().toggleBold().run()}
+							class="p-1.5 rounded hover:bg-gray-800 {editor.isActive('bold')
+								? 'text-blue-400 bg-gray-800'
+								: 'text-gray-400'}"><strong>B</strong></button
+						>
+						<button
+							aria-label="Italic"
+							on:click={() => editor.chain().focus().toggleItalic().run()}
+							class="p-1.5 rounded hover:bg-gray-800 {editor.isActive('italic')
+								? 'text-blue-400 bg-gray-800'
+								: 'text-gray-400'}"><em>I</em></button
+						>
+						<button
+							aria-label="Underline"
+							on:click={() => editor.chain().focus().toggleUnderline().run()}
+							class="p-1.5 rounded hover:bg-gray-800 {editor.isActive('underline')
+								? 'text-blue-400 bg-gray-800'
+								: 'text-gray-400'}"><u>U</u></button
+						>
+						<button
+							aria-label="Strikethrough"
+							on:click={() => editor.chain().focus().toggleStrike().run()}
+							class="p-1.5 rounded hover:bg-gray-800 {editor.isActive('strike')
+								? 'text-blue-400 bg-gray-800'
+								: 'text-gray-400'}"><s>S</s></button
+						>
+						<div class="w-px h-4 bg-gray-700 mx-1"></div>
+						<button
+							aria-label="Link"
+							on:click={setLink}
+							class="p-1.5 rounded hover:bg-gray-800 {editor.isActive('link')
+								? 'text-blue-400 bg-gray-800'
+								: 'text-gray-400'}">🔗</button
+						>
+						<button
+							aria-label="Code"
+							on:click={() => editor.chain().focus().toggleCode().run()}
+							class="p-1.5 rounded hover:bg-gray-800 {editor.isActive('code')
+								? 'text-blue-400 bg-gray-800'
+								: 'text-gray-400'}">&lt;/&gt;</button
+						>
+					</div>
+				{/if}
+
 				<div
-					bind:this={bubbleMenuElement}
-					class="bubble-menu bg-gray-900 border border-gray-700 rounded-lg p-1 flex gap-1 items-center shadow-xl transform transition-all duration-200"
+					class="flex-1 bg-gray-900 border border-gray-800 rounded-xl p-8 min-h-[600px] shadow-lg relative"
 				>
-					<button
-						aria-label="Bold"
-						on:click={() => editor.chain().focus().toggleBold().run()}
-						class="p-1.5 rounded hover:bg-gray-800 {editor.isActive('bold')
-							? 'text-blue-400 bg-gray-800'
-							: 'text-gray-400'}"><strong>B</strong></button
-					>
-					<button
-						aria-label="Italic"
-						on:click={() => editor.chain().focus().toggleItalic().run()}
-						class="p-1.5 rounded hover:bg-gray-800 {editor.isActive('italic')
-							? 'text-blue-400 bg-gray-800'
-							: 'text-gray-400'}"><em>I</em></button
-					>
-					<button
-						aria-label="Underline"
-						on:click={() => editor.chain().focus().toggleUnderline().run()}
-						class="p-1.5 rounded hover:bg-gray-800 {editor.isActive('underline')
-							? 'text-blue-400 bg-gray-800'
-							: 'text-gray-400'}"><u>U</u></button
-					>
-					<button
-						aria-label="Strikethrough"
-						on:click={() => editor.chain().focus().toggleStrike().run()}
-						class="p-1.5 rounded hover:bg-gray-800 {editor.isActive('strike')
-							? 'text-blue-400 bg-gray-800'
-							: 'text-gray-400'}"><s>S</s></button
-					>
-					<div class="w-px h-4 bg-gray-700 mx-1"></div>
-					<button
-						aria-label="Link"
-						on:click={setLink}
-						class="p-1.5 rounded hover:bg-gray-800 {editor.isActive('link')
-							? 'text-blue-400 bg-gray-800'
-							: 'text-gray-400'}">🔗</button
-					>
-                    <button
-						aria-label="Code"
-						on:click={() => editor.chain().focus().toggleCode().run()}
-						class="p-1.5 rounded hover:bg-gray-800 {editor.isActive('code')
-							? 'text-blue-400 bg-gray-800'
-							: 'text-gray-400'}">&lt;/&gt;</button
-					>
+					<div bind:this={element} class="editor-content"></div>
+				</div>
+			{:else if activeTab === 'history' && articleId}
+				<div
+					class="flex-1 bg-gray-900 border border-gray-800 rounded-xl p-8 min-h-[600px] shadow-lg"
+				>
+					<HistoryTab {articleId} />
 				</div>
 			{/if}
-
-			<div
-				class="flex-1 bg-gray-900 border border-gray-800 rounded-xl p-8 min-h-[600px] shadow-lg relative"
-			>
-				<div bind:this={element} class="editor-content"></div>
-			</div>
 		</div>
 	</main>
 </div>

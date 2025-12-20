@@ -8,30 +8,32 @@ datasource db {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  email         String    @unique
-  passwordHash  String
-  role          String    @default("WRITER") // Enum Role
-  createdAt     DateTime  @default(now())
-  qaPages       QAPage[]
+  id             String           @id @default(cuid())
+  email          String           @unique
+  passwordHash   String
+  role           String           @default("WRITER") // Enum Role
+  createdAt      DateTime         @default(now())
+  qaPages        QAPage[]
+  articleHistory ArticleHistory[]
 }
 
 model QAPage {
-  id              String    @id @default(cuid())
-  slug            String    @unique
+  id              String           @id @default(cuid())
+  slug            String           @unique
   title           String
   contentHtml     String
   contentText     String
-  type            String    @default("FAQ") // Enum PageType
-  status          String    @default("DRAFT") // Enum Status
-  viewCount       Int       @default(0)
+  type            String           @default("FAQ") // Enum PageType
+  status          String           @default("DRAFT") // Enum Status
+  viewCount       Int              @default(0)
   authorId        String
-  author          User      @relation(fields: [authorId], references: [id])
+  author          User             @relation(fields: [authorId], references: [id])
   tags            Tag[]
   categoryId      String?
-  category        Category? @relation(fields: [categoryId], references: [id])
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
+  category        Category?        @relation(fields: [categoryId], references: [id])
+  history         ArticleHistory[]
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
 }
 
 model Tag {
@@ -56,4 +58,14 @@ model DiagnosisFlow {
   edges       String   // Stored as JSON string
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+}
+
+model ArticleHistory {
+  id              String   @id @default(cuid())
+  articleId       String
+  article         QAPage   @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  changedByUserId String
+  changedBy       User     @relation(fields: [changedByUserId], references: [id])
+  oldContent      String   // JSON snapshot of article state before change
+  createdAt       DateTime @default(now())
 }
