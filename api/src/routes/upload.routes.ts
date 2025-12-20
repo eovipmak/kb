@@ -16,15 +16,14 @@ export async function uploadRoutes(fastify: FastifyInstance) {
         }
 
         // Validate type
-        const allowedMimeTypes = ['image/png', 'image/jpeg'];
+        const allowedMimeTypes = ['image/png', 'image/jpeg', 'image/gif', 'image/webp'];
         if (!allowedMimeTypes.includes(data.mimetype)) {
-            return reply.code(400).send({ message: 'Invalid file type. Only PNG and JPEG are allowed.' });
+            return reply.code(400).send({ message: 'Invalid file type. Only PNG, JPEG, WEBP and GIF are allowed.' });
         }
 
         // Generate filename
         const ext = path.extname(data.filename);
-        const randomName = crypto.randomBytes(16).toString('hex');
-        const filename = `${randomName}${ext}`;
+        const filename = `${crypto.randomUUID()}${ext}`;
 
         // Ensure uploads directory exists (redundant if server check exists, but safe)
         const uploadDir = path.join(process.cwd(), 'uploads');

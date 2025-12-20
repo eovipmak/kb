@@ -22,6 +22,7 @@
 	import { TableHeader } from '@tiptap/extension-table-header';
 	import BubbleMenu from '@tiptap/extension-bubble-menu';
 	import { Commands } from './commands.svelte';
+    import { ImageUploadExtension } from '$lib/tiptap/ImageUploadExtension';
 	import Spinner from '$lib/components/Spinner.svelte';
 	import { marked } from 'marked';
 
@@ -115,6 +116,7 @@
 				TableHeader,
 				TableCell,
 				Commands(handleImageUpload),
+                ImageUploadExtension,
 				BubbleMenu.configure({
 					element: bubbleMenuElement
 				})
@@ -124,36 +126,6 @@
 				attributes: {
 					class:
 						'prose prose-sm sm:prose lg:prose-lg xl:prose-2xl mx-auto focus:outline-none min-h-[500px] text-gray-300'
-				},
-				handlePaste: (view, event, slice) => {
-					const items = Array.from(event.clipboardData?.items || []);
-					const item = items.find((item) => item.type.indexOf('image') === 0);
-
-					if (item) {
-						event.preventDefault();
-						const file = item.getAsFile();
-						if (file) {
-							uploadImage(file);
-						}
-						return true;
-					}
-					return false;
-				},
-				handleDrop: (view, event, slice, moved) => {
-					if (
-						!moved &&
-						event.dataTransfer &&
-						event.dataTransfer.files &&
-						event.dataTransfer.files.length > 0
-					) {
-						const file = event.dataTransfer.files[0];
-						if (file.type.startsWith('image/')) {
-							event.preventDefault();
-							uploadImage(file);
-							return true;
-						}
-					}
-					return false;
 				}
 			}
 		});
