@@ -1,11 +1,8 @@
 node_modules
 meilisearch
-data.ms/auth/lock.mdb
 .pids
 api.log
 client.log
 meili.log
-data.ms/indexes/2a47a153-645f-4136-b1af-05c2ed477b8b/data.mdb
-data.ms/indexes/2a47a153-645f-4136-b1af-05c2ed477b8b/lock.mdb
-data.ms/tasks/data.mdb
-data.ms/tasks/lock.mdb
+data.ms
+uploads
