@@ -1,0 +1,246 @@
+{
+  "users": [
+    {
+      "id": "cmixh6lmi0000kobzfxrqyhfk",
+      "email": "qa_tester@example.com",
+      "passwordHash": "$2b$10$iP0DBfATNLkV3U.gTcxPveZntLVH3QfKC7UGStRL9KDtCdBslsvWe",
+      "role": "ADMIN",
+      "createdAt": "2025-12-08T18:18:57.403Z"
+    },
+    {
+      "id": "cmixhaveg00007rhc42wzkxv5",
+      "email": "admin@example.com",
+      "passwordHash": "$2b$10$BlmDqtkHZHrLCed7vM1pU.vfb3fMN/R4oo0djcbwu.6KrADvucqWy",
+      "role": "ADMIN",
+      "createdAt": "2025-12-08T18:22:16.696Z"
+    },
+    {
+      "id": "cmiyt38kq000010u3q1soe8p8",
+      "email": "writer_workflow@example.com",
+      "passwordHash": "hashedpassword",
+      "role": "WRITER",
+      "createdAt": "2025-12-09T16:40:02.091Z"
+    },
+    {
+      "id": "cmiyt38l9000110u3ibmpyza3",
+      "email": "admin_workflow@example.com",
+      "passwordHash": "hashedpassword",
+      "role": "ADMIN",
+      "createdAt": "2025-12-09T16:40:02.109Z"
+    }
+  ],
+  "tags": [
+    {
+      "id": "cmjed8sf5000331lc3lb0kpki",
+      "name": "FAQ"
+    },
+    {
+      "id": "cmjed8sfj000431lcwrpo556s",
+      "name": "Guide"
+    }
+  ],
+  "categories": [
+    {
+      "id": "cmjed8sef000131lc1qx34ctq",
+      "name": "General",
+      "slug": "general"
+    },
+    {
+      "id": "cmjed8ses000231lclxzi0j7g",
+      "name": "Account",
+      "slug": "account"
+    }
+  ],
+  "qaPages": [
+    {
+      "id": "cmjed8sfz000531lc3vyph60i",
+      "slug": "getting-started-with-the-knowledge-base",
+      "title": "Getting Started with the Knowledge Base",
+      "contentMarkdown": "# Getting Started\n\nWelcome to the Knowledge Base. This article will help you get started with creating and publishing articles.\n\n- Open the admin panel.\n- Click \"New Article\".\n- Fill in the title and content.\n- Save and publish.",
+      "contentText": " Getting Started\n\nWelcome to the Knowledge Base. This article will help you get started with creating and publishing articles.\n\n Open the admin panel.\n Click \"New Article\".\n Fill in the title and content.\n Save and publish.",
+      "type": "FAQ",
+      "status": "PUBLISHED",
+      "viewCount": 1,
+      "authorId": "cmixhaveg00007rhc42wzkxv5",
+      "categoryId": "cmjed8sef000131lc1qx34ctq",
+      "createdAt": "2025-12-20T14:00:46.080Z",
+      "updatedAt": "2025-12-20T14:13:02.236Z",
+      "tags": [
+        {
+          "id": "cmjed8sfj000431lcwrpo556s",
+          "name": "Guide"
+        }
+      ]
+    },
+    {
+      "id": "cmjed8sgg000631lcvemlms7l",
+      "slug": "how-to-reset-your-password",
+      "title": "How to Reset Your Password",
+      "contentMarkdown": "# Resetting Your Password\n\nIf you forgot your password, follow these steps:\n\n1. Go to the login page.\n2. Click \"Forgot password?\".\n3. Enter your email address.\n4. Check your inbox for a reset link.\n5. Follow the link to set a new password.",
+      "contentText": " Resetting Your Password\n\nIf you forgot your password, follow these steps:\n\n1. Go to the login page.\n2. Click \"Forgot password?\".\n3. Enter your email address.\n4. Check your inbox for a reset link.\n5. Follow the link to set a new password.",
+      "type": "FAQ",
+      "status": "PUBLISHED",
+      "viewCount": 2,
+      "authorId": "cmixhaveg00007rhc42wzkxv5",
+      "categoryId": "cmjed8ses000231lclxzi0j7g",
+      "createdAt": "2025-12-20T14:00:46.096Z",
+      "updatedAt": "2025-12-20T14:16:13.635Z",
+      "tags": [
+        {
+          "id": "cmjed8sf5000331lc3lb0kpki",
+          "name": "FAQ"
+        }
+      ]
+    },
+    {
+      "id": "cmjed8sgu000731lckvcm3r84",
+      "slug": "troubleshooting-login-issues",
+      "title": "Troubleshooting Login Issues",
+      "contentMarkdown": "# Troubleshooting Login Issues\n\nCommon problems when logging in:\n\n- **Incorrect credentials**: Ensure your email and password are correct.\n- **Account not verified**: Check your email for a verification link.\n- **Browser cookies disabled**: Enable cookies in your browser settings.",
+      "contentText": " Troubleshooting Login Issues\n\nCommon problems when logging in:\n\n Incorrect credentials: Ensure your email and password are correct.\n Account not verified: Check your email for a verification link.\n Browser cookies disabled: Enable cookies in your browser settings.",
+      "type": "FAQ",
+      "status": "PUBLISHED",
+      "viewCount": 6,
+      "authorId": "cmixhaveg00007rhc42wzkxv5",
+      "categoryId": "cmjed8ses000231lclxzi0j7g",
+      "createdAt": "2025-12-20T14:00:46.111Z",
+      "updatedAt": "2025-12-20T14:16:11.089Z",
+      "tags": [
+        {
+          "id": "cmjed8sf5000331lc3lb0kpki",
+          "name": "FAQ"
+        },
+        {
+          "id": "cmjed8sfj000431lcwrpo556s",
+          "name": "Guide"
+        }
+      ]
+    },
+    {
+      "id": "cmjed8sh9000831lcjthwgd6l",
+      "slug": "understanding-article-statuses",
+      "title": "Understanding Article Statuses",
+      "contentMarkdown": "# Article Statuses\n\nArticles can be in one of the following statuses:\n\n- **DRAFT**: Not visible to the public.\n- **PUBLISHED**: Visible to all users.\n- **ARCHIVED**: Retained for reference but not shown in listings.",
+      "contentText": " Article Statuses\n\nArticles can be in one of the following statuses:\n\n DRAFT: Not visible to the public.\n PUBLISHED: Visible to all users.\n ARCHIVED: Retained for reference but not shown in listings.",
+      "type": "FAQ",
+      "status": "PUBLISHED",
+      "viewCount": 4,
+      "authorId": "cmixhaveg00007rhc42wzkxv5",
+      "categoryId": "cmjed8sef000131lc1qx34ctq",
+      "createdAt": "2025-12-20T14:00:46.125Z",
+      "updatedAt": "2025-12-20T14:13:24.431Z",
+      "tags": [
+        {
+          "id": "cmjed8sfj000431lcwrpo556s",
+          "name": "Guide"
+        }
+      ]
+    },
+    {
+      "id": "cmjed8shm000931lc78gsije7",
+      "slug": "how-to-add-tags-to-an-article",
+      "title": "How to Add Tags to an Article",
+      "contentMarkdown": "# Adding Tags\n\nTags help categorize content. To add tags:\n\n1. Edit the article.\n2. In the \"Tags\" field, type the tag name and press Enter.\n3. Save the article. Tags will appear on the article page.",
+      "contentText": " Adding Tags\n\nTags help categorize content. To add tags:\n\n1. Edit the article.\n2. In the \"Tags\" field, type the tag name and press Enter.\n3. Save the article. Tags will appear on the article page.",
+      "type": "FAQ",
+      "status": "PUBLISHED",
+      "viewCount": 3,
+      "authorId": "cmixhaveg00007rhc42wzkxv5",
+      "categoryId": "cmjed8sef000131lc1qx34ctq",
+      "createdAt": "2025-12-20T14:00:46.139Z",
+      "updatedAt": "2025-12-20T14:14:46.023Z",
+      "tags": [
+        {
+          "id": "cmjed8sfj000431lcwrpo556s",
+          "name": "Guide"
+        }
+      ]
+    },
+    {
+      "id": "cmjed8si1000a31lcyieh5nq4",
+      "slug": "advanced-formatting-with-tiptap",
+      "title": "Advanced Formatting with TipTap",
+      "contentMarkdown": "# Advanced Formatting\n\nOur editor supports many features:\n\n- **Bold** and *Italic* text.\n- [Links](https://example.com).\n- Code blocks for technical documentation.\n- Tables for structured data.\n- Task lists for checklists.",
+      "contentText": " Advanced Formatting\n\nOur editor supports many features:\n\n Bold and Italic text.\n [Links](https://example.com).\n Code blocks for technical documentation.\n Tables for structured data.\n Task lists for checklists.",
+      "type": "FAQ",
+      "status": "PUBLISHED",
+      "viewCount": 3,
+      "authorId": "cmixhaveg00007rhc42wzkxv5",
+      "categoryId": "cmjed8sef000131lc1qx34ctq",
+      "createdAt": "2025-12-20T14:00:46.153Z",
+      "updatedAt": "2025-12-20T14:16:15.828Z",
+      "tags": [
+        {
+          "id": "cmjed8sfj000431lcwrpo556s",
+          "name": "Guide"
+        }
+      ]
+    },
+    {
+      "id": "cmjed8sif000b31lche4pi5w4",
+      "slug": "configuring-your-profile",
+      "title": "Configuring Your Profile",
+      "contentMarkdown": "# Profile Configuration\n\nYou can customize your profile settings:\n\n1. Go to Settings.\n2. Change your display name.\n3. Upload a profile picture.\n4. Set your notification preferences.",
+      "contentText": " Profile Configuration\n\nYou can customize your profile settings:\n\n1. Go to Settings.\n2. Change your display name.\n3. Upload a profile picture.\n4. Set your notification preferences.",
+      "type": "FAQ",
+      "status": "PUBLISHED",
+      "viewCount": 1,
+      "authorId": "cmixhaveg00007rhc42wzkxv5",
+      "categoryId": "cmjed8ses000231lclxzi0j7g",
+      "createdAt": "2025-12-20T14:00:46.167Z",
+      "updatedAt": "2025-12-20T14:11:08.764Z",
+      "tags": [
+        {
+          "id": "cmjed8sfj000431lcwrpo556s",
+          "name": "Guide"
+        }
+      ]
+    },
+    {
+      "id": "cmjed8sit000c31lczdtg6ofk",
+      "slug": "secure-your-account-with-2fa",
+      "title": "Secure Your Account with 2FA",
+      "contentMarkdown": "# Two-Factor Authentication\n\nWe recommend enabling 2FA for extra security:\n\n- Use an authenticator app (e.g., Google Authenticator).\n- Save your backup codes in a safe place.\n- 2FA will be required every time you sign in from a new device.",
+      "contentText": " TwoFactor Authentication\n\nWe recommend enabling 2FA for extra security:\n\n Use an authenticator app (e.g., Google Authenticator).\n Save your backup codes in a safe place.\n 2FA will be required every time you sign in from a new device.",
+      "type": "FAQ",
+      "status": "PUBLISHED",
+      "viewCount": 2,
+      "authorId": "cmixhaveg00007rhc42wzkxv5",
+      "categoryId": "cmjed8ses000231lclxzi0j7g",
+      "createdAt": "2025-12-20T14:00:46.181Z",
+      "updatedAt": "2025-12-20T14:13:26.653Z",
+      "tags": [
+        {
+          "id": "cmjed8sf5000331lc3lb0kpki",
+          "name": "FAQ"
+        },
+        {
+          "id": "cmjed8sfj000431lcwrpo556s",
+          "name": "Guide"
+        }
+      ]
+    }
+  ],
+  "diagnosisFlows": [
+    {
+      "id": "cmiyua366000058e4lygksrpb",
+      "title": "Diagnosis Internet Connection",
+      "description": "Troubleshoot common internet connection issues",
+      "startNodeId": "node-1",
+      "nodes": "[{\"id\":\"node-1\",\"type\":\"question\",\"content\":\"Can you access Google.com?\"},{\"id\":\"node-2\",\"type\":\"question\",\"content\":\"Is the modem light blinking?\"},{\"id\":\"node-3\",\"type\":\"solution\",\"content\":\"Your internet seems fine. Check the specific website status.\",\"qaPageId\":\"cmiyu9ixs0001rssorigg6tes\"},{\"id\":\"node-4\",\"type\":\"solution\",\"content\":\"Restart your modem and router.\",\"qaPageId\":\"clx124\"},{\"id\":\"node-5\",\"type\":\"solution\",\"content\":\"Contact ISP support.\",\"qaPageId\":\"clx125\"}]",
+      "edges": "[{\"from\":\"node-1\",\"to\":\"node-3\",\"label\":\"Yes\"},{\"from\":\"node-1\",\"to\":\"node-2\",\"label\":\"No\"},{\"from\":\"node-2\",\"to\":\"node-4\",\"label\":\"Yes\"},{\"from\":\"node-2\",\"to\":\"node-5\",\"label\":\"No\"}]",
+      "createdAt": "2025-12-09T17:13:21.294Z",
+      "updatedAt": "2025-12-09T17:13:21.294Z"
+    },
+    {
+      "id": "cmizkd5r70000keevwqfdmlpn",
+      "title": "Power Troubleshooter",
+      "description": "Diagnose power issues",
+      "startNodeId": "node-1",
+      "nodes": "[{\"id\":\"node-1\",\"type\":\"question\",\"content\":\"Is the device plugged in?\"},{\"id\":\"node-2\",\"type\":\"question\",\"content\":\"Is the power light on?\"},{\"id\":\"node-3\",\"type\":\"solution\",\"content\":\"Plug in the device and try again.\"},{\"id\":\"node-4\",\"type\":\"solution\",\"content\":\"Check if the screen is turned on.\"},{\"id\":\"node-5\",\"type\":\"solution\",\"content\":\"Check the fuse in the plug.\"}]",
+      "edges": "[{\"from\":\"node-1\",\"to\":\"node-2\",\"label\":\"Yes\"},{\"from\":\"node-1\",\"to\":\"node-3\",\"label\":\"No\"},{\"from\":\"node-2\",\"to\":\"node-4\",\"label\":\"Yes\"},{\"from\":\"node-2\",\"to\":\"node-5\",\"label\":\"No\"}]",
+      "createdAt": "2025-12-10T05:23:34.628Z",
+      "updatedAt": "2025-12-10T05:23:34.628Z"
+    }
+  ]
+}

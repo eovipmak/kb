@@ -10,10 +10,10 @@ export async function qaRoutes(fastify: FastifyInstance) {
     const createSchema = {
         body: {
             type: 'object',
-            required: ['title', 'contentMarkdown'],
+            required: ['title', 'contentHtml'],
             properties: {
                 title: { type: 'string', minLength: 10 },
-                contentMarkdown: { type: 'string', minLength: 50 },
+                contentHtml: { type: 'string', minLength: 50 },
                 type: { type: 'string', enum: Object.values(PageType) },
                 tags: { type: 'array', items: { type: 'string' } },
                 categoryId: { type: 'string' }
@@ -26,7 +26,7 @@ export async function qaRoutes(fastify: FastifyInstance) {
             type: 'object',
             properties: {
                 title: { type: 'string', minLength: 10 },
-                contentMarkdown: { type: 'string', minLength: 50 },
+                contentHtml: { type: 'string', minLength: 50 },
                 status: { type: 'string', enum: Object.values(Status) },
                 type: { type: 'string', enum: Object.values(PageType) },
                 tags: { type: 'array', items: { type: 'string' } },

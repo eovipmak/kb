@@ -171,7 +171,7 @@
 				tags = art.tags.map((t: any) => t.name);
 
 				// Convert Markdown to HTML for TipTap if it looks like markdown
-				let content = art.contentMarkdown || '';
+				let content = art.contentHtml || '';
 				if (content.includes('#') || content.includes('*') || content.includes('- ')) {
 					content = await marked.parse(content);
 				}
@@ -200,7 +200,7 @@
 				type,
 				categoryId: category,
 				tags,
-				contentMarkdown: editor.getHTML(),
+				contentHtml: editor.getHTML(),
 				status
 			};
 

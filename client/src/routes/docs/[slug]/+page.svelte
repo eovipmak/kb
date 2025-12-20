@@ -37,7 +37,7 @@
 			// We assume sync behavior or await it if necessary.
 			// But in reactive block we can't await easily.
 			// marked.parse returns string | Promise<string>.
-			const rawHtml = marked.parse(data.article.contentMarkdown) as string;
+			const rawHtml = marked.parse(data.article.contentHtml) as string;
 
 			if (browser) {
 				contentHtml = DOMPurify.sanitize(rawHtml);

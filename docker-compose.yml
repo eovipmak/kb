@@ -8,16 +8,17 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - DATABASE_URL=file:/app/prisma/dev.db
+      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/kb?schema=public
       - JWT_SECRET=supersecret
       - MEILI_HOST=http://meilisearch:7700
       - MEILI_MASTER_KEY=masterKey
     volumes:
       - ./api:/app
       - /app/node_modules
-    command: sh -c "npm install && npx prisma generate && npm run dev"
+    command: sh -c "npm install && npx prisma migrate deploy && npx prisma generate && npm run dev"
     depends_on:
       - meilisearch
+      - postgres
 
   client:
     build:
@@ -46,5 +47,17 @@ services:
     volumes:
       - meili_data:/meili_data
 
+  postgres:
+    image: postgres:15-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=kb
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
 volumes:
   meili_data:
+  postgres_data:

@@ -3,8 +3,8 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = "file:./dev.db"
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model User {
@@ -20,7 +20,7 @@ model QAPage {
   id              String    @id @default(cuid())
   slug            String    @unique
   title           String
-  contentMarkdown String
+  contentHtml     String
   contentText     String
   type            String    @default("FAQ") // Enum PageType
   status          String    @default("DRAFT") // Enum Status

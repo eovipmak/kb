@@ -36,7 +36,7 @@ async function testMeiliSync() {
     console.log('Creating QA Page...');
     const created = await QAService.createQAPage({
         title: 'Meilisearch Test',
-        contentMarkdown: 'Testing meilisearch sync.',
+        contentHtml: 'Testing meilisearch sync.',
         tags: ['test', 'meilisearch-sync']
     }, authorId);
 

@@ -25,14 +25,14 @@ export class QAService {
         return uniqueSlug;
     }
 
-    static async createQAPage(data: { title: string; contentMarkdown: string; type?: PageType; tags?: string[]; categoryId?: string }, authorId: string) {
+    static async createQAPage(data: { title: string; contentHtml: string; type?: PageType; tags?: string[]; categoryId?: string }, authorId: string) {
         const slug = await this.generateSlug(data.title);
-        const contentText = removeMarkdown(data.contentMarkdown);
+        const contentText = removeMarkdown(data.contentHtml);
 
         const result = await prisma.qAPage.create({
             data: {
                 title: data.title,
-                contentMarkdown: data.contentMarkdown,
+                contentHtml: data.contentHtml,
                 contentText,
                 slug,
                 type: data.type || PageType.FAQ,
@@ -117,7 +117,7 @@ export class QAService {
         throw new Error('Forbidden');
     }
 
-    static async updateQAPage(id: string, data: { title?: string; contentMarkdown?: string; status?: Status; type?: PageType; tags?: string[]; categoryId?: string }, userId: string, userRole: Role) {
+    static async updateQAPage(id: string, data: { title?: string; contentHtml?: string; status?: Status; type?: PageType; tags?: string[]; categoryId?: string }, userId: string, userRole: Role) {
         const page = await prisma.qAPage.findUnique({ where: { id } });
         if (!page) throw new Error('Not found');
 
@@ -140,8 +140,8 @@ export class QAService {
             updateData.slug = await this.generateSlug(data.title);
         }
 
-        if (data.contentMarkdown) {
-            updateData.contentText = removeMarkdown(data.contentMarkdown);
+        if (data.contentHtml) {
+            updateData.contentText = removeMarkdown(data.contentHtml);
         }
 
         if (data.tags) {
