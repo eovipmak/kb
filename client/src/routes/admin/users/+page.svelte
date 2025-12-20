@@ -4,8 +4,15 @@
 	import client from '$lib/api/client';
 	import Spinner from '$lib/components/Spinner.svelte';
 
+	interface User {
+		id: string;
+		email: string;
+		role: 'ADMIN' | 'WRITER';
+		createdAt: string;
+	}
+
 	// Svelte 5 Runes state
-	let users = $state<any[]>([]);
+	let users = $state<User[]>([]);
 	let loading = $state(true);
 	let showModal = $state(false);
 	let formMode = $state<'create' | 'edit'>('create');
@@ -93,7 +100,9 @@
 				await client.post('/users', formData);
 				successMessage = 'User created successfully!';
 			} else {
-				const updateData: any = { role: formData.role };
+				const updateData: { role: 'ADMIN' | 'WRITER'; password?: string } = { 
+					role: formData.role 
+				};
 				if (formData.password) {
 					updateData.password = formData.password;
 				}

@@ -45,7 +45,7 @@ export class UserService {
     }
 
     static async updateUser(id: string, data: { role?: Role; password?: string }) {
-        const updateData: any = {};
+        const updateData: { role?: Role; passwordHash?: string } = {};
 
         if (data.role) {
             updateData.role = data.role;
