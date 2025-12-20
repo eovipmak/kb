@@ -139,4 +139,32 @@ export class SearchService {
             console.error("SearchService Clear Error (non-fatal):", e);
         }
     }
+
+    /**
+     * Async (fire-and-forget) version of indexDocument
+     * Does not block the calling code, executes in background
+     */
+    static indexDocumentAsync(qaPage: any) {
+        setImmediate(async () => {
+            try {
+                await this.indexDocument(qaPage);
+            } catch (e) {
+                console.error("SearchService Async Index Error (non-fatal):", e);
+            }
+        });
+    }
+
+    /**
+     * Async (fire-and-forget) version of removeDocument
+     * Does not block the calling code, executes in background
+     */
+    static removeDocumentAsync(qaId: string) {
+        setImmediate(async () => {
+            try {
+                await this.removeDocument(qaId);
+            } catch (e) {
+                console.error("SearchService Async Remove Error (non-fatal):", e);
+            }
+        });
+    }
 }

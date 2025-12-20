@@ -57,8 +57,8 @@ export class QAService {
             }
         });
 
-        // Sync to Meilisearch
-        await SearchService.indexDocument(result);
+        // Sync to Meilisearch (async, non-blocking)
+        SearchService.indexDocumentAsync(result);
 
         return result;
     }
@@ -166,8 +166,8 @@ export class QAService {
             }
         });
 
-        // Sync to Meilisearch
-        await SearchService.indexDocument(result);
+        // Sync to Meilisearch (async, non-blocking)
+        SearchService.indexDocumentAsync(result);
 
         return result;
     }
@@ -180,7 +180,7 @@ export class QAService {
             throw new Error('Forbidden');
         }
 
-        await SearchService.removeDocument(id);
+        SearchService.removeDocumentAsync(id);
         return prisma.qAPage.delete({ where: { id } });
     }
 
