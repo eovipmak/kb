@@ -11,6 +11,7 @@ import { searchRoutes } from './routes/search.routes';
 import { analyticsRoutes } from './routes/analytics.routes';
 import { diagnosisRoutes } from './routes/diagnosis.routes';
 import { uploadRoutes } from './routes/upload.routes';
+import { userRoutes } from './routes/user.routes';
 import multipart from '@fastify/multipart';
 import fastifyStatic from '@fastify/static';
 import path from 'path';
@@ -54,6 +55,7 @@ server.register(searchRoutes, { prefix: '/api' });
 server.register(analyticsRoutes, { prefix: '/api/analytics' });
 server.register(diagnosisRoutes, { prefix: '/api/diagnosis-flows' });
 server.register(uploadRoutes, { prefix: '/api' });
+server.register(userRoutes, { prefix: '/api/users' });
 
 // Health check route
 server.get('/health', async (request, reply) => {
