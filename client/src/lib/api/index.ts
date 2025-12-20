@@ -5,6 +5,10 @@ export const api = {
 		const res = await client.get(`/qa/slug/${slug}`);
 		return res.data;
 	},
+	getQAById: async (id: string) => {
+		const res = await client.get(`/qa/${id}`);
+		return res.data;
+	},
 	trackView: async (id: string, metadata?: any) => {
 		await client.post(`/analytics/view/${id}`, metadata);
 	},

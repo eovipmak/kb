@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	import { goto } from '$app/navigation';
 	import client from '$lib/api/client';
+	import PreviewModal from './PreviewModal.svelte';
 
 	let stats = {
 		articles: 0,
@@ -10,6 +11,8 @@
 	};
 	let recentArticles: any[] = [];
 	let loading = true;
+	let showModal = false;
+	let selectedArticle: any = null;
 
 	onMount(async () => {
 		const token = localStorage.getItem('token');
@@ -139,13 +142,15 @@
 											</span>
 										</td>
 										<td class="px-6 py-4 text-right space-x-3">
-											<a 
-												href="/docs/{article.slug}" 
-												target="_blank"
-												class="text-gray-500 hover:text-blue-600 font-medium text-sm"
+											<button 
+												on:click={() => {
+													selectedArticle = article;
+													showModal = true;
+												}}
+												class="text-gray-500 hover:text-blue-600 font-medium text-sm bg-transparent border-none cursor-pointer"
 											>
-												View
-											</a>
+												{#if article.status === 'DRAFT'}Preview{:else}View{/if}
+											</button>
 											<a 
 												href="/admin/editor?id={article.id}" 
 												class="text-blue-600 hover:text-blue-700 font-medium text-sm"
@@ -200,3 +205,10 @@
 		{/if}
 	</div>
 </div>
+
+{#if showModal}
+	<PreviewModal 
+		article={selectedArticle} 
+		on:close={() => showModal = false} 
+	/>
+{/if}
