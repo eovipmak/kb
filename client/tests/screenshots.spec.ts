@@ -71,5 +71,73 @@ test.describe('Visual Proof Screenshots', () => {
         // Check for an element specific to the editor, e.g., title input or tiptap editor
         await expect(page.locator('.ProseMirror')).toBeVisible();
         await page.screenshot({ path: path.join(SCREENSHOT_DIR, '05_admin_editor.png'), fullPage: true });
+
+        // 6. Article History Tab (Audit Log)
+        console.log('Navigating to Article with History...');
+        // Mock article data with an ID
+        await page.route('**/api/qa/test-article-123', async (route) => {
+            await route.fulfill({
+                json: {
+                    id: 'test-article-123',
+                    title: 'Sample Article with History',
+                    contentHtml: '<p>This is a sample article.</p>',
+                    type: 'FAQ',
+                    status: 'PUBLISHED',
+                    tags: [{ id: '1', name: 'testing' }, { id: '2', name: 'demo' }],
+                    categoryId: '1',
+                    author: { email: 'admin@example.com', role: 'ADMIN' }
+                }
+            });
+        });
+
+        // Mock history data
+        await page.route('**/api/qa/test-article-123/history', async (route) => {
+            await route.fulfill({
+                json: [
+                    {
+                        id: '1',
+                        articleId: 'test-article-123',
+                        changedBy: { email: 'admin@example.com', role: 'ADMIN' },
+                        oldContent: {
+                            title: 'Previous Version of Article',
+                            status: 'DRAFT',
+                            tags: [{ id: '1', name: 'testing' }]
+                        },
+                        createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString() // 2 days ago
+                    },
+                    {
+                        id: '2',
+                        articleId: 'test-article-123',
+                        changedBy: { email: 'writer@example.com', role: 'WRITER' },
+                        oldContent: {
+                            title: 'Initial Article Draft',
+                            status: 'DRAFT',
+                            tags: []
+                        },
+                        createdAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString() // 5 days ago
+                    }
+                ]
+            });
+        });
+
+        await page.goto('/admin/editor?id=test-article-123');
+        await page.waitForLoadState('networkidle');
+
+        // Click History tab
+        await page.click('button:has-text("History")');
+        await page.waitForTimeout(1500); // Wait for history to load
+        await page.screenshot({ path: path.join(SCREENSHOT_DIR, '06_article_history_audit_log.png'), fullPage: true });
+
+        // 7. Editor with Content (New Page for Image Paste Demo)
+        console.log('Creating new editor page for image paste demo...');
+        await page.goto('/admin/editor');
+        await page.waitForLoadState('networkidle');
+        await expect(page.locator('.ProseMirror')).toBeVisible();
+
+        // Fill in some content to demonstrate the editor
+        await page.fill('input[id="title"]', 'How to Paste Images in Articles');
+        await page.waitForTimeout(500);
+
+        await page.screenshot({ path: path.join(SCREENSHOT_DIR, '07_editor_image_paste_ready.png'), fullPage: true });
     });
 });
