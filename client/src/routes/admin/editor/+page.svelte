@@ -21,6 +21,7 @@
 	import { TableCell } from '@tiptap/extension-table-cell';
 	import { TableHeader } from '@tiptap/extension-table-header';
 	import BubbleMenu from '@tiptap/extension-bubble-menu';
+	import { Commands } from './commands';
 	import Spinner from '$lib/components/Spinner.svelte';
 
 	let element: HTMLElement;
@@ -35,8 +36,6 @@
 	let tagInput = '';
 	let loading = true;
 	let saving = false;
-	let showColorPicker = false;
-	let showHighlightPicker = false;
 
 	const uploadImage = async (file: File) => {
 		const formData = new FormData();
@@ -120,6 +119,7 @@
 				TableRow,
 				TableHeader,
 				TableCell,
+				Commands(handleImageUpload),
 				BubbleMenu.configure({
 					element: bubbleMenuElement
 				})
@@ -201,20 +201,6 @@
 			return;
 		}
 		editor.chain().focus().extendMarkRange('link').setLink({ href: url }).run();
-	};
-
-	const setTextColor = (color: string) => {
-		editor.chain().focus().setColor(color).run();
-		showColorPicker = false;
-	};
-
-	const setHighlight = (color: string) => {
-		editor.chain().focus().setHighlight({ color }).run();
-		showHighlightPicker = false;
-	};
-
-	const addTable = () => {
-		editor.chain().focus().insertTable({ rows: 3, cols: 3, withHeaderRow: true }).run();
 	};
 </script>
 
@@ -365,292 +351,12 @@
 
 		<!-- Editor -->
 		<div class="lg:col-span-3 flex flex-col gap-4">
-			<!-- Toolbar -->
+			
 			{#if editor}
-				<div
-					class="bg-gray-900 border border-gray-800 rounded-xl p-2 flex flex-wrap gap-1 items-center shadow-lg sticky top-24 z-40"
-				>
-					<!-- Text formatting -->
-					<button
-						on:click={() => editor.chain().focus().toggleBold().run()}
-						class="p-2 rounded hover:bg-gray-800 {editor.isActive('bold')
-							? 'text-blue-400 bg-gray-800'
-							: 'text-gray-400'}"
-						title="Bold (Cmd/Ctrl+B)"
-						aria-keyshortcuts="Meta+b Control+b"><strong>B</strong></button
-					>
-					<button
-						on:click={() => editor.chain().focus().toggleItalic().run()}
-						class="p-2 rounded hover:bg-gray-800 {editor.isActive('italic')
-							? 'text-blue-400 bg-gray-800'
-							: 'text-gray-400'}"
-						title="Italic (Cmd/Ctrl+I)"
-						aria-keyshortcuts="Meta+i Control+i"><em>I</em></button
-					>
-					<button
-						on:click={() => editor.chain().focus().toggleUnderline().run()}
-						class="p-2 rounded hover:bg-gray-800 {editor.isActive('underline')
-							? 'text-blue-400 bg-gray-800'
-							: 'text-gray-400'}"
-						title="Underline (Cmd/Ctrl+U)"
-						aria-keyshortcuts="Meta+u Control+u"><u>U</u></button
-					>
-					<button
-						on:click={() => editor.chain().focus().toggleStrike().run()}
-						class="p-2 rounded hover:bg-gray-800 {editor.isActive('strike')
-							? 'text-blue-400 bg-gray-800'
-							: 'text-gray-400'}"
-						title="Strikethrough (Cmd/Ctrl+Shift+X)"
-						aria-keyshortcuts="Meta+Shift+x Control+Shift+x"><s>S</s></button
-					>
-					<button
-						on:click={() => editor.chain().focus().toggleCode().run()}
-						class="p-2 rounded hover:bg-gray-800 {editor.isActive('code')
-							? 'text-blue-400 bg-gray-800'
-							: 'text-gray-400'}"
-						title="Code (Cmd/Ctrl+E)"
-						aria-keyshortcuts="Meta+e Control+e">Code</button
-					>
-
-					<div class="w-px h-6 bg-gray-800 mx-1"></div>
-
-					<!-- Headings -->
-					<button
-						on:click={() => editor.chain().focus().toggleHeading({ level: 1 }).run()}
-						class="p-2 rounded hover:bg-gray-800 {editor.isActive('heading', { level: 1 })
-							? 'text-blue-400 bg-gray-800'
-							: 'text-gray-400'}"
-						title="Heading 1 (Cmd/Ctrl+Alt+1)"
-						aria-keyshortcuts="Meta+Alt+1 Control+Alt+1">H1</button
-					>
-					<button
-						on:click={() => editor.chain().focus().toggleHeading({ level: 2 }).run()}
-						class="p-2 rounded hover:bg-gray-800 {editor.isActive('heading', { level: 2 })
-							? 'text-blue-400 bg-gray-800'
-							: 'text-gray-400'}"
-						title="Heading 2 (Cmd/Ctrl+Alt+2)"
-						aria-keyshortcuts="Meta+Alt+2 Control+Alt+2">H2</button
-					>
-					<button
-						on:click={() => editor.chain().focus().toggleHeading({ level: 3 }).run()}
-						class="p-2 rounded hover:bg-gray-800 {editor.isActive('heading', { level: 3 })
-							? 'text-blue-400 bg-gray-800'
-							: 'text-gray-400'}"
-						title="Heading 3 (Cmd/Ctrl+Alt+3)"
-						aria-keyshortcuts="Meta+Alt+3 Control+Alt+3">H3</button
-					>
-
-					<div class="w-px h-6 bg-gray-800 mx-1"></div>
-
-					<!-- Lists -->
-					<button
-						on:click={() => editor.chain().focus().toggleBulletList().run()}
-						class="p-2 rounded hover:bg-gray-800 {editor.isActive('bulletList')
-							? 'text-blue-400 bg-gray-800'
-							: 'text-gray-400'}"
-						title="Bullet List (Cmd/Ctrl+Shift+8)"
-						aria-keyshortcuts="Meta+Shift+8 Control+Shift+8">• List</button
-					>
-					<button
-						on:click={() => editor.chain().focus().toggleOrderedList().run()}
-						class="p-2 rounded hover:bg-gray-800 {editor.isActive('orderedList')
-							? 'text-blue-400 bg-gray-800'
-							: 'text-gray-400'}"
-						title="Ordered List (Cmd/Ctrl+Shift+7)"
-						aria-keyshortcuts="Meta+Shift+7 Control+Shift+7">1. List</button
-					>
-					<button
-						on:click={() => editor.chain().focus().toggleTaskList().run()}
-						class="p-2 rounded hover:bg-gray-800 {editor.isActive('taskList')
-							? 'text-blue-400 bg-gray-800'
-							: 'text-gray-400'}"
-						title="Task List (Cmd/Ctrl+Shift+9)"
-						aria-keyshortcuts="Meta+Shift+9 Control+Shift+9">☑ Task</button
-					>
-
-					<div class="w-px h-6 bg-gray-800 mx-1"></div>
-
-					<!-- Blocks -->
-					<button
-						on:click={() => editor.chain().focus().toggleBlockquote().run()}
-						class="p-2 rounded hover:bg-gray-800 {editor.isActive('blockquote')
-							? 'text-blue-400 bg-gray-800'
-							: 'text-gray-400'}"
-						title="Blockquote (Cmd/Ctrl+Shift+B)"
-						aria-keyshortcuts="Meta+Shift+b Control+Shift+b">" Quote</button
-					>
-					<button
-						on:click={() => editor.chain().focus().toggleCodeBlock().run()}
-						class="p-2 rounded hover:bg-gray-800 {editor.isActive('codeBlock')
-							? 'text-blue-400 bg-gray-800'
-							: 'text-gray-400'}"
-						title="Code Block (Cmd/Ctrl+Alt+C)"
-						aria-keyshortcuts="Meta+Alt+c Control+Alt+c">&lt;/&gt;</button
-					>
-					<button
-						on:click={() => editor.chain().focus().setHorizontalRule().run()}
-						class="p-2 rounded hover:bg-gray-800 text-gray-400 hover:text-blue-400"
-						title="Horizontal Rule">—</button
-					>
-
-					<div class="w-px h-6 bg-gray-800 mx-1"></div>
-
-					<!-- Text alignment -->
-					<button
-						on:click={() => editor.chain().focus().setTextAlign('left').run()}
-						class="p-2 rounded hover:bg-gray-800 {editor.isActive({ textAlign: 'left' })
-							? 'text-blue-400 bg-gray-800'
-							: 'text-gray-400'}"
-						title="Align Left (Cmd/Ctrl+Shift+L)"
-						aria-keyshortcuts="Meta+Shift+l Control+Shift+l">⬅</button
-					>
-					<button
-						on:click={() => editor.chain().focus().setTextAlign('center').run()}
-						class="p-2 rounded hover:bg-gray-800 {editor.isActive({ textAlign: 'center' })
-							? 'text-blue-400 bg-gray-800'
-							: 'text-gray-400'}"
-						title="Align Center (Cmd/Ctrl+Shift+E)"
-						aria-keyshortcuts="Meta+Shift+e Control+Shift+e">↔</button
-					>
-					<button
-						on:click={() => editor.chain().focus().setTextAlign('right').run()}
-						class="p-2 rounded hover:bg-gray-800 {editor.isActive({ textAlign: 'right' })
-							? 'text-blue-400 bg-gray-800'
-							: 'text-gray-400'}"
-						title="Align Right (Cmd/Ctrl+Shift+R)"
-						aria-keyshortcuts="Meta+Shift+r Control+Shift+r">➡</button
-					>
-
-					<div class="w-px h-6 bg-gray-800 mx-1"></div>
-
-					<!-- Color/Highlight -->
-					<div class="relative">
-						<button
-							on:click={() => (showColorPicker = !showColorPicker)}
-							class="p-2 rounded hover:bg-gray-800 text-gray-400 hover:text-blue-400"
-							title="Text Color">A</button
-						>
-						{#if showColorPicker}
-							<div
-								class="absolute top-full mt-1 bg-gray-900 border border-gray-800 rounded-lg p-2 flex gap-1 z-50"
-							>
-								<button
-									aria-label="Set text color to white"
-									on:click={() => setTextColor('#ffffff')}
-									class="w-6 h-6 rounded"
-									style="background-color: #ffffff"
-								></button>
-								<button
-									aria-label="Set text color to red"
-									on:click={() => setTextColor('#ef4444')}
-									class="w-6 h-6 rounded"
-									style="background-color: #ef4444"
-								></button>
-								<button
-									aria-label="Set text color to orange"
-									on:click={() => setTextColor('#f59e0b')}
-									class="w-6 h-6 rounded"
-									style="background-color: #f59e0b"
-								></button>
-								<button
-									aria-label="Set text color to green"
-									on:click={() => setTextColor('#10b981')}
-									class="w-6 h-6 rounded"
-									style="background-color: #10b981"
-								></button>
-								<button
-									aria-label="Set text color to blue"
-									on:click={() => setTextColor('#3b82f6')}
-									class="w-6 h-6 rounded"
-									style="background-color: #3b82f6"
-								></button>
-								<button
-									aria-label="Set text color to purple"
-									on:click={() => setTextColor('#8b5cf6')}
-									class="w-6 h-6 rounded"
-									style="background-color: #8b5cf6"
-								></button>
-							</div>
-						{/if}
-					</div>
-
-					<div class="relative">
-						<button
-							on:click={() => (showHighlightPicker = !showHighlightPicker)}
-							class="p-2 rounded hover:bg-gray-800 text-gray-400 hover:text-blue-400"
-							title="Highlight">🖍</button
-						>
-						{#if showHighlightPicker}
-							<div
-								class="absolute top-full mt-1 bg-gray-900 border border-gray-800 rounded-lg p-2 flex gap-1 z-50"
-							>
-								<button
-									aria-label="Set highlight color to light yellow"
-									on:click={() => setHighlight('#fef3c7')}
-									class="w-6 h-6 rounded border border-gray-700"
-									style="background-color: #fef3c7"
-								></button>
-								<button
-									aria-label="Set highlight color to light orange"
-									on:click={() => setHighlight('#fed7aa')}
-									class="w-6 h-6 rounded border border-gray-700"
-									style="background-color: #fed7aa"
-								></button>
-								<button
-									aria-label="Set highlight color to light red"
-									on:click={() => setHighlight('#fecaca')}
-									class="w-6 h-6 rounded border border-gray-700"
-									style="background-color: #fecaca"
-								></button>
-								<button
-									aria-label="Set highlight color to light blue"
-									on:click={() => setHighlight('#bfdbfe')}
-									class="w-6 h-6 rounded border border-gray-700"
-									style="background-color: #bfdbfe"
-								></button>
-								<button
-									aria-label="Set highlight color to light purple"
-									on:click={() => setHighlight('#c7d2fe')}
-									class="w-6 h-6 rounded border border-gray-700"
-									style="background-color: #c7d2fe"
-								></button>
-								<button
-									aria-label="Remove highlight"
-									on:click={() => editor.chain().focus().unsetHighlight().run()}
-									class="w-6 h-6 rounded border border-gray-700 bg-gray-800 text-white text-xs flex items-center justify-center"
-									>✕</button
-								>
-							</div>
-						{/if}
-					</div>
-
-					<div class="w-px h-6 bg-gray-800 mx-1"></div>
-
-					<!-- Insert -->
-					<button
-						on:click={setLink}
-						class="p-2 rounded hover:bg-gray-800 {editor.isActive('link')
-							? 'text-blue-400 bg-gray-800'
-							: 'text-gray-400'}"
-						title="Link (Cmd/Ctrl+K)"
-						aria-keyshortcuts="Meta+k Control+k">🔗</button
-					>
-					<button
-						on:click={handleImageUpload}
-						class="p-2 rounded hover:bg-gray-800 text-gray-400 hover:text-blue-400"
-						title="Image">🖼</button
-					>
-					<button
-						on:click={addTable}
-						class="p-2 rounded hover:bg-gray-800 text-gray-400 hover:text-blue-400"
-						title="Table">⊞</button
-					>
-				</div>
-
 				<!-- Bubble Menu -->
 				<div
 					bind:this={bubbleMenuElement}
-					class="bubble-menu bg-gray-900 border border-gray-800 rounded-lg p-1 flex gap-1 items-center shadow-xl"
+					class="bubble-menu bg-gray-900 border border-gray-700 rounded-lg p-1 flex gap-1 items-center shadow-xl transform transition-all duration-200"
 				>
 					<button
 						aria-label="Bold"
@@ -680,12 +386,20 @@
 							? 'text-blue-400 bg-gray-800'
 							: 'text-gray-400'}"><s>S</s></button
 					>
+					<div class="w-px h-4 bg-gray-700 mx-1"></div>
 					<button
 						aria-label="Link"
 						on:click={setLink}
 						class="p-1.5 rounded hover:bg-gray-800 {editor.isActive('link')
 							? 'text-blue-400 bg-gray-800'
 							: 'text-gray-400'}">🔗</button
+					>
+                    <button
+						aria-label="Code"
+						on:click={() => editor.chain().focus().toggleCode().run()}
+						class="p-1.5 rounded hover:bg-gray-800 {editor.isActive('code')
+							? 'text-blue-400 bg-gray-800'
+							: 'text-gray-400'}">&lt;/&gt;</button
 					>
 				</div>
 			{/if}
@@ -831,13 +545,26 @@
 	:global(.ProseMirror ul[data-type='taskList'] li > div) {
 		flex: 1 1 auto;
 	}
+	:global(.ProseMirror ul[data-type='taskList'] li > div > p) {
+		margin: 0;
+	}
+
 	:global(.ProseMirror ul[data-type='taskList'] input[type='checkbox']) {
 		cursor: pointer;
-		width: 1.2em;
-		height: 1.2em;
+		width: 1.1em;
+		height: 1.1em;
+        margin-top: 0.15em; /* Adjusted roughly for line-height 1.75 */
+        appearance: auto;
+        accent-color: #3b82f6;
+        position: relative;
+        top: 0.1em; /* Fine tuning */
 	}
 
 	/* Strike-through and underline */
+	:global(.ProseMirror s) {
+		text-decoration: line-through;
+        color: #64748b; /* Dim completed tasks */
+	}
 	:global(.ProseMirror s) {
 		text-decoration: line-through;
 	}
