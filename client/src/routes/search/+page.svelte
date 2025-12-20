@@ -295,6 +295,8 @@
 				<div class="flex flex-wrap gap-2">
 					{#each COMMON_TAGS as t}
 						<button
+							type="button"
+							aria-pressed={selectedTags.includes(t)}
 							class="px-2.5 py-1 rounded-full text-xs font-medium border transition-colors duration-200 {selectedTags.includes(
 								t
 							)
