@@ -128,4 +128,15 @@ export class SearchService {
             offset: (page - 1) * limit
         });
     }
+
+    static async clearIndex() {
+        try {
+            console.log("Clearing search index...");
+            const client = this.getClient();
+            const index = client.index(this.indexName);
+            await index.deleteAllDocuments();
+        } catch (e) {
+            console.error("SearchService Clear Error (non-fatal):", e);
+        }
+    }
 }

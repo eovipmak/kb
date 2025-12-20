@@ -77,5 +77,23 @@ export const analyticsService = {
         return {
             totalViews: page.viewCount
         };
+    },
+
+    async getGlobalStats() {
+        const [articleCount, userCount, totalViews] = await Promise.all([
+            prisma.qAPage.count(),
+            prisma.user.count(),
+            prisma.qAPage.aggregate({
+                _sum: {
+                    viewCount: true
+                }
+            })
+        ]);
+
+        return {
+            articles: articleCount,
+            users: userCount,
+            views: totalViews._sum.viewCount || 0
+        };
     }
 };

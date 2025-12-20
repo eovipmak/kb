@@ -21,13 +21,17 @@
 	import { TableCell } from '@tiptap/extension-table-cell';
 	import { TableHeader } from '@tiptap/extension-table-header';
 	import BubbleMenu from '@tiptap/extension-bubble-menu';
-	import { Commands } from './commands';
+	import { Commands } from './commands.svelte';
 	import Spinner from '$lib/components/Spinner.svelte';
+	import { marked } from 'marked';
+
+	import { page } from '$app/stores';
 
 	let element: HTMLElement;
 	let bubbleMenuElement: HTMLElement;
 	let editor: Editor;
 
+	let articleId = $page.url.searchParams.get('id');
 	let title = '';
 	let type = 'FAQ';
 	let category = '';
@@ -73,16 +77,7 @@
 			return;
 		}
 
-		try {
-			const res = await client.get('/categories');
-			categories = res.data;
-			if (categories.length > 0) category = categories[0].id;
-		} catch (e) {
-			console.error('Failed to load categories', e);
-		} finally {
-			loading = false;
-		}
-
+		// Initialize editor first
 		editor = new Editor({
 			element: element,
 			extensions: [
@@ -90,8 +85,8 @@
 					heading: {
 						levels: [1, 2, 3, 4, 5, 6]
 					},
-					codeBlock: false, // We'll use separate CodeBlock extension
-					strike: false // We'll use separate Strike extension
+					codeBlock: false,
+					strike: false
 				}),
 				CodeBlock,
 				Image,
@@ -162,6 +157,33 @@
 				}
 			}
 		});
+
+		try {
+			const catRes = await client.get('/categories');
+			categories = catRes.data;
+
+			if (articleId) {
+				const artRes = await client.get(`/qa/${articleId}`);
+				const art = artRes.data;
+				title = art.title;
+				type = art.type;
+				category = art.categoryId;
+				tags = art.tags.map((t: any) => t.name);
+
+				// Convert Markdown to HTML for TipTap if it looks like markdown
+				let content = art.contentMarkdown || '';
+				if (content.includes('#') || content.includes('*') || content.includes('- ')) {
+					content = await marked.parse(content);
+				}
+				editor.commands.setContent(content);
+			} else if (categories.length > 0) {
+				category = categories[0].id;
+			}
+		} catch (e) {
+			console.error('Failed to load data', e);
+		} finally {
+			loading = false;
+		}
 	});
 
 	onDestroy(() => {
@@ -173,14 +195,21 @@
 
 		saving = true;
 		try {
-			await client.post('/qa', {
+			const payload = {
 				title,
 				type,
 				categoryId: category,
 				tags,
 				contentMarkdown: editor.getHTML(),
 				status
-			});
+			};
+
+			if (articleId) {
+				await client.put(`/qa/${articleId}`, payload);
+			} else {
+				await client.post('/qa', payload);
+			}
+			
 			alert(`Saved as ${status}`);
 			goto('/admin');
 		} catch (e) {

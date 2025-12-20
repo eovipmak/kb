@@ -80,7 +80,7 @@ export async function qaRoutes(fastify: FastifyInstance) {
                 userId = decoded.id;
                 userRole = decoded.role;
             } catch (err) {
-                return reply.code(401).send({ message: 'Invalid token' });
+                // Anonymous fallback
             }
         }
 
@@ -109,10 +109,9 @@ export async function qaRoutes(fastify: FastifyInstance) {
                 userId = decoded.id;
                 userRole = decoded.role;
             } catch (err) {
-                // If token is invalid but provided, we might fail or treat as anonymous.
-                // For get, we can probably treat as anonymous if token is bad, but usually token invalid means 401.
-                // However, detailed logic: if no token -> anonymous. if invalid token -> 401.
-                return reply.code(401).send({ message: 'Invalid token' });
+                // On GET routes, allow fallback to anonymous if token is invalid
+                // instead of returning 401, especially for public content.
+                // However, if content is draft, QAService will handle the lack of userId.
             }
         }
 

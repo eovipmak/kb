@@ -44,4 +44,15 @@ export async function analyticsRoutes(fastify: FastifyInstance) {
             return reply.code(500).send({ message: 'Internal Server Error' });
         }
     });
+
+    // Get global stats
+    fastify.get('/stats', async (request, reply) => {
+        try {
+            const stats = await analyticsService.getGlobalStats();
+            return stats;
+        } catch (err) {
+            request.log.error(err);
+            return reply.code(500).send({ message: 'Internal Server Error' });
+        }
+    });
 }

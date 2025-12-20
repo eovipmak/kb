@@ -8,26 +8,42 @@
 		users: 0,
 		views: 0
 	};
+	let recentArticles: any[] = [];
 	let loading = true;
 
 	onMount(async () => {
-		// Quick check if auth token exists
 		const token = localStorage.getItem('token');
 		if (!token) {
-			goto('/login'); // Assuming login route exists, otherwise maybe home
+			goto('/login');
 			return;
 		}
 
 		try {
-			// Fetch some stats if available, or just mocking for now to ensure page loads
-			// const res = await client.get('/analytics/stats');
-			// stats = res.data;
+			const [statsRes, articlesRes] = await Promise.all([
+				client.get('/analytics/stats'),
+				client.get('/qa', { params: { limit: 10 } })
+			]);
+			stats = statsRes.data;
+			recentArticles = articlesRes.data;
 		} catch (e) {
 			console.error(e);
 		} finally {
 			loading = false;
 		}
 	});
+
+	function getStatusColor(status: string) {
+		switch (status) {
+			case 'PUBLISHED':
+				return 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400';
+			case 'DRAFT':
+				return 'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-400';
+			case 'REVIEW':
+				return 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400';
+			default:
+				return 'bg-slate-100 text-slate-700';
+		}
+	}
 </script>
 
 <div class="min-h-screen bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 p-8">
@@ -68,7 +84,7 @@
 					>
 						Total Articles
 					</h3>
-					<p class="text-3xl font-bold mt-2">--</p>
+					<p class="text-3xl font-bold mt-2">{stats.articles}</p>
 				</div>
 				<div
 					class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700"
@@ -78,7 +94,7 @@
 					>
 						Total Users
 					</h3>
-					<p class="text-3xl font-bold mt-2">--</p>
+					<p class="text-3xl font-bold mt-2">{stats.users}</p>
 				</div>
 				<div
 					class="bg-white dark:bg-gray-800 p-6 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700"
@@ -88,36 +104,95 @@
 					>
 						Total Views
 					</h3>
-					<p class="text-3xl font-bold mt-2">--</p>
+					<p class="text-3xl font-bold mt-2">{stats.views}</p>
 				</div>
 			</div>
 
-			<!-- Quick Links -->
-			<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+			<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+				<!-- Article List -->
 				<div
-					class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden"
+					class="lg:col-span-2 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden"
 				>
-					<div class="p-6 border-b border-gray-100 dark:border-gray-700">
-						<h2 class="text-xl font-bold">Quick Actions</h2>
+					<div class="p-6 border-b border-gray-100 dark:border-gray-700 flex justify-between items-center">
+						<h2 class="text-xl font-bold">Recent Articles</h2>
+						<a href="/docs" class="text-sm text-blue-600 hover:underline">View Public List →</a>
 					</div>
-					<div class="p-6 grid gap-4">
-						<a
-							href="/admin/editor"
-							class="block p-4 rounded-lg bg-gray-50 dark:bg-gray-700/50 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition group"
-						>
-							<span class="font-semibold group-hover:text-blue-600 dark:group-hover:text-blue-400"
-								>Create New Article</span
+					<div class="overflow-x-auto">
+						<table class="w-full text-left border-collapse">
+							<thead>
+								<tr class="bg-gray-50 dark:bg-gray-700/50">
+									<th class="px-6 py-3 text-xs font-semibold text-gray-500 uppercase">Title</th>
+									<th class="px-6 py-3 text-xs font-semibold text-gray-500 uppercase">Status</th>
+									<th class="px-6 py-3 text-xs font-semibold text-gray-500 uppercase text-right">Actions</th>
+								</tr>
+							</thead>
+							<tbody class="divide-y divide-gray-100 dark:divide-gray-700">
+								{#each recentArticles as article}
+									<tr class="hover:bg-gray-50 dark:hover:bg-gray-700/30 transition-colors">
+										<td class="px-6 py-4">
+											<div class="font-medium text-gray-900 dark:text-white">{article.title}</div>
+											<div class="text-xs text-gray-500 mt-0.5">{article.category?.name || 'Uncategorized'}</div>
+										</td>
+										<td class="px-6 py-4">
+											<span class="px-2 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider {getStatusColor(article.status)}">
+												{article.status}
+											</span>
+										</td>
+										<td class="px-6 py-4 text-right space-x-3">
+											<a 
+												href="/docs/{article.slug}" 
+												target="_blank"
+												class="text-gray-500 hover:text-blue-600 font-medium text-sm"
+											>
+												View
+											</a>
+											<a 
+												href="/admin/editor?id={article.id}" 
+												class="text-blue-600 hover:text-blue-700 font-medium text-sm"
+											>
+												Edit
+											</a>
+										</td>
+									</tr>
+								{/each}
+								{#if recentArticles.length === 0}
+									<tr>
+										<td colspan="3" class="px-6 py-10 text-center text-gray-500">
+											No articles found. Seed the database or create a new one.
+										</td>
+									</tr>
+								{/if}
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+				<!-- Quick Links -->
+				<div class="space-y-8">
+					<div
+						class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden"
+					>
+						<div class="p-6 border-b border-gray-100 dark:border-gray-700">
+							<h2 class="text-xl font-bold">Quick Actions</h2>
+						</div>
+						<div class="p-6 grid gap-4">
+							<a
+								href="/admin/editor"
+								class="block p-4 rounded-lg bg-gray-50 dark:bg-gray-700/50 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition group"
 							>
-							<p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
-								Write a new FAQ or Troubleshooting guide
-							</p>
-						</a>
-						<!-- Add more links as features are implemented -->
-						<div
-							class="block p-4 rounded-lg bg-gray-50 dark:bg-gray-700/50 opacity-60 cursor-not-allowed"
-						>
-							<span class="font-semibold">Manage Users</span>
-							<p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Coming soon...</p>
+								<span class="font-semibold group-hover:text-blue-600 dark:group-hover:text-blue-400"
+									>Create New Article</span
+								>
+								<p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
+									Write a new FAQ or Troubleshooting guide
+								</p>
+							</a>
+							<div
+								class="block p-4 rounded-lg bg-gray-50 dark:bg-gray-700/50 opacity-60 cursor-not-allowed"
+							>
+								<span class="font-semibold">Manage Users</span>
+								<p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Coming soon...</p>
+							</div>
 						</div>
 					</div>
 				</div>

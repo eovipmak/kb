@@ -11,7 +11,7 @@ export const api = {
 	search: async (params: {
 		q: string;
 		type?: string;
-		category?: string;
+		categoryId?: string;
 		tags?: string;
 		page?: number;
 		limit?: number;

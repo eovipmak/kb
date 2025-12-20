@@ -1,58 +1,64 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+    interface Props {
+        items: any[];
+        command: (item: any) => void;
+    }
 
-	export let items: any[] = [];
-	export let command: (item: any) => void;
+    let { items = [], command } = $props<Props>();
 
-	let selectedIndex = 0;
+    let selectedIndex = $state(0);
 
     export function updateProps(newItems: any[]) {
-        items = newItems;
+        // In Svelte 5, if items comes from props, we can't reassign it if it's not a local state.
+        // But here we just want to reset the selection when items change.
         selectedIndex = 0;
     }
 
-	// Watch for changes in items to reset selection if needed
-	$: if (items) {
-		selectedIndex = 0;
-	}
+    // We can use $effect to reset selectedIndex when items change if needed,
+    // but usually the caller will call updateProps or the reactive nature of $props will handle it.
+    $effect(() => {
+        if (items) {
+            selectedIndex = 0;
+        }
+    });
 
-	export const onKeyDown = ({ event }: { event: KeyboardEvent }) => {
-		if (event.key === 'ArrowUp') {
-			upHandler();
-			return true;
-		}
+    export const onKeyDown = ({ event }: { event: KeyboardEvent }) => {
+        if (event.key === 'ArrowUp') {
+            upHandler();
+            return true;
+        }
 
-		if (event.key === 'ArrowDown') {
-			downHandler();
-			return true;
-		}
+        if (event.key === 'ArrowDown') {
+            downHandler();
+            return true;
+        }
 
-		if (event.key === 'Enter') {
-			enterHandler();
-			return true;
-		}
+        if (event.key === 'Enter') {
+            enterHandler();
+            return true;
+        }
 
-		return false;
-	};
+        return false;
+    };
 
-	const upHandler = () => {
-		selectedIndex = (selectedIndex + items.length - 1) % items.length;
-	};
+    const upHandler = () => {
+        selectedIndex = (selectedIndex + items.length - 1) % items.length;
+    };
 
-	const downHandler = () => {
-		selectedIndex = (selectedIndex + 1) % items.length;
-	};
+    const downHandler = () => {
+        selectedIndex = (selectedIndex + 1) % items.length;
+    };
 
-	const enterHandler = () => {
-		selectItem(selectedIndex);
-	};
+    const enterHandler = () => {
+        selectItem(selectedIndex);
+    };
 
-	const selectItem = (index: number) => {
-		const item = items[index];
-		if (item) {
-			command(item);
-		}
-	};
+    const selectItem = (index: number) => {
+        const item = items[index];
+        if (item) {
+            command(item);
+        }
+    };
 </script>
 
 

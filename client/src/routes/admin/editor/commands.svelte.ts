@@ -128,20 +128,21 @@ export const Commands = (uploadImageCallback: () => void) => Extension.create({
         render: () => {
             let component: any;
             let popup: any;
+            let propsState = $state({
+                items: [] as any[],
+                command: (item: any) => { }
+            });
 
             return {
                 onStart: (props: any) => {
-                    // Mount Svelte component using Svelte 5 API
+                    propsState.items = props.items;
+                    propsState.command = props.command;
+
                     const element = document.createElement('div');
 
                     component = mount(CommandsList, {
                         target: element,
-                        props: {
-                            items: props.items,
-                            command: (item: any) => {
-                                props.command(item);
-                            }
-                        }
+                        props: propsState
                     });
 
                     if (!props.clientRect) {
@@ -160,9 +161,7 @@ export const Commands = (uploadImageCallback: () => void) => Extension.create({
                 },
 
                 onUpdate(props: any) {
-                    component.$set({
-                        items: props.items
-                    });
+                    propsState.items = props.items;
 
                     if (!props.clientRect) {
                         return;
@@ -184,7 +183,7 @@ export const Commands = (uploadImageCallback: () => void) => Extension.create({
 
                 onExit() {
                     popup[0].destroy();
-                    component.$destroy();
+                    unmount(component);
                 }
             };
         }

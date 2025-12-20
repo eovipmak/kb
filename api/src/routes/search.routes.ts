@@ -16,9 +16,9 @@ export async function searchRoutes(fastify: FastifyInstance) {
         schema: {
             querystring: {
                 type: 'object',
-                required: ['q'],
+                required: [],
                 properties: {
-                    q: { type: 'string' },
+                    q: { type: 'string', default: '' },
                     type: { type: 'string', enum: ['FAQ', 'TROUBLESHOOTING'] },
                     categoryId: { type: 'string' },
                     tags: { type: 'string' },
