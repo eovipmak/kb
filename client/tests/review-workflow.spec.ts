@@ -244,12 +244,6 @@ test.describe('Review Queue & Approval Workflow', () => {
 		// Wait for the review list to update
 		await page.waitForTimeout(1000);
 
-		// Debug: Take screenshot before checking for article
-		await page.screenshot({
-			path: 'test-result/admin-review-queue-before-check.png',
-			fullPage: true
-		});
-
 		// Check if there are any articles in the review list
 		const reviewArticleCount = await page.locator('tbody tr').count();
 		console.log('Number of rows in review table:', reviewArticleCount);
