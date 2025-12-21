@@ -1,0 +1,16 @@
+
+> client@0.0.1 dev
+> vite dev --host
+
+1:07:30 PM [vite] (client) Forced re-optimization of dependencies
+
+  VITE v7.2.7  ready in 1551 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: http://192.168.0.2:5173/
+1:08:18 PM [vite-plugin-svelte] src/routes/admin/editor/CommandsList.svelte:72:4 Using `on:click` to listen to the click event is deprecated. Use the event attribute `onclick` instead
+https://svelte.dev/e/event_directive_deprecated
+1:08:18 PM [vite-plugin-svelte] src/routes/admin/editor/CommandsList.svelte:73:4 Using `on:mouseenter` to listen to the mouseenter event is deprecated. Use the event attribute `onmouseenter` instead
+https://svelte.dev/e/event_directive_deprecated
+1:15:42 PM [vite] (client) hmr update /src/routes/admin/editor/+page.svelte?svelte&type=style&lang.css, /src/app.css
+1:16:34 PM [vite] (client) hmr update /src/routes/admin/editor/+page.svelte, /src/app.css

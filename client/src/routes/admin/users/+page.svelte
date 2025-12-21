@@ -100,8 +100,8 @@
 				await client.post('/users', formData);
 				successMessage = 'User created successfully!';
 			} else {
-				const updateData: { role: 'ADMIN' | 'WRITER'; password?: string } = { 
-					role: formData.role 
+				const updateData: { role: 'ADMIN' | 'WRITER'; password?: string } = {
+					role: formData.role
 				};
 				if (formData.password) {
 					updateData.password = formData.password;
@@ -158,9 +158,7 @@
 		<div class="mb-8 flex items-center justify-between">
 			<div>
 				<h1 class="text-3xl font-bold text-gray-900 dark:text-white">User Management</h1>
-				<p class="mt-2 text-gray-600 dark:text-gray-400">
-					Manage system users and their roles
-				</p>
+				<p class="mt-2 text-gray-600 dark:text-gray-400">Manage system users and their roles</p>
 			</div>
 			<button
 				onclick={openCreateModal}
@@ -172,7 +170,9 @@
 
 		<!-- Success/Error Messages -->
 		{#if successMessage}
-			<div class="mb-4 p-4 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 rounded-md">
+			<div
+				class="mb-4 p-4 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 rounded-md"
+			>
 				{successMessage}
 			</div>
 		{/if}
@@ -197,16 +197,24 @@
 				<table class="min-w-full divide-y divide-gray-200 dark:divide-gray-800">
 					<thead class="bg-gray-50 dark:bg-gray-800">
 						<tr>
-							<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+							<th
+								class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+							>
 								Email
 							</th>
-							<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+							<th
+								class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+							>
 								Role
 							</th>
-							<th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+							<th
+								class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+							>
 								Created At
 							</th>
-							<th class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+							<th
+								class="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider"
+							>
 								Actions
 							</th>
 						</tr>
@@ -223,7 +231,11 @@
 									</div>
 								</td>
 								<td class="px-6 py-4 whitespace-nowrap">
-									<span class="px-2 py-1 text-xs font-semibold rounded-full {getRoleBadgeClass(user.role)}">
+									<span
+										class="px-2 py-1 text-xs font-semibold rounded-full {getRoleBadgeClass(
+											user.role
+										)}"
+									>
 										{user.role}
 									</span>
 								</td>
@@ -256,15 +268,25 @@
 			</h2>
 
 			{#if error}
-				<div class="mb-4 p-3 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 rounded-md text-sm">
+				<div
+					class="mb-4 p-3 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 rounded-md text-sm"
+				>
 					{error}
 				</div>
 			{/if}
 
-			<form onsubmit={(e) => { e.preventDefault(); handleSubmit(); }}>
+			<form
+				onsubmit={(e) => {
+					e.preventDefault();
+					handleSubmit();
+				}}
+			>
 				<!-- Email -->
 				<div class="mb-4">
-					<label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+					<label
+						for="email"
+						class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+					>
 						Email
 					</label>
 					<input
@@ -280,7 +302,10 @@
 
 				<!-- Password -->
 				<div class="mb-4">
-					<label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+					<label
+						for="password"
+						class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2"
+					>
 						Password {formMode === 'edit' ? '(leave blank to keep current)' : ''}
 					</label>
 					<input
