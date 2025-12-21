@@ -43,6 +43,8 @@
 	let loading = true;
 	let saving = false;
 	let activeTab: 'editor' | 'history' = 'editor';
+	let currentUser: any = null;
+	let currentArticle: any = null;
 
 	const uploadImage = async (file: File) => {
 		const formData = new FormData();
@@ -139,9 +141,14 @@
 			const catRes = await client.get('/categories');
 			categories = catRes.data;
 
+			// Fetch current user
+			const userRes = await client.get('/auth/me');
+			currentUser = userRes.data;
+
 			if (articleId) {
 				const artRes = await client.get(`/qa/${articleId}`);
 				const art = artRes.data;
+				currentArticle = art;
 				title = art.title;
 				type = art.type;
 				category = art.categoryId;
@@ -192,6 +199,41 @@
 		} catch (e) {
 			console.error(e);
 			alert('Failed to save');
+		} finally {
+			saving = false;
+		}
+	};
+
+	const approveArticle = async () => {
+		if (!articleId) return;
+		if (!confirm('Approve this article and publish it?')) return;
+
+		saving = true;
+		try {
+			await client.post(`/qa/${articleId}/publish`);
+			alert('Article approved and published!');
+			goto('/admin');
+		} catch (e) {
+			console.error(e);
+			alert('Failed to approve article');
+		} finally {
+			saving = false;
+		}
+	};
+
+	const rejectArticle = async () => {
+		if (!articleId) return;
+		const reason = prompt('Reason for rejection (optional):');
+		if (reason === null) return; // User cancelled
+
+		saving = true;
+		try {
+			await client.post(`/qa/${articleId}/reject`, { reason });
+			alert('Article rejected and moved back to draft');
+			goto('/admin');
+		} catch (e) {
+			console.error(e);
+			alert('Failed to reject article');
 		} finally {
 			saving = false;
 		}
@@ -345,6 +387,37 @@
 			</div>
 
 			<div class="bg-gray-900 border border-gray-800 rounded-xl p-5 space-y-3 shadow-lg">
+				{#if currentUser?.role === 'ADMIN' && currentArticle?.status === 'REVIEW'}
+					<!-- Admin Review Actions for REVIEW status -->
+					<div class="bg-amber-900/20 border border-amber-700 rounded-lg p-3 mb-3">
+						<p class="text-amber-400 text-xs font-semibold mb-2">⚠️ Article Pending Review</p>
+					</div>
+					<button
+						on:click={approveArticle}
+						disabled={saving}
+						aria-busy={saving}
+						class="w-full py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-sm font-bold transition shadow-emerald-900/20 shadow-lg flex justify-center items-center gap-2"
+					>
+						{#if saving}
+							<Spinner class="h-4 w-4" />
+						{/if}
+						✓ Approve & Publish
+					</button>
+					<button
+						on:click={rejectArticle}
+						disabled={saving}
+						aria-busy={saving}
+						class="w-full py-2.5 bg-red-600 hover:bg-red-500 text-white rounded-lg text-sm font-bold transition shadow-red-900/20 shadow-lg flex justify-center items-center gap-2"
+					>
+						{#if saving}
+							<Spinner class="h-4 w-4" />
+						{/if}
+						✗ Reject (Back to Draft)
+					</button>
+					<div class="border-t border-gray-700 my-3"></div>
+				{/if}
+
+				<!-- Regular Save Actions -->
 				<button
 					on:click={() => save('DRAFT')}
 					disabled={saving}
@@ -356,28 +429,32 @@
 					{/if}
 					Save Draft
 				</button>
-				<button
-					on:click={() => save('REVIEW')}
-					disabled={saving}
-					aria-busy={saving}
-					class="w-full py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-sm font-medium transition shadow-blue-900/20 shadow-lg flex justify-center items-center gap-2"
-				>
-					{#if saving}
-						<Spinner class="h-4 w-4" />
-					{/if}
-					Submit for Review
-				</button>
-				<button
-					on:click={() => save('PUBLISHED')}
-					disabled={saving}
-					aria-busy={saving}
-					class="w-full py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-sm font-medium transition shadow-emerald-900/20 shadow-lg flex justify-center items-center gap-2"
-				>
-					{#if saving}
-						<Spinner class="h-4 w-4" />
-					{/if}
-					Publish
-				</button>
+				{#if currentArticle?.status !== 'REVIEW' || currentUser?.role !== 'ADMIN'}
+					<button
+						on:click={() => save('REVIEW')}
+						disabled={saving}
+						aria-busy={saving}
+						class="w-full py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-sm font-medium transition shadow-blue-900/20 shadow-lg flex justify-center items-center gap-2"
+					>
+						{#if saving}
+							<Spinner class="h-4 w-4" />
+						{/if}
+						Submit for Review
+					</button>
+				{/if}
+				{#if currentUser?.role === 'ADMIN'}
+					<button
+						on:click={() => save('PUBLISHED')}
+						disabled={saving}
+						aria-busy={saving}
+						class="w-full py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-sm font-medium transition shadow-emerald-900/20 shadow-lg flex justify-center items-center gap-2"
+					>
+						{#if saving}
+							<Spinner class="h-4 w-4" />
+						{/if}
+						Publish
+					</button>
+				{/if}
 			</div>
 		</div>
 
