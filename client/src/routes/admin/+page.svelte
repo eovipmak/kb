@@ -10,9 +10,12 @@
 		views: 0
 	};
 	let recentArticles: any[] = [];
+	let reviewArticles: any[] = [];
 	let loading = true;
 	let showModal = false;
 	let selectedArticle: any = null;
+	let activeTab: 'all' | 'review' = 'all';
+	let currentUser: any = null;
 
 	onMount(async () => {
 		const token = localStorage.getItem('token');
@@ -22,12 +25,16 @@
 		}
 
 		try {
-			const [statsRes, articlesRes] = await Promise.all([
+			const [statsRes, articlesRes, reviewRes, userRes] = await Promise.all([
 				client.get('/analytics/stats'),
-				client.get('/qa', { params: { limit: 10 } })
+				client.get('/qa'),
+				client.get('/qa', { params: { status: 'REVIEW' } }),
+				client.get('/auth/me')
 			]);
 			stats = statsRes.data;
 			recentArticles = articlesRes.data;
+			reviewArticles = reviewRes.data;
+			currentUser = userRes.data;
 		} catch (e) {
 			console.error(e);
 		} finally {
@@ -116,9 +123,35 @@
 				<div
 					class="lg:col-span-2 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden"
 				>
-					<div class="p-6 border-b border-gray-100 dark:border-gray-700 flex justify-between items-center">
-						<h2 class="text-xl font-bold">Recent Articles</h2>
-						<a href="/docs" class="text-sm text-blue-600 hover:underline">View Public List →</a>
+					<div class="p-6 border-b border-gray-100 dark:border-gray-700">
+						<div class="flex justify-between items-center mb-4">
+							<h2 class="text-xl font-bold">Articles</h2>
+							<a href="/docs" class="text-sm text-blue-600 hover:underline">View Public List →</a>
+						</div>
+						<!-- Tab Navigation -->
+						<nav class="flex gap-4 border-b border-gray-200 dark:border-gray-700 -mb-px">
+							<button
+								on:click={() => (activeTab = 'all')}
+								class="pb-3 px-1 border-b-2 transition {activeTab === 'all'
+									? 'border-blue-500 text-blue-600 dark:text-blue-400 font-semibold'
+									: 'border-transparent text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'}"
+							>
+								All Articles
+							</button>
+							<button
+								on:click={() => (activeTab = 'review')}
+								class="pb-3 px-1 border-b-2 transition flex items-center gap-2 {activeTab === 'review'
+									? 'border-amber-500 text-amber-600 dark:text-amber-400 font-semibold'
+									: 'border-transparent text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'}"
+							>
+								Needs Review
+								{#if reviewArticles.length > 0}
+									<span class="bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 px-2 py-0.5 rounded-full text-xs font-bold">
+										{reviewArticles.length}
+									</span>
+								{/if}
+							</button>
+						</nav>
 					</div>
 					<div class="overflow-x-auto">
 						<table class="w-full text-left border-collapse">
@@ -130,11 +163,13 @@
 								</tr>
 							</thead>
 							<tbody class="divide-y divide-gray-100 dark:divide-gray-700">
-								{#each recentArticles as article}
+								{#each activeTab === 'all' ? recentArticles : reviewArticles as article}
 									<tr class="hover:bg-gray-50 dark:hover:bg-gray-700/30 transition-colors">
 										<td class="px-6 py-4">
 											<div class="font-medium text-gray-900 dark:text-white">{article.title}</div>
-											<div class="text-xs text-gray-500 mt-0.5">{article.category?.name || 'Uncategorized'}</div>
+											<div class="text-xs text-gray-500 mt-0.5">
+												{article.category?.name || 'Uncategorized'} • by {article.author?.email || 'Unknown'}
+											</div>
 										</td>
 										<td class="px-6 py-4">
 											<span class="px-2 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider {getStatusColor(article.status)}">
@@ -155,15 +190,19 @@
 												href="/admin/editor?id={article.id}" 
 												class="text-blue-600 hover:text-blue-700 font-medium text-sm"
 											>
-												Edit
+												{#if article.status === 'REVIEW' && currentUser?.role === 'ADMIN'}Review{:else}Edit{/if}
 											</a>
 										</td>
 									</tr>
 								{/each}
-								{#if recentArticles.length === 0}
+								{#if (activeTab === 'all' ? recentArticles : reviewArticles).length === 0}
 									<tr>
 										<td colspan="3" class="px-6 py-10 text-center text-gray-500">
-											No articles found. Seed the database or create a new one.
+											{#if activeTab === 'review'}
+												No articles waiting for review.
+											{:else}
+												No articles found. Seed the database or create a new one.
+											{/if}
 										</td>
 									</tr>
 								{/if}
