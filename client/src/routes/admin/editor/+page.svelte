@@ -22,7 +22,7 @@
 	import { TableHeader } from '@tiptap/extension-table-header';
 	import BubbleMenu from '@tiptap/extension-bubble-menu';
 	import { Commands } from './commands.svelte';
-    import { ImageUploadExtension } from '$lib/tiptap/ImageUploadExtension';
+	import { ImageUploadExtension } from '$lib/tiptap/ImageUploadExtension';
 	import Spinner from '$lib/components/Spinner.svelte';
 	import { marked } from 'marked';
 	import HistoryTab from './HistoryTab.svelte';
@@ -85,6 +85,9 @@
 		// Initialize editor first
 		editor = new Editor({
 			element: element,
+			onTransaction: () => {
+				editor = editor;
+			},
 			extensions: [
 				StarterKit.configure({
 					heading: {
@@ -120,7 +123,7 @@
 				TableHeader,
 				TableCell,
 				Commands(handleImageUpload),
-                ImageUploadExtension,
+				ImageUploadExtension,
 				BubbleMenu.configure({
 					element: bubbleMenuElement
 				})
@@ -190,7 +193,7 @@
 			} else {
 				await client.post('/qa', payload);
 			}
-			
+
 			alert(`Saved as ${status}`);
 			goto('/admin');
 		} catch (e) {
@@ -466,6 +469,9 @@
 					>
 						<button
 							aria-label="Bold"
+							title="Bold (Cmd/Ctrl+B)"
+							aria-keyshortcuts="Meta+B Ctrl+B"
+							aria-pressed={editor.isActive('bold')}
 							on:click={() => editor.chain().focus().toggleBold().run()}
 							class="p-1.5 rounded hover:bg-gray-800 {editor.isActive('bold')
 								? 'text-blue-400 bg-gray-800'
@@ -473,6 +479,9 @@
 						>
 						<button
 							aria-label="Italic"
+							title="Italic (Cmd/Ctrl+I)"
+							aria-keyshortcuts="Meta+I Ctrl+I"
+							aria-pressed={editor.isActive('italic')}
 							on:click={() => editor.chain().focus().toggleItalic().run()}
 							class="p-1.5 rounded hover:bg-gray-800 {editor.isActive('italic')
 								? 'text-blue-400 bg-gray-800'
@@ -480,6 +489,9 @@
 						>
 						<button
 							aria-label="Underline"
+							title="Underline (Cmd/Ctrl+U)"
+							aria-keyshortcuts="Meta+U Ctrl+U"
+							aria-pressed={editor.isActive('underline')}
 							on:click={() => editor.chain().focus().toggleUnderline().run()}
 							class="p-1.5 rounded hover:bg-gray-800 {editor.isActive('underline')
 								? 'text-blue-400 bg-gray-800'
@@ -487,6 +499,9 @@
 						>
 						<button
 							aria-label="Strikethrough"
+							title="Strikethrough (Cmd/Ctrl+Shift+X)"
+							aria-keyshortcuts="Meta+Shift+X Ctrl+Shift+X"
+							aria-pressed={editor.isActive('strike')}
 							on:click={() => editor.chain().focus().toggleStrike().run()}
 							class="p-1.5 rounded hover:bg-gray-800 {editor.isActive('strike')
 								? 'text-blue-400 bg-gray-800'
@@ -495,6 +510,8 @@
 						<div class="w-px h-4 bg-gray-700 mx-1"></div>
 						<button
 							aria-label="Link"
+							title="Link"
+							aria-pressed={editor.isActive('link')}
 							on:click={setLink}
 							class="p-1.5 rounded hover:bg-gray-800 {editor.isActive('link')
 								? 'text-blue-400 bg-gray-800'
@@ -502,6 +519,9 @@
 						>
 						<button
 							aria-label="Code"
+							title="Code (Cmd/Ctrl+E)"
+							aria-keyshortcuts="Meta+E Ctrl+E"
+							aria-pressed={editor.isActive('code')}
 							on:click={() => editor.chain().focus().toggleCode().run()}
 							class="p-1.5 rounded hover:bg-gray-800 {editor.isActive('code')
 								? 'text-blue-400 bg-gray-800'
@@ -666,17 +686,17 @@
 		cursor: pointer;
 		width: 1.1em;
 		height: 1.1em;
-        margin-top: 0.15em; /* Adjusted roughly for line-height 1.75 */
-        appearance: auto;
-        accent-color: #3b82f6;
-        position: relative;
-        top: 0.1em; /* Fine tuning */
+		margin-top: 0.15em; /* Adjusted roughly for line-height 1.75 */
+		appearance: auto;
+		accent-color: #3b82f6;
+		position: relative;
+		top: 0.1em; /* Fine tuning */
 	}
 
 	/* Strike-through and underline */
 	:global(.ProseMirror s) {
 		text-decoration: line-through;
-        color: #64748b; /* Dim completed tasks */
+		color: #64748b; /* Dim completed tasks */
 	}
 	:global(.ProseMirror s) {
 		text-decoration: line-through;
@@ -743,12 +763,6 @@
 	}
 
 	/* Bubble menu */
-	:global(.bubble-menu) {
-		display: none;
-	}
-	:global(.bubble-menu.is-active) {
-		display: flex;
-	}
 
 	/* Placeholder */
 	:global(.ProseMirror p.is-editor-empty:first-child::before) {

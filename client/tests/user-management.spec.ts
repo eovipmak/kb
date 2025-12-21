@@ -141,8 +141,8 @@ test.describe('User Management', () => {
 		await page.waitForLoadState('networkidle');
 
 		// 3. Verify access denied message appears
-		await expect(
-			page.getByText(/Access denied|Forbidden|Insufficient permissions/i)
-		).toBeVisible({ timeout: 5000 });
+		await expect(page.getByText(/Access denied|Forbidden|Insufficient permissions/i)).toBeVisible({
+			timeout: 5000
+		});
 	});
 });

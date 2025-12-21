@@ -128,9 +128,7 @@
 									</span>
 								</div>
 
-								<h1
-									class="text-2xl sm:text-3xl font-extrabold text-gray-900 mb-2 leading-tight"
-								>
+								<h1 class="text-2xl sm:text-3xl font-extrabold text-gray-900 mb-2 leading-tight">
 									{article.title}
 								</h1>
 								<div class="flex items-center text-sm text-gray-500 space-x-4">
@@ -154,9 +152,7 @@
 
 						<aside class="hidden lg:block lg:col-span-3 space-y-6">
 							{#if toc.length > 0}
-								<div
-									class="bg-gray-50 rounded-lg p-4 sticky top-0"
-								>
+								<div class="bg-gray-50 rounded-lg p-4 sticky top-0">
 									<h3 class="text-xs font-bold text-gray-900 uppercase tracking-wider mb-3">
 										Table of Contents
 									</h3>
