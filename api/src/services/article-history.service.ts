@@ -66,8 +66,75 @@ export class ArticleHistoryService {
             id: record.id,
             articleId: record.articleId,
             changedBy: record.changedBy,
-            oldContent: JSON.parse(record.oldContent),
+            oldContent: (() => {
+                try {
+                    return JSON.parse(record.oldContent);
+                } catch (error) {
+                    // Return a safe fallback if parsing fails
+                    return {
+                        title: 'Unknown',
+                        contentHtml: '',
+                        contentText: '',
+                        status: 'DRAFT',
+                        type: 'FAQ',
+                        categoryId: null,
+                        tags: []
+                    };
+                }
+            })(),
             createdAt: record.createdAt
         }));
+    }
+
+    /**
+     * Restore article from a history record
+     * Only accessible by Admin or the article author
+     */
+    static async restoreFromHistory(historyId: string, userId: string, userRole: Role) {
+        // Get the history record
+        const historyRecord = await prisma.articleHistory.findUnique({
+            where: { id: historyId },
+            include: {
+                article: {
+                    include: { tags: true }
+                }
+            }
+        });
+
+        if (!historyRecord) {
+            throw new Error('History record not found');
+        }
+
+        const article = historyRecord.article;
+
+        // Check permissions: Admin or Author only
+        if (userRole !== Role.ADMIN && article.authorId !== userId) {
+            throw new Error('Forbidden');
+        }
+
+        // Parse the old content with error handling
+        let oldContent;
+        try {
+            oldContent = JSON.parse(historyRecord.oldContent);
+        } catch (error) {
+            throw new Error('Invalid history record data');
+        }
+
+        // Create a history record for the current state before restoring
+        await this.createHistoryRecord(article.id, userId, {
+            title: article.title,
+            contentHtml: article.contentHtml,
+            contentText: article.contentText,
+            status: article.status,
+            type: article.type,
+            categoryId: article.categoryId,
+            tags: article.tags
+        });
+
+        // Return the old content to be restored
+        return {
+            historyRecord,
+            oldContent
+        };
     }
 }

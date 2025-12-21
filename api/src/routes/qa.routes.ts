@@ -213,4 +213,49 @@ export async function qaRoutes(fastify: FastifyInstance) {
             return reply.code(500).send({ message: 'Internal Server Error' });
         }
     });
+
+    // Restore from History
+    fastify.post('/:id/restore', {
+        schema: {
+            body: {
+                type: 'object',
+                required: ['historyId'],
+                properties: {
+                    historyId: { type: 'string' }
+                }
+            }
+        },
+        preHandler: [verifyToken]
+    }, async (request, reply) => {
+        const { id } = request.params as any;
+        const { historyId } = request.body as any;
+        
+        try {
+            const { ArticleHistoryService } = await import('../services/article-history.service');
+            
+            // Get the old content from history
+            const { oldContent } = await ArticleHistoryService.restoreFromHistory(historyId, request.user!.id, request.user!.role);
+            
+            // Update the article with the old content
+            const restored = await QAService.updateQAPage(
+                id, 
+                {
+                    title: oldContent.title,
+                    contentHtml: oldContent.contentHtml,
+                    type: oldContent.type,
+                    categoryId: oldContent.categoryId,
+                    tags: oldContent.tags.map((t: any) => t.name)
+                }, 
+                request.user!.id, 
+                request.user!.role
+            );
+            
+            return restored;
+        } catch (err: any) {
+            if (err.message === 'Forbidden') return reply.code(403).send({ message: 'Forbidden' });
+            if (err.message === 'History record not found') return reply.code(404).send({ message: 'History record not found' });
+            if (err.message === 'Article not found') return reply.code(404).send({ message: 'Article not found' });
+            return reply.code(500).send({ message: 'Internal Server Error' });
+        }
+    });
 }

@@ -239,6 +239,35 @@
 		}
 	};
 
+	const handleRestore = async () => {
+		// Reload the article data after restore
+		if (!articleId) return;
+		
+		try {
+			const artRes = await client.get(`/qa/${articleId}`);
+			const art = artRes.data;
+			currentArticle = art;
+			title = art.title;
+			type = art.type;
+			category = art.categoryId;
+			tags = art.tags.map((t: any) => t.name);
+
+			// Update editor content
+			let content = art.contentHtml || '';
+			if (content.includes('#') || content.includes('*') || content.includes('- ')) {
+				const { marked } = await import('marked');
+				content = await marked.parse(content);
+			}
+			editor.commands.setContent(content);
+			
+			// Switch back to editor tab
+			activeTab = 'editor';
+		} catch (e) {
+			console.error('Failed to reload article', e);
+			alert('Failed to reload article. Please refresh the page.');
+		}
+	};
+
 	// Toolbar Actions
 	const setLink = () => {
 		const previousUrl = editor.getAttributes('link').href;
@@ -539,7 +568,7 @@
 				<div
 					class="flex-1 bg-gray-900 border border-gray-800 rounded-xl p-8 min-h-[600px] shadow-lg"
 				>
-					<HistoryTab {articleId} />
+					<HistoryTab {articleId} onRestore={handleRestore} />
 				</div>
 			{/if}
 		</div>
