@@ -66,7 +66,22 @@ export class ArticleHistoryService {
             id: record.id,
             articleId: record.articleId,
             changedBy: record.changedBy,
-            oldContent: JSON.parse(record.oldContent),
+            oldContent: (() => {
+                try {
+                    return JSON.parse(record.oldContent);
+                } catch (error) {
+                    // Return a safe fallback if parsing fails
+                    return {
+                        title: 'Unknown',
+                        contentHtml: '',
+                        contentText: '',
+                        status: 'DRAFT',
+                        type: 'FAQ',
+                        categoryId: null,
+                        tags: []
+                    };
+                }
+            })(),
             createdAt: record.createdAt
         }));
     }
@@ -97,8 +112,13 @@ export class ArticleHistoryService {
             throw new Error('Forbidden');
         }
 
-        // Parse the old content
-        const oldContent = JSON.parse(historyRecord.oldContent);
+        // Parse the old content with error handling
+        let oldContent;
+        try {
+            oldContent = JSON.parse(historyRecord.oldContent);
+        } catch (error) {
+            throw new Error('Invalid history record data');
+        }
 
         // Create a history record for the current state before restoring
         await this.createHistoryRecord(article.id, userId, {
