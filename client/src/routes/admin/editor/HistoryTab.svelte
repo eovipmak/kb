@@ -74,7 +74,9 @@
 	{:else}
 		<div class="space-y-4">
 			{#each history as record}
-				<div class="bg-gray-900 border border-gray-800 rounded-lg p-4 hover:border-gray-700 transition">
+				<div
+					class="bg-gray-900 border border-gray-800 rounded-lg p-4 hover:border-gray-700 transition"
+				>
 					<div class="flex justify-between items-start mb-2">
 						<div>
 							<p class="text-sm font-medium text-gray-300">

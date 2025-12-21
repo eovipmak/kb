@@ -116,7 +116,9 @@
 				<div
 					class="lg:col-span-2 bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden"
 				>
-					<div class="p-6 border-b border-gray-100 dark:border-gray-700 flex justify-between items-center">
+					<div
+						class="p-6 border-b border-gray-100 dark:border-gray-700 flex justify-between items-center"
+					>
 						<h2 class="text-xl font-bold">Recent Articles</h2>
 						<a href="/docs" class="text-sm text-blue-600 hover:underline">View Public List →</a>
 					</div>
@@ -126,7 +128,9 @@
 								<tr class="bg-gray-50 dark:bg-gray-700/50">
 									<th class="px-6 py-3 text-xs font-semibold text-gray-500 uppercase">Title</th>
 									<th class="px-6 py-3 text-xs font-semibold text-gray-500 uppercase">Status</th>
-									<th class="px-6 py-3 text-xs font-semibold text-gray-500 uppercase text-right">Actions</th>
+									<th class="px-6 py-3 text-xs font-semibold text-gray-500 uppercase text-right"
+										>Actions</th
+									>
 								</tr>
 							</thead>
 							<tbody class="divide-y divide-gray-100 dark:divide-gray-700">
@@ -134,15 +138,21 @@
 									<tr class="hover:bg-gray-50 dark:hover:bg-gray-700/30 transition-colors">
 										<td class="px-6 py-4">
 											<div class="font-medium text-gray-900 dark:text-white">{article.title}</div>
-											<div class="text-xs text-gray-500 mt-0.5">{article.category?.name || 'Uncategorized'}</div>
+											<div class="text-xs text-gray-500 mt-0.5">
+												{article.category?.name || 'Uncategorized'}
+											</div>
 										</td>
 										<td class="px-6 py-4">
-											<span class="px-2 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider {getStatusColor(article.status)}">
+											<span
+												class="px-2 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider {getStatusColor(
+													article.status
+												)}"
+											>
 												{article.status}
 											</span>
 										</td>
 										<td class="px-6 py-4 text-right space-x-3">
-											<button 
+											<button
 												on:click={() => {
 													selectedArticle = article;
 													showModal = true;
@@ -151,8 +161,8 @@
 											>
 												{#if article.status === 'DRAFT'}Preview{:else}View{/if}
 											</button>
-											<a 
-												href="/admin/editor?id={article.id}" 
+											<a
+												href="/admin/editor?id={article.id}"
 												class="text-blue-600 hover:text-blue-700 font-medium text-sm"
 											>
 												Edit
@@ -207,8 +217,5 @@
 </div>
 
 {#if showModal}
-	<PreviewModal 
-		article={selectedArticle} 
-		on:close={() => showModal = false} 
-	/>
+	<PreviewModal article={selectedArticle} on:close={() => (showModal = false)} />
 {/if}
