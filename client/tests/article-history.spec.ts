@@ -149,8 +149,7 @@ test.describe('Article History & Restore', () => {
 				} else {
 					await route.fulfill({ status: 404, json: { message: 'Not found' } });
 				}
-			}
-			else {
+			} else {
 				await route.continue();
 			}
 		});
@@ -160,7 +159,7 @@ test.describe('Article History & Restore', () => {
 		await page.evaluate(() => {
 			localStorage.setItem('token', 'fake-jwt-token');
 		});
-		
+
 		// Navigate to editor with the article ID
 		await page.goto(`/admin/editor?id=${createdArticleId}`);
 		await page.waitForSelector('.ProseMirror', { timeout: 10000 });
@@ -223,11 +222,11 @@ test.describe('Article History & Restore', () => {
 
 		// Get the first record (most recent change before current state)
 		const firstRecord = historyCards.first();
-		
+
 		// Get the text to see which version it is
 		const firstRecordText = await firstRecord.textContent();
 		console.log('First record text:', firstRecordText);
-		
+
 		// The record should contain "Version" in the title
 		await expect(firstRecord).toContainText('Version');
 
@@ -242,7 +241,7 @@ test.describe('Article History & Restore', () => {
 		// Close preview
 		await page.locator('[role="dialog"] >> button:has-text("Close")').click();
 		await page.waitForTimeout(200);
-		
+
 		// Click Restore on the first record
 		await firstRecord.locator('button:has-text("Restore")').click();
 		await page.waitForTimeout(1500); // Wait for restore and reload

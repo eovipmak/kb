@@ -74,7 +74,7 @@
 					const res = await api.search({
 						q: query,
 						type: type || undefined,
-						category: category || undefined,
+						categoryId: category || undefined,
 						tags: tagsParam || undefined,
 						page: pageNum,
 						limit

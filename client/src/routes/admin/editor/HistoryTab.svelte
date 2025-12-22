@@ -67,7 +67,11 @@
 	};
 
 	const handleRestore = async (record: HistoryRecord) => {
-		if (!confirm(`Are you sure you want to restore this version from ${formatDate(record.createdAt)}?`)) {
+		if (
+			!confirm(
+				`Are you sure you want to restore this version from ${formatDate(record.createdAt)}?`
+			)
+		) {
 			return;
 		}
 
@@ -75,7 +79,7 @@
 		try {
 			await client.post(`/qa/${articleId}/restore`, { historyId: record.id });
 			alert('Article restored successfully! The page will reload.');
-			
+
 			// Call the callback to reload the editor
 			if (onRestore) {
 				onRestore();
@@ -208,7 +212,9 @@
 			</div>
 
 			<div class="border-t border-gray-800 pt-4 mt-4">
-				<h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">Content Preview</h3>
+				<h3 class="text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">
+					Content Preview
+				</h3>
 				<div class="prose prose-sm prose-invert max-w-none">
 					{@html previewRecord.oldContent.contentHtml}
 				</div>

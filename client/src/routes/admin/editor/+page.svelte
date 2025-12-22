@@ -242,7 +242,7 @@
 	const handleRestore = async () => {
 		// Reload the article data after restore
 		if (!articleId) return;
-		
+
 		try {
 			const artRes = await client.get(`/qa/${articleId}`);
 			const art = artRes.data;
@@ -259,7 +259,7 @@
 				content = await marked.parse(content);
 			}
 			editor.commands.setContent(content);
-			
+
 			// Switch back to editor tab
 			activeTab = 'editor';
 		} catch (e) {

@@ -1,0 +1,45 @@
+
+> client@0.0.1 dev
+> vite dev
+
+1:01:56 PM [vite] (client) Forced re-optimization of dependencies
+
+  VITE v7.2.7  ready in 1756 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: http://192.168.0.2:5173/
+1:02:02 PM [vite] (ssr) Error when evaluating SSR module /src/routes/admin/+page.svelte: /app/client/src/routes/admin/+page.svelte:256:3 Unexpected block closing tag
+https://svelte.dev/e/block_unexpected_close
+  Plugin: vite-plugin-svelte:compile
+  File: /app/client/src/routes/admin/+page.svelte:256:3
+   254 |          </div>
+   255 |        </div>
+   256 |      {/if}
+               ^
+   257 |    </div>
+   258 |  </div>
+
+[1;31m[500] GET /admin[0m
+
+1:02:33 PM [vite] (ssr) page reload .svelte-kit/generated/server/internal.js
+1:02:33 PM [vite] (ssr) page reload .svelte-kit/generated/root.js
+1:02:33 PM [vite] (ssr) page reload .svelte-kit/generated/root.svelte
+1:02:39 PM [vite] (ssr) page reload src/routes/admin/+page.svelte
+1:02:52 PM [vite] (ssr) page reload .svelte-kit/generated/root.js
+1:02:52 PM [vite] (ssr) page reload .svelte-kit/generated/root.svelte
+1:02:52 PM [vite] (ssr) page reload .svelte-kit/generated/server/internal.js
+1:03:50 PM [vite] (ssr) page reload .svelte-kit/generated/root.js
+1:03:50 PM [vite] (ssr) page reload .svelte-kit/generated/root.svelte
+1:03:50 PM [vite] (ssr) page reload .svelte-kit/generated/server/internal.js
+1:05:02 PM [vite] (ssr) page reload src/routes/admin/editor/CommandsList.svelte
+1:05:15 PM [vite] (ssr) page reload src/routes/search/+page.svelte
+1:05:27 PM [vite] (ssr) page reload src/routes/+layout.svelte
+1:05:55 PM [vite] (ssr) page reload .svelte-kit/generated/root.svelte
+1:05:55 PM [vite] (ssr) page reload .svelte-kit/generated/root.js
+1:05:55 PM [vite] (ssr) page reload .svelte-kit/generated/server/internal.js
+1:07:03 PM [vite] (ssr) page reload src/routes/admin/+page.svelte
+1:07:03 PM [vite] (ssr) page reload src/routes/admin/editor/+page.svelte
+1:07:03 PM [vite] (ssr) page reload src/routes/admin/editor/HistoryTab.svelte
+1:07:46 PM [vite] (ssr) page reload .svelte-kit/generated/root.svelte
+1:07:46 PM [vite] (ssr) page reload .svelte-kit/generated/root.js
+1:07:46 PM [vite] (ssr) page reload .svelte-kit/generated/server/internal.js
