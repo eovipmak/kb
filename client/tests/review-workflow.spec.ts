@@ -13,13 +13,13 @@ test.describe('Review Queue & Approval Workflow', () => {
 		await page.route('**/api/auth/login', async (route) => {
 			const request = route.request();
 			const postData = request.postDataJSON();
-			
+
 			// Determine role based on email
 			const isAdmin = postData.email === 'admin@example.com';
 			await route.fulfill({
 				status: 200,
 				contentType: 'application/json',
-				body: JSON.stringify({ 
+				body: JSON.stringify({
 					token: isAdmin ? 'fake-admin-token' : 'fake-writer-token',
 					user: {
 						id: isAdmin ? 'admin-1' : 'writer-1',
@@ -33,7 +33,7 @@ test.describe('Review Queue & Approval Workflow', () => {
 		await page.route('**/api/auth/me', async (route) => {
 			const authHeader = route.request().headers()['authorization'];
 			const isAdmin = authHeader?.includes('admin-token');
-			
+
 			await route.fulfill({
 				json: {
 					id: isAdmin ? 'admin-1' : 'writer-1',
@@ -57,12 +57,12 @@ test.describe('Review Queue & Approval Workflow', () => {
 
 		// Mock article creation and updates
 		let articleStatus = 'DRAFT';
-		
+
 		// Mock GET requests to /api/qa with optional query params
 		await page.route('**/api/qa', async (route) => {
 			const method = route.request().method();
 			const url = route.request().url();
-			
+
 			if (method === 'POST') {
 				const postData = route.request().postDataJSON();
 				articleStatus = postData.status || 'DRAFT';
@@ -84,23 +84,28 @@ test.describe('Review Queue & Approval Workflow', () => {
 			} else if (method === 'GET') {
 				const params = new URL(url).searchParams;
 				const status = params.get('status');
-				
+
 				// Return articles based on status filter
 				if (status === 'REVIEW') {
 					await route.fulfill({
-						json: articleStatus === 'REVIEW' ? [{
-							id: articleId,
-							title: 'Test Review Article',
-							contentHtml: '<p>This is a test article for review.</p>',
-							status: 'REVIEW',
-							type: 'FAQ',
-							categoryId: 'cat1',
-							category: { id: 'cat1', name: 'General' },
-							tags: [],
-							author: { id: 'writer-1', email: 'writer@example.com' },
-							slug: 'test-review',
-							createdAt: new Date().toISOString()
-						}] : []
+						json:
+							articleStatus === 'REVIEW'
+								? [
+										{
+											id: articleId,
+											title: 'Test Review Article',
+											contentHtml: '<p>This is a test article for review.</p>',
+											status: 'REVIEW',
+											type: 'FAQ',
+											categoryId: 'cat1',
+											category: { id: 'cat1', name: 'General' },
+											tags: [],
+											author: { id: 'writer-1', email: 'writer@example.com' },
+											slug: 'test-review',
+											createdAt: new Date().toISOString()
+										}
+									]
+								: []
 					});
 				} else {
 					await route.fulfill({ json: [] });
@@ -111,7 +116,7 @@ test.describe('Review Queue & Approval Workflow', () => {
 		// Mock individual article fetch and updates
 		await page.route(new RegExp(`/api/qa/${articleId}`), async (route) => {
 			const method = route.request().method();
-			
+
 			if (method === 'GET') {
 				await route.fulfill({
 					json: {
@@ -201,7 +206,7 @@ test.describe('Review Queue & Approval Workflow', () => {
 
 		// Fill in article details
 		await page.fill('input[placeholder="Article Title"]', 'Test Review Article');
-		
+
 		const editor = page.locator('.ProseMirror');
 		await editor.click();
 		await editor.fill('This is a test article for review.');
@@ -237,10 +242,10 @@ test.describe('Review Queue & Approval Workflow', () => {
 		// ========== STEP 4: Check Review Tab ==========
 		// Wait for the page to fully load
 		await page.waitForLoadState('networkidle');
-		
+
 		// Click on "Needs Review" tab
 		await page.click('button:has-text("Needs Review")');
-		
+
 		// Wait for the review list to update
 		await page.waitForTimeout(1000);
 
@@ -271,10 +276,10 @@ test.describe('Review Queue & Approval Workflow', () => {
 		// 1. The "Needs Review" tab exists and is clickable
 		// 2. The dashboard shows the correct empty state message
 		// 3. The status badge colors are working (from getStatusColor function)
-		
+
 		console.log('Review Queue UI successfully implemented and tested!');
 		console.log('Dashboard shows "Needs Review" tab with proper filtering');
-		
+
 		// Note: In a real integration test with the full backend, the article would appear here
 		// For this test with mocked APIs, we've successfully validated the UI implementation
 	});

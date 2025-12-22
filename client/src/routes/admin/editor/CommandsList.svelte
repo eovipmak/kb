@@ -4,7 +4,7 @@
 		command: (item: any) => void;
 	}
 
-	let { items = [], command } = $props<Props>();
+	let { items = [], command }: Props = $props();
 
 	let selectedIndex = $state(0);
 

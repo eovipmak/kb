@@ -140,18 +140,22 @@
 							</button>
 							<button
 								on:click={() => (activeTab = 'review')}
-								class="pb-3 px-1 border-b-2 transition flex items-center gap-2 {activeTab === 'review'
+								class="pb-3 px-1 border-b-2 transition flex items-center gap-2 {activeTab ===
+								'review'
 									? 'border-amber-500 text-amber-600 dark:text-amber-400 font-semibold'
 									: 'border-transparent text-gray-500 hover:text-gray-700 dark:hover:text-gray-300'}"
 							>
 								Needs Review
 								{#if reviewArticles.length > 0}
-									<span class="bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 px-2 py-0.5 rounded-full text-xs font-bold">
+									<span
+										class="bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400 px-2 py-0.5 rounded-full text-xs font-bold"
+									>
 										{reviewArticles.length}
 									</span>
 								{/if}
 							</button>
 						</nav>
+					</div>
 					<div
 						class="p-6 border-b border-gray-100 dark:border-gray-700 flex justify-between items-center"
 					>
@@ -175,7 +179,8 @@
 										<td class="px-6 py-4">
 											<div class="font-medium text-gray-900 dark:text-white">{article.title}</div>
 											<div class="text-xs text-gray-500 mt-0.5">
-												{article.category?.name || 'Uncategorized'} • by {article.author?.email || 'Unknown'}
+												{article.category?.name || 'Uncategorized'} • by {article.author?.email ||
+													'Unknown'}
 												{article.category?.name || 'Uncategorized'}
 											</div>
 										</td>
