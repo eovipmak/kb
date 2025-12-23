@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import client from '$lib/api/client';
+	import Spinner from '$lib/components/Spinner.svelte';
 
 	export let articleId: string;
 	export let onRestore: (() => void) | undefined = undefined;
@@ -27,7 +28,7 @@
 	let loading = true;
 	let error = '';
 	let previewRecord: HistoryRecord | null = null;
-	let restoring = false;
+	let restoringId: string | null = null;
 
 	onMount(async () => {
 		try {
@@ -75,7 +76,7 @@
 			return;
 		}
 
-		restoring = true;
+		restoringId = record.id;
 		try {
 			await client.post(`/qa/${articleId}/restore`, { historyId: record.id });
 			alert('Article restored successfully! The page will reload.');
@@ -91,7 +92,7 @@
 			console.error('Failed to restore', e);
 			alert('Failed to restore: ' + (e.response?.data?.message || 'Unknown error'));
 		} finally {
-			restoring = false;
+			restoringId = null;
 		}
 	};
 </script>
@@ -99,7 +100,7 @@
 <div class="history-container">
 	{#if loading}
 		<div class="text-center py-8 text-gray-400">
-			<div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+			<Spinner class="mx-auto h-8 w-8 text-blue-500" />
 			<p class="mt-2">Loading history...</p>
 		</div>
 	{:else if error}
@@ -161,14 +162,14 @@
 						</button>
 						<button
 							on:click={() => handleRestore(record)}
-							disabled={restoring}
-							class="px-3 py-1.5 bg-blue-600 hover:bg-blue-500 text-white rounded text-sm transition disabled:opacity-50 disabled:cursor-not-allowed"
+							disabled={restoringId !== null}
+							aria-busy={restoringId === record.id}
+							class="px-3 py-1.5 bg-blue-600 hover:bg-blue-500 text-white rounded text-sm transition disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2"
 						>
-							{#if restoring}
-								<span class="inline-block animate-spin">⏳</span>
-							{:else}
-								↶ Restore
+							{#if restoringId === record.id}
+								<Spinner class="h-4 w-4 text-white" />
 							{/if}
+							↶ Restore
 						</button>
 					</div>
 				</div>
