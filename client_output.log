@@ -1,0 +1,10 @@
+
+> client@0.0.1 dev
+> vite dev
+
+1:03:22 PM [vite] (client) Forced re-optimization of dependencies
+
+  VITE v7.2.7  ready in 1616 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: http://192.168.0.2:5173/
