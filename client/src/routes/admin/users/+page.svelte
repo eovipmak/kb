@@ -27,6 +27,7 @@
 	});
 
 	let editingUserId = $state('');
+	let deletingUserId = $state('');
 
 	onMount(async () => {
 		const token = localStorage.getItem('token');
@@ -127,6 +128,8 @@
 			return;
 		}
 
+		deletingUserId = id;
+
 		try {
 			await client.delete(`/users/${id}`);
 			successMessage = 'User deleted successfully!';
@@ -138,6 +141,8 @@
 		} catch (e: any) {
 			console.error(e);
 			error = e.response?.data?.message || 'Failed to delete user';
+		} finally {
+			deletingUserId = '';
 		}
 	}
 
@@ -245,9 +250,17 @@
 								<td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
 									<button
 										onclick={() => deleteUser(user.id, user.email)}
-										class="text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300"
+										disabled={!!deletingUserId}
+										aria-busy={deletingUserId === user.id}
+										aria-label="Delete user {user.email}"
+										class="inline-flex items-center text-red-600 hover:text-red-900 dark:text-red-400 dark:hover:text-red-300 disabled:opacity-50 disabled:cursor-not-allowed"
 									>
-										Delete
+										{#if deletingUserId === user.id}
+											<Spinner class="mr-2 h-4 w-4" />
+											Deleting...
+										{:else}
+											Delete
+										{/if}
 									</button>
 								</td>
 							</tr>
